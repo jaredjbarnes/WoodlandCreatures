@@ -1,0 +1,35 @@
+﻿<div material-input material-textarea controller="components.material.inputs.Input" unselectable>
+    <style component="css-helpers"></style>
+    <style component="css-material-input"></style>
+    <style>
+        [material-textarea] {
+            box-sizing: content-box;
+            height: 130px;
+        }
+
+            [material-textarea] [material-input-container] {
+                height: 100%;
+            }
+
+            [material-textarea] [material-input-label] {
+                top: 27px;
+                bottom: auto;
+            }
+
+            [material-textarea] [material-input-input] {
+                top: 22px;
+                line-height: normal !important;
+                height: auto !important;
+                resize: none;
+            }
+
+            [material-textarea][no-border-bottom] [material-input-input] {
+                border-bottom: none !important;
+            }
+    </style>
+    <div material-input-container tag="material-input-container">
+        <div material-input-label tag="label"></div>
+        <textarea material-input-input tag="input"></textarea>
+        <div material-input-helper-text tag="helper" class="ellipsis"><embed /></div>
+    </div>
+</div>

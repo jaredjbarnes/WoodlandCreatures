@@ -1,0 +1,20 @@
+﻿<div desktop-scroll controller="components.ui.layouts.DesktopScroll">
+    <style>
+        [desktop-scroll] {
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        [desktop-scroll-content] {
+            height: auto;
+            position: relative;
+            -webkit-transform: translate3d(0,0,0);
+            -webkit-backface-visibility: hidden;
+            transform: translate3d(0,0,0);
+            backface-visibility: hidden;
+        }
+    </style>
+    <div desktop-scroll-content tag="content">
+        <embed />
+    </div>
+</div>

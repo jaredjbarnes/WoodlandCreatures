@@ -1,0 +1,31 @@
+﻿<div permission-error-state controller="components.material.login.PermissionErrorState">
+    <style component="css-helpers"></style>
+    <style>
+        [permission-error-state] {
+            height: 194px;
+            position: relative;
+        }
+
+        [permission-error-state-retry] {
+            position: absolute !important;
+            bottom: 0;
+        }
+
+        [permission-error-state-table] {
+            height: 150px;
+            display: table;
+            width: 100%;
+        }
+
+        [permission-error-state-table-cell] {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+    <div permission-error-state-table>
+        <div permission-error-state-table-cell>
+            <div class="text-headline text-center no-margin">No permission</div>
+        </div>
+    </div>
+    <div tag="retry-button" permission-error-state-retry component="raised-button" light-theme class="text-center input-block-level text-light background-primary extra-padding-small">Try Again</div>
+</div>

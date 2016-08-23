@@ -1,0 +1,14 @@
+﻿<div lazy-load controller="components.material.states.LazyLoad">
+    <style component="css-helpers"></style>
+    <embed select=":first-child" />
+    <div tag="error" class="hide absolute-fill-parent">
+        <div style="display: table" class="fill-parent">
+            <div style="display: table-cell; vertical-align: middle" class="text-center">
+                <div tag="error-message" class="text-danger text-title extra-margin-bottom-small">
+                    There was an error loading the page. Confirm Internet connection and try again. 
+                </div>
+                <div tag="try-again" component="raised-button" class="extra-padding-left extra-padding-right extra-padding-top-small extra-padding-bottom-small text-subhead extra-margin-top">Try Again</div>
+            </div>
+        </div>
+    </div>
+</div>

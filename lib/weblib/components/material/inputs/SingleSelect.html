@@ -1,0 +1,67 @@
+﻿<div material-single-select material-dropdown material-input controller="components.material.inputs.SingleSelect" unselectable tabindex="0">
+    <style component="css-helpers"></style>
+    <style component="css-material-input"></style>
+    <style>
+        [single-select-state-manager] {
+            position: relative;
+            top: -20px;
+            height: 160px !important;
+            outline: 0;
+        }
+
+        [single-select-collection] {
+            outline: 0;
+        }
+
+        [single-select-dropdown] {
+            max-height: 226px !important;
+        }
+
+        [single-select-helper] {
+            padding-top: 4px;
+            font-size: 12px;
+        }
+        [single-select-dropdown-content-container] {
+            opacity: 0;
+        }
+    </style>
+    <div material-input-container tag="material-input-container">
+        <div material-dropdown-clickable-area tag="clickable-area">
+            <div material-dropdown-label tag="label"></div>
+            <div material-input-helper-text tag="helper" class="ellipsis"><embed select="[selector='helper']" /></div>
+        </div>
+
+        <div material-dropdown-dropdown single-select-dropdown
+             tag="dropdown"
+             class="background-light text-dark hide overflow-hidden">
+            <div single-select-dropdown-content-container tag="dropdown-content-container">
+                <div single-select-search tag="search" label="Search" component="input"></div>
+                <div single-select-state-manager tag="state-manager" component="ui-state-manager" class="overflow-hidden" tabindex="0">
+                    <div name="pre-search" initial>
+                        <p single-select-helper class="text-info">Type to begin searching</p>
+                    </div>
+                    <div name="loading" class="background-light">
+                        <div tag="preloader-line" component="preloader-line"></div>
+                    </div>
+                    <div name="results" class="background-light">
+                        <div single-select-collection tag="list"
+                             component="ui-collection"
+                             controller="components.material.layouts.List"
+                             item-height="50"
+                             padding-top="10"
+                             item-component="./SingleSelectItem.html" class="fill-parent">
+                        </div>
+                    </div>
+                    <div name="error" class="background-light">
+                        <p single-select-helper tag="error-message" class="text-danger"></p>
+                    </div>
+                    <div name="no-results" class="background-light">
+                        <p single-select-helper class="text-info">No Results Found</p>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</div>

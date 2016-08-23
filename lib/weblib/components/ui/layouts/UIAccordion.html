@@ -1,0 +1,12 @@
+﻿<div ui-accordion controller="components.ui.layouts.UIAccordion">
+    <!-- Has a header and content section the header always shows while the body is contracted and expanded at different times.-->
+    <style type="text/css">
+        [ui-accordion] > [tag="content"] {
+            height: auto;
+            width: 100%;
+            max-height: 0;
+        }
+    </style>
+    <div tag="header"><embed select=":nth-child(1)" /></div>
+    <div tag="content" class="hide overflow-hidden"><embed select=":nth-child(2)" /></div>
+</div>

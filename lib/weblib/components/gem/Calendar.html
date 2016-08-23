@@ -1,0 +1,218 @@
+﻿<div gem-calendar controller="components.gem.Calendar">
+    <style component="./Theme.html">
+    </style>
+    <style>
+        [gem-calendar] {
+            position: relative;
+            padding: 15px;
+        }
+
+        [gem-calendar-actions] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 35px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        [gem-calendar-month] {
+            height: 35px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        [gem-calendar-year] {
+            height: 35px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 15px;
+        }
+
+        [gem-calendar-display] {
+            position: absolute;
+            top: 105px;
+            bottom: 50px;
+            left: 0;
+            right: 0;
+            box-sizing: border-box;
+        }
+
+        [gem-calendar-display-header] {
+            position: relative;
+        }
+
+        .calendar-square {
+            width: 25px;
+            height: 25px;
+            font-size: 12px;
+            text-transform: uppercase;
+            display: inline-block;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 25px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0);
+        }
+
+            .calendar-square:hover {
+                border: 1px solid #999;
+            }
+
+            .calendar-square.selected {
+                background-color: #0094ff;
+                color: #fff;
+            }
+
+        [gem-calendar-header] {
+            height: 25px;
+            line-height: 25px;
+            background-color: #999;
+            color: #fff;
+        }
+
+        [gem-calendar-week] {
+            position: relative;
+            width: 100%;
+            height: 25px;
+        }
+
+            [gem-calendar-week] > * {
+                position: absolute;
+            }
+
+                [gem-calendar-week] > *:nth-child(1) {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+
+                [gem-calendar-week] > *:nth-child(2) {
+                    position: absolute;
+                    top: 0;
+                    left: 14%;
+                }
+
+                [gem-calendar-week] > *:nth-child(3) {
+                    position: absolute;
+                    top: 0;
+                    left: 29%;
+                }
+
+                [gem-calendar-week] > *:nth-child(4) {
+                    position: absolute;
+                    top: 0;
+                    left: 43%;
+                }
+
+                [gem-calendar-week] > *:nth-child(5) {
+                    position: absolute;
+                    top: 0;
+                    left: 58%;
+                }
+
+                [gem-calendar-week] > *:nth-child(6) {
+                    position: absolute;
+                    top: 0;
+                    left: 72%;
+                }
+
+                [gem-calendar-week] > *:nth-child(7) {
+                    position: absolute;
+                    top: 0;
+                    left: 87%;
+                }
+    </style>
+    <div style="position:relative;width:100%;height:100%;">
+        <div gem-calendar-actions>
+            <div gem-calendar-month>
+                <select tag="month" class="gem-input" style="width:100%;">
+                    <option value="0">January</option>
+                    <option value="1">February</option>
+                    <option value="2">March</option>
+                    <option value="3">April</option>
+                    <option value="4">May</option>
+                    <option value="5">June</option>
+                    <option value="6">July</option>
+                    <option value="7">August</option>
+                    <option value="8">September</option>
+                    <option value="9">October</option>
+                    <option value="10">November</option>
+                    <option value="11">December</option>
+                </select>
+            </div>
+            <div gem-calendar-year>
+                <input tag="year" class="gem-input" style="width:100%;" />
+            </div>
+        </div>
+        <div gem-calendar-display class="gem-inset gem-tab-content">
+            <div gem-calendar-header gem-calendar-week>
+                <div class="calendar-square">S</div>
+                <div class="calendar-square">M</div>
+                <div class="calendar-square">T</div>
+                <div class="calendar-square">W</div>
+                <div class="calendar-square">T</div>
+                <div class="calendar-square">F</div>
+                <div class="calendar-square">S</div>
+            </div>
+            <div tag="dates">
+                <div gem-calendar-week tag="first-week">
+                    <div tag="0" class="calendar-square"></div>
+                    <div tag="1" class="calendar-square"></div>
+                    <div tag="2" class="calendar-square"></div>
+                    <div tag="3" class="calendar-square"></div>
+                    <div tag="4" class="calendar-square"></div>
+                    <div tag="5" class="calendar-square"></div>
+                    <div tag="6" class="calendar-square"></div>
+                </div>
+                <div gem-calendar-week tag="second-week">
+                    <div tag="7" class="calendar-square"></div>
+                    <div tag="8" class="calendar-square"></div>
+                    <div tag="9" class="calendar-square"></div>
+                    <div tag="10" class="calendar-square"></div>
+                    <div tag="11" class="calendar-square"></div>
+                    <div tag="12" class="calendar-square"></div>
+                    <div tag="13" class="calendar-square"></div>
+                </div>
+                <div gem-calendar-week tag="third-week">
+                    <div tag="14" class="calendar-square"></div>
+                    <div tag="15" class="calendar-square"></div>
+                    <div tag="16" class="calendar-square"></div>
+                    <div tag="17" class="calendar-square"></div>
+                    <div tag="18" class="calendar-square"></div>
+                    <div tag="19" class="calendar-square"></div>
+                    <div tag="20" class="calendar-square"></div>
+                </div>
+                <div gem-calendar-week tag="fourth-week">
+                    <div tag="21" class="calendar-square"></div>
+                    <div tag="22" class="calendar-square"></div>
+                    <div tag="23" class="calendar-square"></div>
+                    <div tag="24" class="calendar-square"></div>
+                    <div tag="25" class="calendar-square"></div>
+                    <div tag="26" class="calendar-square"></div>
+                    <div tag="27" class="calendar-square"></div>
+                </div>
+                <div gem-calendar-week tag="fifth-week">
+                    <div tag="28" class="calendar-square"></div>
+                    <div tag="29" class="calendar-square"></div>
+                    <div tag="30" class="calendar-square"></div>
+                    <div tag="31" class="calendar-square"></div>
+                    <div tag="32" class="calendar-square"></div>
+                    <div tag="33" class="calendar-square"></div>
+                    <div tag="34" class="calendar-square"></div>
+                </div>
+                <div gem-calendar-week tag="six-week">
+                    <div tag="35" class="calendar-square"></div>
+                    <div tag="36" class="calendar-square"></div>
+                    <div tag="37" class="calendar-square"></div>
+                    <div tag="38" class="calendar-square"></div>
+                    <div tag="39" class="calendar-square"></div>
+                    <div tag="40" class="calendar-square"></div>
+                    <div tag="41" class="calendar-square"></div>
+                </div>
+            </div>
+        </div>
+        <button style="position:absolute;bottom:0;left:0;width:100%;" class="gem-button" tag="select">Select</button>
+    </div>
+</div>

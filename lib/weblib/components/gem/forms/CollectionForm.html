@@ -1,0 +1,88 @@
+﻿<div collection-form controller="components.gem.forms.CollectionForm">
+    <style component="css-material-icons"></style>
+    <style component="./../Theme.html"></style>
+    <style component="css-helpers"></style>
+    <style>
+        [collection-form] {
+            position: relative;
+            box-sizing: border-box;
+            padding: 15px;
+        }
+
+        [collection-form-container] {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        [collection-form-table] {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            right: 142px;
+            bottom: 0;
+        }
+
+            [collection-form-table].search-only {
+                right: 0;
+            }
+
+        [collection-form-actions] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 142px;
+            height: 100%;
+            text-align: right;
+        }
+
+        [collection-form-top-actions] > .hide {
+            margin-bottom: 0;
+        }
+
+        [collection-form-top-actions] > * {
+            margin: 0;
+            margin-bottom: 15px;
+        }
+
+        [collection-form-search-area] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 142px;
+            height: 45px;
+        }
+
+            [collection-form-search-area].search-only {
+                right: 0px;
+            }
+    </style>
+    <div collection-form-container>
+        <div tag="search-area" collection-form-search-area>
+            <div style="position:absolute;top:0;left:0;right:45px;">
+                <input tag="search" type="text" class="gem-input" style="width:100%;" />
+            </div>
+            <div style="text-align: center; width: 40px; height: 40px; line-height: 40px; position: absolute; top: 0; right: 0; ">
+                <i class="material-icons" style="font-size: 30px;">search</i>
+            </div>
+        </div>
+        <div style="position:absolute;top:55px;left:0;bottom:0;right:0;">
+            <div tag="table" collection-form-table component="./Table.html">
+
+            </div>
+            <div collection-form-actions>
+                <div collection-form-top-actions style="position:absolute;top:0;right:0;">
+                    <p>
+                        <button tag="add" class="gem-button">Add</button>
+                    </p>
+                    <p>
+                        <button tag="edit" disabled class="gem-button secondary">Edit</button>
+                    </p>
+                    <p>
+                        <button tag="delete" disabled class="gem-button secondary">Delete</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

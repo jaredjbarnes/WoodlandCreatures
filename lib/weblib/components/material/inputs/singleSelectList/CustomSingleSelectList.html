@@ -1,0 +1,37 @@
+﻿<div custom-single-select-list controller="components.material.inputs.singleSelectList.CustomSingleSelectList">
+    <style component="css-helpers"></style>
+    <div class="relative fill-parent overflow-hidden" style="display: table;">
+        <div tag="search" style="display: table-row;">
+            <embed />
+        </div>
+        <div style="position: relative; display: table-row; height: 100%;">
+            <div class="fill-parent relative">
+                <div tag="state-manager" component="state-manager" class="absolute-fill-parent">
+                    <div name="pre-search" class="absolute-fill-parent">
+                        <div class="text-info">Type to begin searching</div>
+                    </div>
+                    <div name="loading" class="absolute-fill-parent">
+                        <div tag="preloader-line" component="preloader-line"></div>
+                    </div>
+                    <div name="results" class="absolute-fill-parent">
+                        <div tag="list"
+                             component="ui-collection"
+                             controller="components.material.layouts.List"
+                             item-height="48"
+                             padding-top="8"
+                             item-component="./SingleSelectItem.html"
+                             class="fill-parent"
+                             style="outline: 0">
+                        </div>
+                    </div>
+                    <div name="error" class="absolute-fill-parent">
+                        <div tag="error-message" class="text-danger"></div>
+                    </div>
+                    <div name="no-results" class="absolute-fill-parent">
+                        <div class="text-info">No Results Found</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

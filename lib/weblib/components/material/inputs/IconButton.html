@@ -1,0 +1,32 @@
+﻿<div icon-button controller="components.material.inputs.IconButton" unselectable>
+    <style component="css-help"></style>
+    <style>
+        [icon-button] {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+
+        [icon-button-background] {
+            opacity: 0;
+            background-color: rgba(0,0,0,0.2);
+            width: 2em;
+            height: 2em;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        [icon-button][light-theme] [icon-button-background] {
+            background-color: rgba(255,255,255,0.2);
+        }
+    </style>
+    <div class="absolute-bullseye">
+        <div icon-button-background tag="icon-background"></div>
+    </div>
+    <div class="absolute-bullseye" style="display: inline-block; z-index: 2; width: 1em;">
+        <embed />
+    </div>
+    <div style="display: inline-block; width: 1em;">&nbsp;</div>
+</div>

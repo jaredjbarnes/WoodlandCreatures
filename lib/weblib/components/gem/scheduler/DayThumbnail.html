@@ -1,0 +1,111 @@
+﻿<div gem-scheduler-day-thumbnail controller="components.gem.scheduler.DayThumbnail">
+    <style component="css-material-icons"></style>
+    <style component="css-helpers"></style>
+    <style>
+        [gem-scheduler-day-thumbnail] {
+            position: relative;
+            font-size: 12px;
+        }
+
+        [gem-scheduler-day-thumbnail-date] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 18%;
+            width: 100%;
+        }
+
+            [gem-scheduler-day-thumbnail-date] span {
+                background-color: rgba(0,0,0,0.45);
+                width: auto;
+                color: #fff;
+            }
+
+        [gem-scheduler-day-thumbnail-events] {
+            position: absolute;
+            top: 20%;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+            [gem-scheduler-day-thumbnail-events] > div {
+                height: 25%;
+                width: 100%;
+                box-sizing: border-box;
+                margin-top: 2px;
+            }
+
+        .gem-circle-button {
+            background-color: #fff;
+            width: 37px;
+            height: 37px;
+            border-radius: 50%;
+            box-shadow: 1px 2px 5px rgba(0,0,0,0.4);
+            text-align: center;
+            line-height: 37px;
+        }
+
+        [gem-scheduler-add-event] {
+            position: absolute;
+            bottom: 10%;
+            right: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            color: rgba(255,255,255, 0.8);
+            background-color: rgb(88, 163, 255);
+        }
+
+        [gem-scheduler-edit-event] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            font-size: 16px;
+            color: rgba(255,255,255, 0.8);
+            background-color: #e88f4f;
+        }
+
+        [gem-scheduler-delete-event] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            font-size: 16px;
+            color: rgba(255,255,255, 0.8);
+            background-color: rgb(169, 0, 0);
+        }
+
+        [gem-scheduler-close-event] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            font-size: 16px;
+            color: rgba(0, 0, 0,0.8);
+            background-color: rgb(255, 255, 255);
+        }
+
+
+        .gem-circle-button:hover {
+            box-shadow: 2px 5px 10px rgba(0,0,0,0.3);
+        }
+    </style>
+    <div tag="date-header" gem-scheduler-day-thumbnail-date>
+        <div tag="day-of-the-month"></div>
+    </div>
+    <div tag="events-container" gem-scheduler-day-thumbnail-events>
+        <div tag="0"></div>
+        <div tag="1"></div>
+        <div tag="2"></div>
+        <div tag="3"></div>
+    </div>
+    <div tag="select-menu" unselectable class="hide" style="width: 40px; height: 40px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); ">
+        <div style="position: relative; top: 20px; left: 0; ">
+            <div tag="close-select-button" unselectable gem-scheduler-close-event class="material-icons gem-circle-button">&#xE5CD;</div>
+            <div tag="delete-button" unselectable gem-scheduler-delete-event class="material-icons gem-circle-button">&#xE872;</div>
+            <div tag="edit-button" unselectable gem-scheduler-edit-event class="material-icons gem-circle-button">&#xE150;</div>
+        </div>
+    </div>
+    <div tag="add-button" gem-scheduler-add-event class="hide material-icons gem-circle-button">&#xE145;</div>
+</div>

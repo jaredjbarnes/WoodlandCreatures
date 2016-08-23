@@ -1,0 +1,47 @@
+﻿<div ui-checkbox controller="components.ui.inputs.UICheckbox">
+    <style type="text/css">
+        [ui-checkbox] {
+            display: inline-block;
+            cursor: pointer;
+            line-height: normal;
+        }
+
+        [ui-checkbox] > [tag="table"] {
+            display: table;
+        }
+
+        [ui-checkbox] > [tag="table"] > div {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        [ui-checkbox] > [tag="table"] > div > div {
+            position: relative;
+            font-size: 1.3em;
+            width: 1em;
+            margin: 0;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        [ui-checkbox] > [tag="table"] > [tag="label-before"] {
+            padding-right: 12px;
+        }
+
+        [ui-checkbox] > [tag="table"] > [tag="label-after"] {
+            padding-left: 12px;
+        }
+
+        [ui-checkbox].input-block-level > [tag="table"] > [tag="label-after"], [ui-checkbox].input-block-level > [tag="table"] > [tag="label-before"] {
+            width: 100%;
+        }
+    </style>
+    <div tag="table">
+        <div tag="label-before" class="hide"></div>
+        <div>
+            <div tag="square-blank" ui-icon image="square-blank"></div>
+            <div tag="ok" ui-icon image="ok" class="hide"></div>
+        </div>
+        <div tag="label-after" class="hide"></div>
+    </div>
+</div>

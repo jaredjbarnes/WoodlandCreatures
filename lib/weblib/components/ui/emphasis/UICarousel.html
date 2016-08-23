@@ -1,0 +1,70 @@
+﻿<div ui-carousel controller="components.ui.emphasis.UICarousel">
+    <style type="text/css">
+        [ui-carousel] {
+            position: relative;
+            overflow: hidden;
+        }
+        [ui-carousel] > [tag="carousel"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        [ui-carousel] [tag="carousel"] > [tag="carousel-inner"] {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        [ui-carousel] [tag="carousel"] > [tag="carousel-inner"] > div.carousel-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        [ui-carousel] [tag="carousel"] > [tag="carousel-inner"] > div.carousel-item.current {
+            z-index: 2;
+        }
+        [ui-carousel] [tag="carousel"] > [tag="carousel-inner"] > div.carousel-item.previous {
+            left: -100%;
+            z-index: 3;
+        }
+        [ui-carousel] [tag="carousel"] > [tag="carousel-inner"] > div.carousel-item.next {
+            left: 100%;
+            z-index: 3;
+        }
+        [ui-carousel] [tag="carousel"] > [tag="carousel-left"], [ui-carousel] [tag="carousel"] > [tag="carousel-right"] {
+            position: absolute;
+            top: 50%;
+            margin-top: -18px;
+            border: none;
+            font-size: 25px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            padding: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            text-shadow: 0 1px 0 #ffffff;
+            color: #777777;
+            box-shadow: 0 0 5px rgba(0,0,0,0.4);
+            z-index: 2;
+        }
+        [ui-carousel] [tag="carousel"] > [tag="carousel-left"]:hover, [ui-carousel] [tag="carousel"] > [tag="carousel-right"]:hover {
+            color: #333;
+        }
+
+        [ui-carousel] [tag="carousel"] > [tag="carousel-left"] {
+            left: -4px;
+        }
+        [ui-carousel] [tag="carousel"] > [tag="carousel-right"] {
+            right: -4px;
+        }
+    </style>
+    <div tag="carousel" class="well well-small fill-parent"> 
+        <div tag="carousel-inner" class="fill-parent"><embed /></div> 
+        <span tag="carousel-left" class="hide"><span ui-icon image="chevron-left"></span></span>
+        <span tag="carousel-right" class="hide"><span ui-icon image="chevron-right"></span></span>
+    </div>
+</div>

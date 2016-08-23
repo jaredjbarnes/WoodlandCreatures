@@ -1,0 +1,75 @@
+﻿<div ui-single-select controller="components.ui.inputs.UISingleSelect">
+    <style>
+        [ui-single-select] {
+            position: relative;
+            box-sizing: border-box;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            min-height: 34px;
+        }
+
+        [ui-single-select] div {
+            box-sizing: border-box;
+        }
+
+        [ui-single-select] > div {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        [ui-single-select] .search-input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        [ui-single-select] > div > [tag='placeholder'] {
+            cursor: pointer;
+            display: table;
+            background-color: #fff;
+            min-height: 32px;
+        }
+
+        [ui-single-select] > div > [tag='dropdown'] {
+            position: absolute;
+            z-index: 1000;
+            width: 100%;
+            height: 0px;
+            overflow: hidden;
+            background-color: #efefef;
+            box-sizing: border-box;
+        }
+
+        [ui-single-select] [tag='placeholder'] > div {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 6px 12px;
+            box-sizing: border-box;
+        }
+    </style>
+    <div>
+        <div tag="componentContainer" style="display:none;">
+            <embed select="[component]" />
+        </div>
+        <div class="fill-parent" tag="placeholder" unselectable="on">
+            <div tag="placeholderName" unselectable="on">--Select--</div><div class="text-center" style="width:28px;"><span ui-icon image="caret-down"></span></div>
+        </div>
+        <div tag="dropdown">
+            <div class="fill-parent" tag="navigation" component="ui-navigation">
+                <div tag="searchContainer" style="height:auto;width:100%;background-color:#fff;">
+                    <div ui-join class="input-block-level">
+                        <input tag="search" class="search-input" type="text" />
+                        <span ui-icon class="add-on" image="magnifier"></span>
+                    </div>
+                </div>
+                <div tag="resultsContainer" class="fill-parent" style="overflow-y:scroll;">
+                    <div tag="loading" style="display:none;height:35px;line-height:35px;padding-left:5px;">Loading...</div>
+                    <div tag="noResults" style="display:none;height:35px;line-height:35px;padding-left:5px;">No results. Please search again.</div>
+                    <div tag="results">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

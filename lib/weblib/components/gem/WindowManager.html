@@ -1,0 +1,33 @@
+﻿<div window-manager controller="components.gem.WindowManager">
+    <style component="css-helpers"></style>
+    <style>
+        [window-manager] {
+            position: relative;
+            z-index: 1;
+        }
+
+        [window-manager-container] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        [window-manager-veil] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+            opacity: 0.5;
+        }
+    </style>
+    <div class="absolute-fill-parent" style="z-index: 1;">
+        <embed />
+    </div>
+    <div tag="window-container" window-manager-container>
+        <div tag="veil" window-manager-veil class="hide"></div>
+    </div>
+</div>

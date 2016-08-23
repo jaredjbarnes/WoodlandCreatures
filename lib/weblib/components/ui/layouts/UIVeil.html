@@ -1,0 +1,21 @@
+﻿<div ui-veil controller="components.ui.layouts.UIVeil">
+    <style>
+        [ui-veil] {
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            background-color: rgba(0,0,0,0.5);
+            filter: alpha(opacity=50);
+        }
+
+        [ui-veil] [tag="veil-content-container"] {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <div shadow-root>
+        <div tag="veil-content-container">
+            <embed />
+        </div>
+    </div>
+</div>

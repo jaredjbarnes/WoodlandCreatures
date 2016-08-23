@@ -1,0 +1,58 @@
+﻿<div ui-map controller="components.ui.widgets.UIMap">
+    <!--
+        It will accept one or more Opportunities, read the addresses from them,
+        and route from the device's current location to the opportunities.
+        -->
+    <style>
+        [ui-map] {
+            background-color: #dcdce2; /*this should match the google maps background color set in code*/
+        }
+
+        [ui-map] h3 {
+            color: #00457C;
+            padding: 0;
+            margin: 0;
+        }
+
+        [ui-map] img {
+            max-width: initial;
+        }
+
+        [ui-map] [tag="map-canvas"] {
+            height: 100%;
+        }
+
+        [ui-map] [tag="directions-panel"] {
+            position: absolute;
+            top: 10%;
+            width: 280px;
+            height: 80%;
+            overflow: auto;
+            border: 1px solid black;
+            background-color: rgba(198,198,198,0.9);
+            right: 0px;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        [ui-map] [tag="directions-panel"].hide {
+            display: none;
+        }
+             
+            
+        [ui-map] [tag="Loading"] {
+            height: 100%;
+            text-align: center;
+            display: flex; /*ie8 will show at the top, not a big deal*/
+            justify-content: center;
+            align-content: center;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+    </style>
+
+    <div tag="map-canvas">
+        <div tag="Loading"><embed /></div>
+    </div>
+    <div tag="directions-panel" class="hide"></div>
+</div>

@@ -1,0 +1,33 @@
+﻿<div network-error-state controller="components.material.login.NetworkErrorState">
+    <style component="css-helpers"></style>
+    <style>
+        [network-error-state] {
+            height: 194px;
+            position: relative;
+        }
+
+        [network-error-state-retry] {
+            position: absolute !important;
+            bottom: 0;
+        }
+
+        [network-error-state-table] {
+            height: 150px;
+            display: table;
+            width: 100%;
+        }
+
+        [network-error-state-table-cell] {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+    <div network-error-state-table>
+        <div network-error-state-table-cell>
+            <div class="text-headline text-center no-margin">
+                Network error, try again later.
+            </div>
+        </div>
+    </div>
+    <div network-error-state-retry tag="retry-button" component="raised-button" light-theme class="text-center input-block-level text-light background-primary extra-padding-small">Try Again</div>
+</div>

@@ -1,0 +1,173 @@
+﻿<div ui-date-picker controller="components.ui.widgets.UIDatePicker">
+    <style>
+        [ui-date-picker] {
+            width: 100%;
+            height: 100%;
+            background: #fafafa;
+            overflow: hidden;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: table;
+            text-align: center;
+            overflow: auto;
+            padding: 15px;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] {
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-header"] {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-header"] > div {
+            font-weight: 300;
+            font-size: 26px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] {
+            position: relative;
+            display: inline-block;
+            background-color: #fff;
+            -webkit-box-shadow: inset 0 1px 0 #fff;
+            -moz-box-shadow: inset 0 1px 0 #fff;
+            box-shadow: inset 0 1px 0 #fff;
+            width: 100%;
+            padding: 10px 0;
+            height: 300px;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-months"], [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-years"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            z-index: 3;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-months"].behind, [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-years"].behind {
+            z-index: 2;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-months"] > div, [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-years"] > div {
+            float: left;
+            width: 25%;
+            height: 33.33333333%;
+            margin: 0;
+            padding: 0;
+            color: #777;
+            text-shadow: 0 1px 0 #ffffff;
+            font-size: 20px;
+            line-height: 20px;
+            vertical-align: middle;
+            border: none;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-years"] > div.smaller {
+            font-size: 14px;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-months"] > div:before, [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-years"] > div:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -0.25em; /* Adjusts for spacing */
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-day-of-week"] {
+            overflow: hidden;
+            width: 100%;
+            height: 40px;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-day-of-week"] > div {
+            display: inline-block;
+            float: left;
+            font-size: 12px;
+            line-height: 40px;
+            width: 14.285714%;
+            height: auto;
+            text-shadow: 0 1px 0 #ffffff;
+            letter-spacing: 0.15em;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] > [tag="calendar-table"] > .calendar-cell {
+            position: relative;
+            display: inline-block;
+            float: left;
+            width: 14.285714%;
+            height: 40px;
+            line-height: 40px;
+            font-size: 18px;
+            text-shadow: 0 1px 0 #ffffff;
+            padding: 0;
+            margin: 0;
+            color: #777;
+            border: none;
+        }
+
+        [ui-date-picker] > [shadow-root] > [tag="calendar-container"] > [tag="calendar"] > [tag="calendar-inner"] .text-primary {
+            font-weight: bold;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+        }
+
+        [ui-date-picker] > [shadow-root] [ui-button][disabled] {
+            background-color: inherit;
+        }
+
+        [ui-date-picker] > [shadow-root] [ui-button]:empty {
+            cursor: default;
+        }
+    </style>
+    <div shadow-root>
+        <div tag="calendar-container">
+            <div tag="calendar">
+                <div tag="calendar-header" class="text-right">
+                    <div tag="calendar-month" ui-button class="primary extra-margin-right-small">January</div>
+                    <div tag="calendar-year" ui-button class="primary">2010</div>
+                </div>
+                <div tag="calendar-inner">
+                    <div tag="calendar-day-of-week">
+                        <div>SUN</div>
+                        <div>MON</div>
+                        <div>TUE</div>
+                        <div>WED</div>
+                        <div>THU</div>
+                        <div>FRI</div>
+                        <div>SAT</div>
+                    </div>
+                    <div tag="calendar-table"></div>
+                    <div tag="calendar-months" class="hide">
+                        <div ui-button class="link">JAN</div>
+                        <div ui-button class="link">FEB</div>
+                        <div ui-button class="link">MAR</div>
+                        <div ui-button class="link">APR</div>
+                        <div ui-button class="link">MAY</div>
+                        <div ui-button class="link">JUN</div>
+                        <div ui-button class="link">JUL</div>
+                        <div ui-button class="link">AUG</div>
+                        <div ui-button class="link">SEP</div>
+                        <div ui-button class="link">OCT</div>
+                        <div ui-button class="link">NOV</div>
+                        <div ui-button class="link">DEC</div>
+                    </div>
+                    <div tag="calendar-years" class="hide"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

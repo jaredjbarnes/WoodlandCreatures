@@ -1,0 +1,182 @@
+﻿<div gem-scheduler controller="components.gem.scheduler.Scheduler">
+    <style component="./../Theme.html">
+    </style>
+    <style>
+        [gem-scheduler] {
+            position: relative;
+        }
+
+        [gem-scheduler-sidebar] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #f2f2f2;
+        }
+
+        [gem-scheduler-content] {
+            position: absolute;
+            top: 0;
+            left: 250px;
+            right: 0;
+            bottom: 0;
+            background-color: #fff;
+        }
+
+        /*[gem-scheduler-sidebar-header] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #114a7c;
+        }*/
+
+        [gem-scheduler-sidebar-date-selector] {
+            position: absolute;
+            top: 0px;
+            left: 0;
+            width: 100%;
+            height: 0px;
+            overflow: hidden;
+        }
+
+        [gem-scheduler-sidebar-event-selector] {
+            position: absolute;
+            top: 0px;
+            left: 0;
+            width: 100%;
+            bottom: 0;
+        }
+
+        [gem-scheduler-sidebar-event-selector-header] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #bfc0c1;
+            line-height: 50px;
+            font-weight: bold;
+            box-sizing: border-box;
+            padding-left: 16px;
+            color: #114a7c;
+        }
+
+        [gem-scheduler-sidebar-event-selector-content] {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+            [gem-scheduler-sidebar-event-selector-content] > div {
+                height: 40px;
+                width: 100%;
+                line-height: 40px;
+                box-sizing: border-box;
+                padding-left: 32px;
+                font-size: 16px;
+            }
+
+                [gem-scheduler-sidebar-event-selector-content] > div > input {
+                    margin-right: 8px;
+                }
+
+        [gem-scheduler-content-header] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #1966af;
+        }
+
+        [gem-scheduler-content-content] {
+            position: absolute !important;
+            top: 50px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        [gem-scheduler-content-content] {
+            position: absolute !important;
+            top: 50px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        [gem-scheduler-content-view] {
+            padding: 15px;
+        }
+
+        .gem-scheduler-header-button {
+            width: 100px;
+            height: 50px;
+            line-height: 50px;
+            color: rgba(255,255,255, 0.8);
+            text-align: center;
+            cursor: pointer;
+        }
+
+            .gem-scheduler-header-button:hover {
+                width: 100px;
+                height: 50px;
+                line-height: 50px;
+                color: rgba(255,255,255, 0.8);
+                text-align: center;
+                background-color: #27659b;
+            }
+
+            .gem-scheduler-header-button.selected {
+                width: 100px;
+                height: 50px;
+                line-height: 50px;
+                background-color: #114a7c;
+            }
+
+        [gem-scheduler-content-header-day] {
+            position: absolute;
+            top: 0;
+            right: 100px;
+        }
+
+        [gem-scheduler-content-header-month] {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
+    <div gem-scheduler-sidebar>
+        <div gem-scheduler-sidebar-header>
+            <div tag="date-selector" gem-scheduler-sidebar-date-selector></div>
+            <div tag="event-selector" gem-scheduler-sidebar-event-selector>
+                <div gem-scheduler-sidebar-event-selector-header>
+                    Events
+                </div>
+                <div tag="events" gem-scheduler-sidebar-event-selector-content>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div gem-scheduler-content>
+        <div gem-scheduler-content-header>
+            <div tag="day-button" class="gem-scheduler-header-button" gem-scheduler-content-header-day>Day</div>
+            <div tag="month-button" class="gem-scheduler-header-button selected" gem-scheduler-content-header-month>Month</div>
+        </div>
+        <div tag="overview-state-manager" gem-scheduler-content-content component="absolute-state-manager">
+            <div name="month-overview" gem-scheduler-content-view>
+                <div tag="month-overview" class="fill-parent" component="./MonthOverview.html"></div>
+            </div>
+            <div name="daily-overview" gem-scheduler-content-view>
+                <div tag="daily-overview" class="fill-parent" component="./DailyOverview.html"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿<div ui-preloader-view>
+    <style type="text/css">
+        [ui-preloader-view] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 5;
+            width: 100%;
+            height: 100%;
+        }
+        [ui-preloader-view-table] {
+            display: table;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        [ui-preloader-view-table-cell]{
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+    </style>
+    <div ui-preloader-view-table>
+        <div ui-preloader-view-table-cell>
+            <div component="ui-preloader-circle"></div>
+        </div>
+    </div>
+</div>

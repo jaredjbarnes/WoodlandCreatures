@@ -1,0 +1,31 @@
+﻿<div confirm controller="components.gem.Confirm">
+    <style component="./Theme.html"></style>
+    <style>
+        [confirm] {
+            position: relative;
+        }
+
+        [confirm-buttons] {
+            position: absolute;
+            right: 15px;
+            height: 35px;
+            bottom: 15px;
+            left: 15px;
+            text-align: center;
+        }
+
+        [add-form-buttons] > button {
+            margin-left: 15px;
+        }
+
+        [confirm-messages] {
+            box-sizing: border-box;
+            padding: 15px;
+        }
+    </style>
+    <div confirm-messages tag="message"></div>
+    <div confirm-buttons>
+        <button tag="yes" class="gem-button">Yes</button>
+        <button tag="no" class="gem-button secondary" style="margin-left: 15px;">No</button>
+    </div>
+</div>

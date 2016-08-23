@@ -1,0 +1,10 @@
+﻿<div controller="components.material.login.LoginFormState">
+    <div tag="state-manager" component="ui-state-manager">
+        <div name="empty" initial></div>
+        <div tag="login-input-state" name="login-input-state" component="lazy-load-state" lazy-load="./LoginInputState.html"></div>
+        <div tag="logging-in-state" name="logging-in-state" component="./LoggingInState.html"></div>
+        <div tag="multi-factor-input" name="multi-factor-input" component="lazy-load-state" lazy-load="./MultiFactorInputState.html"></div>
+        <div tag="network-error" name="network-error" component="./NetworkErrorState.html"></div>
+        <div tag="invalid-credentials" name="invalid-credentials" component="lazy-load-state" lazy-load="./InvalidCredentialErrorState.html"></div>
+    </div>
+</div>

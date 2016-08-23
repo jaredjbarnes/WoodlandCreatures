@@ -1,0 +1,73 @@
+﻿<div test-runner-results controller="components.tester.TestRunnerResults">
+    <style>
+        [test-runner-results] {
+            width: 100%;
+            height: 100%;
+        }
+
+        [test-runner-results-header] {
+            height: 60px;
+            box-sizing: border-box;
+            border-bottom: solid 1px #ccc;
+            background-color: #fff;
+            line-height: 60px;
+            font-size: 16px;
+            color: #00457c;
+        }
+
+        [test-runner-results-content] {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .failed-test {
+            color: #f00;
+        }
+
+        .passed-test {
+            color: #008301;
+        }
+
+        .test-runner-results {
+            box-sizing: border-box;
+            padding: 8px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            border-bottom: 2px solid #ccc;
+        }
+    </style>
+    <div tag="navigation" component="ui-navigation" header-height="60" class="fill-parent">
+        <div test-runner-results-header>
+            <div component="ui-three-column-header">
+                <span></span>
+                <span style="font-size:20px;">
+                    Results
+                </span>
+                <span tag="done" ui-button class="primary" style="margin-right:12px;">Done</span>
+            </div>
+        </div>
+        <div test-runner-results-content>
+
+            <table style="width:100%;height:100%;margin:0;">
+                <tbody>
+                    <tr>
+                        <td style="width:50%;height:100%;vertical-align:top;">
+                            <div tag="passed-tests" class="test-runner-results">
+
+                            </div>
+                        </td>
+                        <td style="width:50%;height:100%;vertical-align:top;">
+                            <div tag="failed-tests" class="test-runner-results">
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

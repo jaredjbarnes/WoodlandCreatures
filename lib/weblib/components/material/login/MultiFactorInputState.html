@@ -1,0 +1,40 @@
+﻿<div multifactor-input-state controller="components.material.login.MultiFactorInputState" apply="components.material.inputs.SubmitFormBehavior">
+    <style component="css-helpers"></style>
+    <style>
+        [multifactor-input-state] {
+            height: 194px;
+            position: relative;
+        }
+
+        [multifactor-input-state-submit] {
+            position: absolute !important;
+            bottom: 0;
+        }
+
+        [multifactor-input-state-table] {
+            height: 150px;
+            display: table;
+            width: 100%;
+        }
+
+        [multifactor-input-state-table-cell] {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        [multifactor-input-logo] {
+            width: 100%;
+            padding-top: 7px;
+        }
+    </style>
+    <div multifactor-input-state-table>
+        <div multifactor-input-state-table-cell>
+            <div component="group">
+                <img multifactor-input-logo src="./Google-Authenticator-icon.png" class="text-center extra-padding-right" span="3">
+                <div tag="token-input" component="input" label="Google Authenicator Token" name="token" apply="components.material.inputs.InputRequiredBehavior" tabindex="1" span="9"></div>
+            </div>
+        </div>
+    </div>
+    <div tag="submit-button" submit multifactor-input-state-submit component="raised-button" light-theme class="text-center input-block-level text-light background-primary extra-padding-small extra-margin-top"
+         controller="components.material.animations.HorizontalShakeBehavior" tabindex="2">SUBMIT</div>
+</div>

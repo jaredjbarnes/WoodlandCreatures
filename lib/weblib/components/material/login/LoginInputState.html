@@ -1,0 +1,17 @@
+﻿<div login-input-state controller="components.material.login.LoginInputState" apply="components.material.inputs.SubmitFormBehavior">
+    <style component="css-helpers"></style>
+    <style>
+        [login-input-state] {
+            width: 100%;
+            height: auto;
+        }
+
+        [login-input-state-username] {
+            padding-top: 5px;
+        }
+    </style>
+
+    <div login-input-state-username tag="username-input" component="input" label="Username" name="username" apply="components.material.inputs.InputRequiredBehavior" tabindex="1"></div>
+    <div tag="password-input" component="input" label="Password" password class="extra-padding-bottom" name="password" apply="components.material.inputs.InputRequiredBehavior" tabindex="2"></div>
+    <div tag="submit-button" submit login-input-state-button component="raised-button" light-theme class="text-center input-block-level text-light background-primary extra-padding-small" controller="components.material.animations.HorizontalShakeBehavior" tabindex="3">LOGIN</div>
+</div>

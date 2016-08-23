@@ -1,0 +1,19 @@
+﻿<div ui-collection controller="components.internetExplorer.ui.layouts.UICollection">
+    <style>
+        [ui-collection] {
+            overflow: auto;
+        }
+
+        [ui-collection-content] {
+            position: relative;
+            -webkit-transform: translate3d(0,0,0);
+            -webkit-backface-visibility: hidden;
+            transform: translate3d(0,0,0);
+            backface-visibility: hidden;
+            min-width: 100%;
+        }
+    </style>
+    <div ui-collection-content tag="content">
+        <embed />
+    </div>
+</div>

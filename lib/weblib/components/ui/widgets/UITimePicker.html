@@ -1,0 +1,388 @@
+﻿<div ui-time-picker controller="components.ui.widgets.UITimePicker">
+    <style>
+        [ui-time-picker] {
+            width: 100%;
+            height: 100%;
+            background: #fafafa;
+            overflow: hidden;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="time-container"] {
+            position: relative;
+            top: 0;
+            left: 0;
+            display: table;
+            float: left;
+            height: 100%;
+            width: 40%;
+            line-height: 60px;
+            text-align: center;
+            text-shadow: 0 1px 0 #ffffff;
+            z-index: 1;
+            letter-spacing: -0.06em;
+            font-size: 50px;
+            background: #fafafa;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="time-container"] > [tag="time"] {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="time-container"] > [tag="time"] span.keypad-first > span.second-number {
+            color: #777777 !important;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="time-container"] > [tag="time"] span.keypad-second > span.first-number {
+            color: #777777 !important;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="time-container"] > [tag="time"] > span {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            color: #777777;
+            border: none;
+            line-height: 60px;
+            vertical-align: baseline;
+            margin: 0;
+            font-size: inherit;
+            padding: 0;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="time-container"] > [tag="time"] > [tag="period"] {
+            font-size: 25px;
+            letter-spacing: normal;
+            width: 38px;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            display: block;
+            width: 60%;
+            text-align: center;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            overflow: hidden;
+            display: block;
+            background-color: #fff;
+            border-radius: 50%;
+            -webkit-box-shadow: inset 0 1px 0 #fff;
+            -moz-box-shadow: inset 0 1px 0 #fff;
+            box-shadow: inset 0 1px 0 #fff;
+            font-size: 36px;
+            width: 320px;
+            height: 320px;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"].transform-supported {
+            top: 50%;
+            left: 50%;
+            bottom: auto;
+            right: auto;
+            -webkit-transform: translate3d(-50%,-50%,0);
+            transform: translate3d(-50%,-50%,0);
+            display: block;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="keypad"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            background: #fafafa;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="keypad"] [ui-button-group] {
+            height: 25%;
+            border-collapse: collapse;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="keypad"] [ui-button] {
+            border: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            font-size: 36px;
+            padding: 0;
+            vertical-align: middle;
+            line-height: normal;
+            background-color: transparent;
+            color: #777777;
+        }
+
+
+        @media (max-width: 560px) {
+            [ui-time-picker] > [shadow-root] > [tag="time-container"] {
+                padding: 0;
+                top: 0;
+                width: 100%;
+                height: 80px;
+                line-height: 80px;
+                border: none;
+                display: block;
+            }
+
+            [ui-time-picker] > [shadow-root] > [tag="time-container"] > [tag="time"] {
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                line-height: 80px;
+                height: 80px;
+            }
+
+            [ui-time-picker] > [shadow-root] > [tag="clock-container"] {
+                position: absolute;
+                height: auto;
+                width: auto;
+                float: none;
+                top: 80px;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                display: block;
+                padding: 0;
+            }
+
+            [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="keypad"] {
+                top: 0;
+            }
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > div {
+            position: absolute;
+            font-size: inherit;
+            width: 60px;
+            height: 40px;
+            padding: 0;
+            margin: 0;
+            border: none;
+            line-height: 40px;
+            text-shadow: 0 1px 0 #ffffff;
+            color: #777;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .twelve {
+            top: 15px;
+            left: 50%;
+            margin-left: -30px;
+            z-index: 2;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .six {
+            bottom: 15px;
+            left: 50%;
+            margin-left: -30px;
+            z-index: 2;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .one {
+            top: 8%;
+            right: 27%;
+            margin-top: 2px;
+            margin-right: -2px;
+            text-align: right;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .eleven {
+            top: 8%;
+            left: 27%;
+            margin-top: 2px;
+            margin-left: -2px;
+            text-align: left;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .two {
+            top: 25%;
+            right: 8%;
+            margin-top: -5px;
+            margin-right: 9px;
+            text-align: right;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .ten {
+            top: 25%;
+            left: 8%;
+            margin-top: -5px;
+            margin-left: 9px;
+            text-align: left;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .three {
+            top: 50%;
+            right: 17px;
+            margin-top: -20px;
+            text-align: right;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .nine {
+            top: 50%;
+            left: 17px;
+            margin-top: -20px;
+            text-align: left;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .four {
+            bottom: 25%;
+            right: 8%;
+            margin-bottom: -5px;
+            margin-right: 9px;
+            text-align: right;
+        }
+
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .eight {
+            bottom: 25%;
+            left: 8%;
+            margin-bottom: -5px;
+            margin-left: 9px;
+            text-align: left;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .five {
+            bottom: 8%;
+            right: 27%;
+            margin-bottom: 2px;
+            margin-right: -2px;
+            text-align: right;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > .seven {
+            bottom: 8%;
+            left: 27%;
+            margin-bottom: 2px;
+            margin-left: -2px;
+            text-align: left;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > [tag="exact-time"] {
+            top: 50%;
+            left: 50%;
+            margin-left: -30px;
+            margin-top: -20px;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > div > span {
+            -webkit-transition: font-size 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+            transition: font-size 400ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+            -webkit-transform: translate3d(0px, 0px, 0px);
+            transform: translate3d(0px, 0px, 0px);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-perspective: 1000;
+            perspective: 1000;
+        }
+
+        [ui-time-picker] > [shadow-root] > [tag="clock-container"] > [tag="clock"] > [tag="exact-time"] > span {
+            line-height: inherit;
+        }
+
+        [ui-time-picker] > [shadow-root] [tag="clock-container"] > [tag="hr"], [ui-time-picker] > [shadow-root] [tag="clock-container"] > [tag="min"] {
+            position: absolute;
+            top: 15px;
+        }
+
+        [ui-time-picker] > [shadow-root] [tag="clock-container"] > [tag="hr"] {
+            left: 15px;
+        }
+
+        [ui-time-picker] > [shadow-root] [tag="clock-container"] > [tag="min"] {
+            right: 15px;
+        }
+
+        [ui-time-picker] > [shadow-root] [tag="clock-container"] > [tag="am"], [ui-time-picker] > [shadow-root] [tag="clock-container"] > [tag="pm"] {
+            position: absolute;
+            bottom: 15px;
+        }
+
+        [ui-time-picker] > [shadow-root] [tag="clock-container"] > [tag="am"] {
+            left: 15px;
+        }
+
+        [ui-time-picker] > [shadow-root] [tag="clock-container"] > [tag="pm"] {
+            right: 15px;
+        }
+
+        [ui-time-picker] > [shadow-root] [ui-button][disabled] {
+            background-color: inherit;
+        }
+    </style>
+    <div shadow-root>
+        <div tag="time-container">
+            <div tag="time">
+                <span ui-button tag="hours" class="link">12</span>
+                <span tag="minutes-separator">:</span>
+                <span ui-button tag="minutes" class="link"><span class="first-number">0</span><span class="second-number">0</span></span>
+                <span tag="seconds-separator" class="hide">:</span>
+                <span ui-button tag="seconds" class="link hide"><span class="first-number">0</span><span class="second-number">0</span></span>
+                <span ui-button tag="period" class="link">AM</span>
+            </div>
+        </div>
+        <div tag="clock-container">
+            <div tag="clock">
+                <div ui-button class="link twelve hours"><span>12</span></div>
+                <div ui-button class="link one hours"><span>1</span></div>
+                <div ui-button class="link two hours"><span>2</span></div>
+                <div ui-button class="link three hours"><span>3</span></div>
+                <div ui-button class="link four hours"><span>4</span></div>
+                <div ui-button class="link five hours"><span>5</span></div>
+                <div ui-button class="link six hours"><span>6</span></div>
+                <div ui-button class="link seven hours"><span>7</span></div>
+                <div ui-button class="link eight hours"><span>8</span></div>
+                <div ui-button class="link nine hours"><span>9</span></div>
+                <div ui-button class="link ten hours"><span>10</span></div>
+                <div ui-button class="link eleven hours"><span>11</span></div>
+                <div ui-button class="link twelve minutes-seconds invisible"><span>00</span></div>
+                <div ui-button class="link one minutes-seconds invisible"><span>05</span></div>
+                <div ui-button class="link two minutes-seconds invisible"><span>10</span></div>
+                <div ui-button class="link three minutes-seconds invisible"><span>15</span></div>
+                <div ui-button class="link four minutes-seconds invisible"><span>20</span></div>
+                <div ui-button class="link five minutes-seconds invisible"><span>25</span></div>
+                <div ui-button class="link six minutes-seconds invisible"><span>30</span></div>
+                <div ui-button class="link seven minutes-seconds invisible"><span>35</span></div>
+                <div ui-button class="link eight minutes-seconds invisible"><span>40</span></div>
+                <div ui-button class="link nine minutes-seconds invisible"><span>45</span></div>
+                <div ui-button class="link ten minutes-seconds invisible"><span>50</span></div>
+                <div ui-button class="link eleven minutes-seconds invisible"><span>55</span></div>
+                <div ui-button tag="exact-time" class="link invisible"><span ui-icon image="dial-pad" class="no-padding no-margin"></span></div>
+            </div>
+            <div tag="keypad" class="invisible">
+                <div ui-button-group class="input-block-level">
+                    <div ui-button>1</div>
+                    <div ui-button>2</div>
+                    <div ui-button>3</div>
+                </div>
+                <div ui-button-group class="input-block-level">
+                    <div ui-button>4</div>
+                    <div ui-button>5</div>
+                    <div ui-button class="second-only" disabled>6</div>
+                </div>
+                <div ui-button-group class="input-block-level">
+                    <div ui-button class="second-only" disabled>7</div>
+                    <div ui-button class="second-only" disabled>8</div>
+                    <div ui-button class="second-only" disabled>9</div>
+                </div>
+                <div ui-button-group class="input-block-level">
+                    <div ui-button>0</div>
+                </div>
+            </div>
+            <div ui-button tag="hr" class="primary">Hr.</div>
+            <div ui-button tag="min" class="primary">Min.</div>
+            <div ui-button tag="am" class="primary">AM</div>
+            <div ui-button tag="pm" class="primary">PM</div>
+        </div>
+    </div>
+</div>

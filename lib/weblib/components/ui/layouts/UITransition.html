@@ -1,0 +1,21 @@
+﻿<div ui-transition controller="components.ui.layouts.UITransition">
+    <style type="text/css">
+        [ui-transition], [ui-transition] > [tag="outer"], [ui-transition] > [tag="outer"] > [tag="inner"] {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        [ui-transition] > [tag="outer"] > [tag="inner"] > :first-child {
+            pointer-events: all;
+            visibility: visible;
+        }
+    </style>
+    <div tag="outer">
+        <div tag="inner">
+            <embed />
+        </div>
+    </div>
+</div>

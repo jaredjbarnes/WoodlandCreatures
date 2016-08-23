@@ -1,0 +1,33 @@
+﻿<div absolute-state-manager controller="components.material.states.AbsoluteStateManager">
+    <style>
+        [absolute-state-manager] {
+            position: relative;
+            overflow: hidden;
+        }
+
+            [absolute-state-manager] > * {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                visibility: hidden;
+                opacity: 0;
+            }
+
+            [absolute-state-manager] > .state-manager-off-stack {
+                visibility: hidden !important;
+                opacity: 0 !important;
+            }
+
+            [absolute-state-manager] > .state-manager-on-stack {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            [absolute-state-manager] > .state-manager-top-state {
+                position: absolute;
+            }
+    </style>
+    <embed />
+</div>

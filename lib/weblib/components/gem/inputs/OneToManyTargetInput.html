@@ -1,0 +1,56 @@
+﻿<div one-to-many-target-input controller="components.gem.inputs.OneToManyTargetInput">
+    <style component="css-material-icons"></style>
+    <style>
+        [one-to-many-target-input] {
+            box-sizing: border-box;
+        }
+
+        [one-to-many-target-input-view].gem-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 35px;
+            font-size: 18px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            line-height: 40px;
+        }
+
+
+        div[one-to-many-target-input-input] {
+            position: absolute;
+            top: 0;
+            left: 35px;
+            right: 125px;
+            bottom: 0;
+        }
+
+            div[one-to-many-target-input-input] > input {
+                line-height: 40px;
+                border-radius: 0;
+                border-right: 0;
+                border-left: 0;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+                cursor: pointer;
+            }
+
+        [one-to-many-target-input-change].gem-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 125px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+    </style>
+    <div tag="label"></div>
+    <div style="overflow: hidden; position: relative; border: 0;" class="gem-input">
+        <div one-to-many-target-input-input>
+            <input tag="input" class="gem-input fill-parent" />
+        </div>
+        <button tag="view" one-to-many-target-input-view class="gem-button"><i class="material-icons">&#xE873;</i></button>
+        <button tag="change" one-to-many-target-input-change class="gem-button">Change</button>
+    </div>
+    <div tag="error-message" class="gem-input-error-message"></div>
+</div>

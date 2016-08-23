@@ -1,0 +1,40 @@
+﻿<div one-to-many-collection-entity-form controller="components.gem.forms.OneToManyCollectionEntityForm">
+    <style component="./../Theme.html"></style>
+    <style>
+        [one-to-many-collection-entity-form] {
+            position: relative;
+        }
+
+        [one-to-many-collection-entity-form-fields] {
+            position: absolute !important;
+            top: 15px;
+            left: 15px;
+            bottom: 65px;
+            right: 15px;
+            overflow-y: auto;
+        }
+
+        [one-to-many-collection-entity-form-buttons] {
+            position: absolute;
+            right: 15px;
+            height: 35px;
+            bottom: 15px;
+            left: 15px;
+            text-align: right;
+        }
+    </style>
+    <div tag="form" one-to-many-collection-entity-form-fields component="./DynamicForm.html">
+
+    </div>
+    <div one-to-many-collection-entity-form-buttons>
+        <div tag="actions-state-manager" component="absolute-state-manager" style="overflow: visible;">
+            <div tag="add-actions" name="save-changes">
+                <button tag="save" class="gem-button">Save</button>
+                <button tag="cancel" style="margin-left: 15px;" class="gem-button secondary">Cancel</button>
+            </div>
+            <div tag="edit-actions" name="close">
+                <button tag="ok" class="gem-button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

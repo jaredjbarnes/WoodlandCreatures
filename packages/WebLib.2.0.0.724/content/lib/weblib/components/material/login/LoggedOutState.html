@@ -1,0 +1,33 @@
+﻿<div session-expired-state controller="components.material.login.LoggedOutState">
+    <style component="css-helpers"></style>
+    <style>
+        [session-expired-state] {
+            height: 194px;
+            position: relative;
+        }
+
+        [session-expired-state-retry] {
+            position: absolute !important;
+            bottom: 0;
+        }
+
+        [session-expired-state-table] {
+            height: 150px;
+            display: table;
+            width: 100%;
+        }
+
+        [session-expired-state-table-cell] {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+    <div session-expired-state-table>
+        <div session-expired-state-table-cell>
+            <div class="text-headline text-center no-margin">
+                You have been logged out
+            </div>
+        </div>
+    </div>
+    <div session-expired-state-retry tag="ok-button" component="raised-button" light-theme class="text-center input-block-level text-light background-primary extra-padding-small">OK</div>
+</div>

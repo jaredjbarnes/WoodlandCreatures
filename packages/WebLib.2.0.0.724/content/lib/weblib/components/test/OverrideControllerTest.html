@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta name="platform-config" content="/libcdn/v1.1/platform-config.json" />
+    <script src="/libcdn/v1.1/js/Boot.js"></script>
+</head>
+<body>
+    <script>
+        window.Override = function (elem) {
+            var self = this;
+            elem.innerHTML = "OVERRIDE!";
+        };
+    </script>
+    <div controller="Override" component="ui-alert"></div>
+</body>
+</html>

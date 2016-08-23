@@ -1,0 +1,44 @@
+﻿<div digging-item controller="components.test.DiggingListItem">
+    <div digging-container class="fill-parent" style="">
+        <style>
+            [digging-item] {
+                padding: 8px;
+            }
+
+            [digging-container] {
+                background-color: #fff;
+                -webkit-box-shadow: 0px 1px 2px 0px rgba(50, 50, 50, 0.5);
+                -moz-box-shadow: 0px 1px 2px 0px rgba(50, 50, 50, 0.5);
+                box-shadow: 0px 1px 2px 0px rgba(50, 50, 50, 0.5);
+                border-bottom: 1px solid #999;
+                border-radius: 2px;
+                box-sizing: border-box;
+                position: relative;
+            }
+
+
+            [digging-content] {
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-radius: 2px;
+                background-color: #fff;
+            }
+
+            [digging-loading] {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        </style>
+        <div tag="loading" digging-loading class="fill-parent">
+            Loading...
+        </div>
+        <div tag="content" digging-content class="fill-parent">
+            <div tag="name">
+
+            </div>
+            <div></div>
+        </div>
+    </div>
+</div>

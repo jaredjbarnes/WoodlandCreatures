@@ -1,0 +1,22 @@
+﻿<div ui-popup controller="components.ui.layouts.UIPopup">
+    <style>
+        [ui-popup] [tag="ui-popup-container"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+        }
+    </style>
+    <div shadow-root>
+        <div tag="ui-popup-container">
+            <div component="ui-transition" tag="veil">
+                <div tag="ui-popup-veil" component="ui-veil">
+                    <div component="ui-transition" tag="contentTransition">
+                        <embed />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

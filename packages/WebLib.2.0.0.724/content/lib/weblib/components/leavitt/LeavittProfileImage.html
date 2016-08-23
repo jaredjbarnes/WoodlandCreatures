@@ -1,0 +1,28 @@
+﻿<div leavitt-profile-image controller="components.leavitt.LeavittProfileImage">
+    <style>
+        [leavitt-profile-image] {
+            position: relative;
+            overflow: hidden;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        [leavitt-profile-image-image] {
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+        }
+        [leavitt-profile-image][square] {
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
+        }
+        [leavitt-profile-image][square] > [leavitt-profile-image-image] {
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
+        }
+    </style>
+    <img leavitt-profile-image-image tag="leavitt-profile-image"/>
+</div>

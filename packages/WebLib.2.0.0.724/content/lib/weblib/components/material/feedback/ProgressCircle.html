@@ -1,0 +1,13 @@
+﻿<div progress-circle controller="components.material.feedback.ProgressCircle">
+    <style component="css-helpers"></style>
+    <style>
+        [progress-circle] {
+            position: relative;
+            display: inline-block;
+        }
+    </style>
+    <canvas tag="canvas" class="absolute" style="z-index: 2;" width="0" height="0"></canvas>
+    <div class="relative fill-parent" style="z-index: 1;">
+        <embed />
+    </div>
+</div>

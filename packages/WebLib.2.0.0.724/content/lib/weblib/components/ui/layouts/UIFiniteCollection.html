@@ -1,0 +1,22 @@
+﻿<div ui-finite-collection controller="components.ui.layouts.UIFiniteCollection">
+    <style>
+        [ui-finite-collection] {
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        [ui-finite-collection] > [tag='templateContainer'] {
+            display: none;
+        }
+
+        [ui-finite-collection] > [tag='content'] {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+    <div class="smooth-scrolling" tag="content">
+
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿<div ui-digging-collection controller="components.ui.layouts.UIDiggingCollection">
+    <style>
+        [ui-digging-collection] {
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        [ui-digging-collection] > [tag='content'] {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+    <div tag="content"></div>
+    <div tag="load-more-results" ui-button class="input-block-level large">Load More Results</div>
+</div>

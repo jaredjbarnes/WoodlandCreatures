@@ -1,19 +1,18 @@
 ﻿BASE.require([
-    "app.components.Sprite",
+    "app.components.Image",
     "app.components.Rect"
 ], function () {
 
     BASE.namespace("app.systems");
 
-    var Sprite = app.components.Sprite;
+    var SpriteImage = app.components.Image;
     var Rect = app.components.Rect;
     var emptyFn = function () { };
 
     app.systems.Camera = function (canvas) {
-        Rect.call(this);
-
         var camera = this;
 
+        Rect.call(this);
         this.game = null;
         this.rootEntity = null;
         this.width = canvas.width;
@@ -24,7 +23,7 @@
 
         this.onScreenFilter = function (entity) {
             var rect = entity.getComponentByType(Rect);
-            var sprite = entity.getComponentByType(Sprite);
+            var sprite = entity.getComponentByType(SpriteImage);
 
             if (rect == null || sprite == null) {
                 return false;
@@ -36,7 +35,7 @@
         };
 
         this.isRenderable = function (entity) {
-            var sprite = entity.getComponentByType(Sprite);
+            var sprite = entity.getComponentByType(SpriteImage);
 
             if (sprite == null) {
                 return false;
@@ -45,6 +44,8 @@
             return true;
         };
     };
+
+    BASE.extend(app.systems.Camera, Rect);
 
     app.systems.Camera.prototype.getEnitiesOnScreen = function () {
         var camera = this;
@@ -81,10 +82,12 @@
         this.placeWithinBounds();
         var entities = this.getEnitiesOnScreen();
 
-        for (var x = 0 ; x < entities; x++) {
+        context.clearRect(0, 0, this.width, this.height);
+
+        for (var x = 0 ; x < entities.length; x++) {
             entity = entities[x];
             rect = entity.getComponentByType(Rect);
-            sprite = entity.getComponentByType(Sprite);
+            sprite = entity.getComponentByType(SpriteImage);
             source = sprite.source;
             image = imageMap[source.path];
 
@@ -101,8 +104,8 @@
                 source.y,
                 source.width,
                 source.height,
-                rect.x,
-                rect.y,
+                rect.x - this.x,
+                rect.y - this.y,
                 rect.width,
                 rect.height
                 );
@@ -111,7 +114,7 @@
 
     app.systems.Camera.prototype.findImagePaths = function () {
         return this.rootEntity.filter(this.isRenderable).map(function (entity) {
-            var sprite = entity.getComponentByType(Sprite);
+            var sprite = entity.getComponentByType(SpriteImage);
             return sprite.source.path;
         });
     };
@@ -147,7 +150,7 @@
         });
     };
 
-    app.systems.Camera.prototype.init = function (game) {
+    app.systems.Camera.prototype.activated = function (game) {
         this.game = game;
         this.rootEntity = game.rootEntity;
         this.loadImages();
@@ -157,5 +160,5 @@
         this.draw();
     };
 
-    BASE.extend(app.systems.Camera, Rect);
+
 });

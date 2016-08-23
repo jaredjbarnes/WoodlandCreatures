@@ -1,0 +1,198 @@
+{
+  "aliases": {
+    "ui-button-dropdown": "ui/inputs/UIButtonDropdown.html",
+    "ui-alert": "ui/emphasis/UIAlert.html",
+    "ui-slider": "ui/inputs/UISlider.html",
+    "ui-sidebar-manager": "ui/layouts/UISidebarManager.html",
+    "ui-collection-item": "ui/layouts/UICollectionItem.html",
+    "ui-collection": {
+      "default": "ui/layouts/UICollection.html",
+      "exceptions": [
+        {
+          "msie": true,
+          "path": "internetExplorer/ui/layouts/UICollection.html"
+        }
+      ]
+    },
+    "ui-date-time-picker": "ui/inputs/UIDateTimePicker.html",
+    "ui-date-picker-label": "ui/inputs/UIDatePickerLabel.html",
+    "ui-finite-collection": "ui/layouts/UIFiniteCollection.html",
+    "finite-list": "ui/layouts/FiniteList.html",
+    "ui-digging-collection": "ui/layouts/UIDiggingCollection.html",
+    "ui-scroll": {
+      "default": "ui/layouts/DesktopScroll.html",
+      "exceptions": [
+        {
+          "ios": true,
+          "path": "ui/layouts/DesktopScroll.html"
+        },
+        {
+          "android": true,
+          "path": "ui/layouts/DesktopScroll.html"
+        }
+      ]
+    },
+    "ui-popup": "ui/layouts/UIPopup.html",
+    "ui-popover": "ui/layouts/UIPopover.html",
+    "ui-context-menu": "ui/layouts/UIContextMenu.html",
+    "ui-single-select": "ui/inputs/UISingleSelect.html",
+    "ui-veil": "ui/layouts/UIVeil.html",
+    "ui-state-manager": "ui/states/UIStateManager.html",
+    "ui-transition": "ui/layouts/UITransition.html",
+    "ui-navigation": "ui/layouts/UINavigation.html",
+    "ui-multi-select": "ui/inputs/UIMultiSelect.html",
+    "ui-progress-bar": "ui/inputs/UIProgressBar.html",
+    "ui-navbar-inner": "ui/navigation/UINavbarInner.html",
+    "ui-carousel": "ui/emphasis/UICarousel.html",
+    "ui-youtube": "ui/layouts/UIYoutube.html",
+    "ui-three-column-header": "ui/layouts/UIThreeColumnHeader.html",
+    "ui-map": "ui/widgets/UIMap.html",
+    "ui-draggable": "ui/layouts/UIDraggable.html",
+    "ui-time-picker": "ui/widgets/UITimePicker.html",
+    "ui-date-picker": "ui/widgets/UIDatePicker.html",
+    "ui-checkbox": "ui/inputs/UICheckbox.html",
+    "ui-radio": "ui/inputs/UIRadio.html",
+    "ui-accordion": "ui/layouts/UIAccordion.html",
+    "ui-accordion-group": "ui/layouts/UIAccordionGroup.html",
+    "ui-mobile-table": "ui/layouts/UIMobileTable.html",
+    "ui-state-button": "ui/inputs/UIStateButton.html",
+    "list-item-container": "ui/layouts/ListItemContainer.html",
+    "component-tester": "tester/ComponentTester.html",
+    "tester-component-loader": "tester/ComponentLoader.html",
+    "tester-controller-inspector": "tester/ControllerInspector.html",
+    "tester-method-inspector": "tester/MethodInspector.html",
+    "tester-element-attributes": "tester/ElementAttributes.html",
+    "leavitt-sign-in": "leavitt/SignIn.html",
+    "leavitt-profile-image": {
+      "default": "leavitt/LeavittProfileImage.html",
+      "exceptions": [
+        {
+          "name": "Internet Explorer",
+          "versions": [
+            {
+              "from": 6,
+              "to": 8
+            }
+          ],
+          "path": "legacy/LegacyLeavittProfileImage.html"
+        }
+      ]
+    },
+    "ui-desktop-scroll": "ui/layouts/DesktopScroll.html",
+    "test-runner": "tester/TestRunner.html",
+    "test-runner-results": "tester/TestRunnerResults.html",
+    "test-runner-error": "tester/TestRunnerError.html",
+    "tester-state-manager": "tester/StateManager.html",
+    "ui-browser": {
+      "default": "ui/browsers/Unknown.html",
+      "exceptions": [
+        {
+          "name": "Internet Explorer",
+          "versions": [
+            {
+              "from": 9,
+              "to": 10
+            },
+            {
+              "from": 10,
+              "to": 11
+            }
+          ],
+          "path": "ui/browsers/IE.html"
+        },
+        {
+          "name": "Chrome",
+          "path": "ui/browsers/Chrome.html"
+        },
+        {
+          "name": "Firefox",
+          "path": "ui/browsers/Firefox.html",
+          "versions": [ { "to": 36 } ]
+        }
+      ]
+    },
+    "ui-preloader-circle": "ui/emphasis/UIPreloaderCircle.html",
+    "ui-preloader-view": "ui/layouts/UIPreloaderView.html",
+    "material-design-inputs": "material/inputs/MaterialDesignInputs.html",
+    "material-inputs-text": "material/inputs/Text.html",
+    "css-helpers": "css/HelpersDeprecated.html",
+    "css-help": "css/Help.html",
+    "css-material-button": "css/MaterialButton.html",
+    "css-material-input": "css/MaterialInput.html",
+    "css-material-icons": "material/icons/MaterialIcons.html",
+    "flat-button": "material/inputs/FlatButton.html",
+    "raised-button": {
+      "default": "material/inputs/RaisedButton.html",
+      "exceptions": [
+        {
+          "name": "Internet Explorer",
+          "versions": [
+            {
+              "from": 6,
+              "to": 8
+            }
+          ],
+          "path": "legacy/LegacyButton.html"
+        }
+      ]
+    },
+    "input": "material/inputs/Input.html",
+    "input-container": "material/inputs/InputContainer.html",
+    "textarea": "material/inputs/Textarea.html",
+    "group": "material/layouts/Group.html",
+    "group-24": "material/layouts/Group24.html",
+    "dropdown": "material/inputs/Dropdown.html",
+    "preloader-line": "material/feedback/PreloaderLine.html",
+    "preloader-circle": "material/feedback/PreloaderCircle.html",
+    "lazy-load-state": "material/states/LazyLoadState.html",
+    "two-column-left-overlay": "material/layouts/TwoColumnLeftOverlay.html",
+    "single-select-item": "material/inputs/SingleSelectItem.html",
+    "single-select": "material/inputs/SingleSelect.html",
+    "single-select-list": "material/inputs/singleSelectList/SingleSelectList.html",
+    "custom-single-select-list": "material/inputs/singleSelectList/CustomSingleSelectList.html",
+    "preloader-circle-view": "material/feedback/PreloaderCircleView.html",
+    "login": "material/login/Login.html",
+    "state-manager": "material/states/StateManager.html",
+    "absolute-state-manager": "material/states/AbsoluteStateManager.html",
+    "lazy-load": "material/states/LazyLoad.html",
+    "modal-manager": "material/layouts/ModalManager.html",
+    "tooltip-manager": "material/layouts/TooltipManager.html",
+    "multi-select": "material/inputs/multiSelect/MultiSelect.html",
+    "progress-bar": "material/feedback/ProgressBar.html",
+    "progress-circle": "material/feedback/ProgressCircle.html",
+    "preloader-clock": "material/feedback/PreloaderClock.html",
+    "icon-button": "material/inputs/IconButton.html",
+    "select": "material/inputs/Select.html",
+    "dynamic-list": "material/layouts/Collection.html",
+    "gem-window": "gem/Window.html",
+    "gem-window-manager": "gem/WindowManager.html",
+    "gem-independent-collection": "gem/forms/IndependentCollection.html",
+    "gem-database-manager": "gem/forms/DatabaseManager.html",
+    "gem-tabs": "gem/Tabs.html",
+    "gem-confirm": "gem/Confirm.html",
+    "gem-dialog": "gem/Dialog.html",
+    "gem-independent-entity-form": "gem/forms/IndependentEntityForm.html",
+    "gem-one-to-many-collection-entity-form": "gem/forms/OneToManyCollectionEntityForm.html",
+    "gem-one-to-many-collection-form": "gem/forms/OneToManyCollection.html",
+    "gem-one-to-many-target-form": "gem/forms/OneToManyTargetForm.html",
+    "gem-one-to-one-form": "gem/forms/OneToOneForm.html",
+    "gem-one-to-one-target-form": "gem/forms/OneToOneTargetForm.html",
+    "gem-many-to-many-form": "gem/forms/ManyToManyForm.html",
+    "gem-many-to-many-target-form": "gem/forms/ManyToManyTargetForm.html",
+    "gem-date-input": "gem/inputs/Date.html",
+    "gem-number-input": "gem/inputs/Number.html",
+    "gem-one-to-many-target-input": "gem/inputs/OneToManyTargetInput.html",
+    "gem-select-input": "gem/inputs/Select.html",
+    "gem-text-input": "gem/inputs/Text.html",
+    "gem-textarea-input": "gem/inputs/Textarea.html",
+    "gem-calendar": "gem/Calendar.html",
+    "gem-input-form": "gem/forms/InputForm.html",
+    "gem-dynamic-form": "gem/forms/DynamicForm.html",
+    "gem-collection-form": "gem/forms/CollectionForm.html",
+    "gem-historical-collection": "gem/forms/HistoricalCollection.html",
+    "gem-single-historical-collection": "gem/forms/SingleHistoricalCollection.html",
+    "gem-quick-add-independent-entity-form": "gem/forms/QuickAddIndependentEntityForm.html",
+    "gem-scheduler": "gem/scheduler/Scheduler.html",
+    "gem-scheduler-event-type-selector": "gem/scheduler/EventTypeSelector.html"
+  }
+}

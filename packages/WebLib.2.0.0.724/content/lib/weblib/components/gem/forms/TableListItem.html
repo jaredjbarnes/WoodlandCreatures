@@ -1,0 +1,20 @@
+﻿<div table-list-item unselectable controller="components.gem.forms.TableListItem">
+    <style component="./../Theme.html"></style>
+    <style component="css-helpers"></style>
+    <style>
+        [table-list-item] {
+            position: relative;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+            [table-list-item].selected {
+                background-color: #58a3ff !important;
+                color: #fff;
+            }
+
+            [table-list-item]:hover:not(.selected) {
+                background-color: rgba(88, 163, 255, 0.20) !important;
+            }
+    </style>
+</div>

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Woodand Creatures</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <canvas id="viewport" width="600" height="300"></canvas>
+    <script src="lib/weblib/lib/BASE/BASE.js"></script>
+    <script>
+        BASE.require.loader.setRoot("lib/weblib/lib/BASE/");
+        BASE.require.loader.setNamespace("app", "app");
+
+        BASE.require([
+            "app.Game",
+            "app.Entity",
+            "app.systems.Camera",
+            "app.components.Image",
+            "app.components.Rect",
+            "app.Timer"
+        ], function () {
+            var Timer = app.Timer;
+            var Game = app.Game;
+            var Camera = app.systems.Camera;
+            var Entity = app.Entity;
+            var Rect = app.components.Rect;
+            var SpriteImage = app.components.Image;
+
+            var makeEntities = function () {
+                var rootEntity = new Entity();
+                rootEntity.type = "map";
+
+                var rootRect = new Rect();
+
+                rootRect.x = 0,
+                rootRect.y = 0;
+                rootRect.width = 100;
+                rootRect.height = 100;
+
+                rootEntity.components.push(rootRect);
+
+                var character = new Entity();
+                character.type = "character";
+
+                var image = new SpriteImage();
+                image.source.path = "/images/zelda.gif";
+                image.source.x = 55;
+                image.source.y = 0;
+                image.source.width = 35;
+                image.source.height = 35;
+
+                var characterRect = new Rect();
+                characterRect.x = 10;
+                characterRect.y = 10;
+                characterRect.width = 35;
+                characterRect.height = 35;
+
+                character.components.push(image);
+                character.components.push(characterRect);
+
+                rootEntity.appendChild(character);
+
+                return rootEntity;
+            };
+
+            var canvas = document.querySelector("#viewport");
+
+            var camera = new Camera(canvas);
+            var timer = new Timer();
+
+            var game = new Game(makeEntities(), timer);
+
+            game.appendSystem(camera);
+            game.play();
+
+            window.game = game;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+﻿<div material-dropdown material-input controller="components.material.inputs.Dropdown" unselectable tabindex="0">
+    <style component="css-helpers"></style>
+    <style component="css-material-input"></style>
+    <style>
+        [material-dropdown][dropup] [material-dropdown-label]:after {
+            content: '\25B2';
+        }
+
+        [material-dropdown][dropup] [material-dropdown-dropdown] {
+            top: auto;
+            bottom: 0;
+            -webkit-transform-origin: bottom left;
+            transform-origin: bottom left;
+        }
+
+        [material-dropdown-dropdown] > [selector="menu"] > div {
+            margin: 0;
+            text-align: left;
+            border: none;
+            display: block;
+            padding: 14px 16px;
+            clear: both;
+            font-weight: normal;
+            line-height: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        [material-dropdown-dropdown] > [selector="menu"] > div[selected] {
+            background: rgba(0,0,0,0.04);
+        }
+    </style>
+    <div material-input-container tag="material-input-container">
+        <div material-dropdown-clickable-area tag="clickable-area">
+            <div material-dropdown-label tag="label"></div>
+            <div material-input-helper-text tag="helper" class="ellipsis"><embed select="[selector='helper']" /></div>
+        </div>
+        <div material-dropdown-dropdown tag="dropdown" class="background-light text-dark hide smooth-scrolling" tabindex="0"><embed select="[selector='menu']" /></div>
+    </div>
+</div>

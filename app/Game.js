@@ -2,7 +2,7 @@
     BASE.namespace("app");
 
     var pausedState = {
-        play: function () {
+        play: function (game) {
             game.timer.play();
             game.state = startedState;
         },
@@ -17,10 +17,10 @@
         }
     };
 
-    app.Game = function (timer) {
+    app.Game = function (rootEntity, timer) {
         this.timer = timer;
         this.systems = [];
-        this.rootEntity = null;
+        this.rootEntity = rootEntity;
         this.state = pausedState;
         this.frame = null;
     };
@@ -32,6 +32,7 @@
     };
 
     app.Game.prototype.loop = function () {
+        var game = this;
         this.frame = requestAnimationFrame(function () {
             game.update();
             game.loop();
@@ -39,7 +40,6 @@
     };
 
     app.Game.prototype.play = function () {
-        var game = this;
         this.state.play(this);
         this.loop();
     };
@@ -68,9 +68,27 @@
 
     };
 
-    app.Game.prototype.addSystem = function (system) {
-        system.init(this);
+    app.Game.prototype.appendSystem = function (system) {
         this.systems.push(system);
+        this.invokeMethodOnSystem(system, "activated", [this]);
+    };
+
+    app.Game.prototype.removeSystem = function (system) {
+        var index = this.systems.indexOf(system);
+
+        if (index > -1) {
+            var system = this.systems.splice(index, 1);
+            this.invokeMethodOnSystem(system, "deactivated", [this]);
+        }
+    };
+
+    app.Game.prototype.insertSystemBefore = function (system, referenceSystem) {
+        var index = this.systems.indexOf(referenceSystem);
+
+        if (index > -1) {
+            var system = this.systems.splice(index, 0, system);
+            this.invokeMethodOnSystem(system, "activated", [this]);
+        }
     };
 
     app.Game.prototype.isReady = function () {

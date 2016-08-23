@@ -1,0 +1,57 @@
+﻿<div tooltip-manager controller="components.material.layouts.TooltipManager">
+    <style component="css-helpers"></style>
+    <style>
+        [tooltip-manager] {
+            position: relative;
+            -webkit-transform: translate3d(0,0,0);
+            -webkit-backface-visibility: hidden;
+            transform: translate3d(0,0,0);
+            backface-visibility: hidden;
+        }
+
+        [tooltip-message] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: auto;
+            opacity: 0;
+            -webkit-transform: translate3d(0,0,0);
+            -webkit-backface-visibility: hidden;
+            transform: translate3d(0,0,0);
+            backface-visibility: hidden;
+            display: none;
+            padding: 16px;
+            box-sizing: border-box;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 2px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        [tooltip-message-arrow] {
+            position: absolute;
+            margin-top: -3px;
+            top: 50%;
+            left: -18px;
+            border-left: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            transform: rotateZ(45deg) translateY(-50%);
+        }
+
+        [tooltip-manager] > div:first-child {
+            position: relative;
+            z-index: 1 !important;
+        }
+    </style>
+    <embed select="div:first-child" />
+    <div tag="tooltip" tooltip-message>
+        <div tag="message"></div>
+        <div tooltip-message-arrow></div>
+    </div>
+</div>

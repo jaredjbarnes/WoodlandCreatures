@@ -21,7 +21,7 @@
         }
     };
 
-    app.Entity.prototype.insertChildBefore = function (referenceEntity, entity) {
+    app.Entity.prototype.insertChildBefore = function (entity, referenceEntity) {
         var index = this.children.indexOf(referenceEntity);
         if (index > -1) {
             this.children.splice(index, 0, entity);

@@ -1,0 +1,57 @@
+﻿<div multi-select controller="components.material.inputs.multiSelect.MultiSelect">
+    <style component="css-helpers"></style>
+    <style component="css-material-icons"></style>
+    <style>
+        [multi-select] {
+            position: relative;
+            min-height: 200px;
+        }
+
+        [multi-select-modal-manager] {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        [multi-select-state-manager] {
+            position: relative;
+            z-index: 2;
+        }
+
+        [multi-select-add] {
+            position: absolute;
+            z-index: 3;
+            bottom: -100px;
+            right: 23px;
+        }
+
+        [multi-select-single-select-wrapper] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 15px;
+        }
+    </style>
+    <div multi-select-modal-manager component="modal-manager" class="overflow-hidden">
+        <div class="fill-parent overflow-hidden">
+            <div multi-select-state-manager tag="state-manager" component="state-manager" class="fill-parent">
+                <div name="landing" class="fill-parent" component="./LandingState.html"></div>
+                <div name="loading" class="fill-parent" component="./LoadingState.html"></div>
+                <div name="error" class="fill-parent" component="./ErrorState.html"></div>
+                <div tag="main" name="main" class="fill-parent overflow-auto">
+                    <div tag="collection" component="finite-list"></div>
+                </div>
+            </div>
+            <div tag="multi-select-add" multi-select-add>
+                <embed />
+            </div>
+        </div>
+        <div multi-select-single-select-wrapper name="single-select" component="./SingleSelectWrapper.html">
+            <div tag="single-select-list" component="single-select-list"></div>
+        </div>
+    </div>
+</div>

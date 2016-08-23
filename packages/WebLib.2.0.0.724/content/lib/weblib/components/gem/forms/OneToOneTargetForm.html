@@ -1,0 +1,44 @@
+﻿<div one-to-one-target-form controller="components.gem.forms.OneToOneTargetForm">
+    <style component="./../Theme.html"></style>
+    <style>
+        [one-to-one-target-form] {
+            position: relative;
+            padding: 15px;
+        }
+
+        [one-to-one-target-form-container] {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        [one-to-one-target-form-search] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+        }
+
+        [one-to-one-target-form-table] {
+            position: absolute !important;
+            top: 65px;
+            bottom: 0px;
+            left: 0;
+            right: 0;
+        }
+    </style>
+    <div one-to-one-target-form-container>
+        <div one-to-one-target-form-search>
+            <div style="position:absolute;top:0;left:0;right:35px;">
+                <input tag="search" type="text" class="gem-input" style="width:100%;" />
+            </div>
+            <div style="text-align:center;width:35px;height:35px;position:absolute;top:0;right:0;">
+                <img src="/images/search.png" style="width:25px;position:absolute;top:50%;right:50%;transform:translate(50%, -50%);" />
+            </div>
+        </div>
+        <div tag="table" one-to-one-target-form-table component="./Table.html">
+
+        </div>
+    </div>
+</div>

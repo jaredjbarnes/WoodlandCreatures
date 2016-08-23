@@ -1,0 +1,76 @@
+﻿<div test-runner controller="components.tester.TestRunner">
+    <style>
+        [test-runner-component-container] {
+            width: 100%;
+            height: 100%;
+        }
+
+        [test-runner-name-veil] {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.33);
+            display: table;
+            text-align: center;
+        }
+
+        [test-runner-component-form] {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        [test-runner-component-form-card] {
+            display: inline-block;
+            border-radius: 2px;
+            background-color: #efefef;
+            width: 320px;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        [test-runner-component-form-card-header] {
+            height: 60px;
+            line-height: 60px;
+            width: 100%;
+            font-size: 20px;
+            border-bottom: 1px solid #ccc;
+            color: #00457c;
+            background-color: #fff;
+        }
+
+        [test-runner-component-form-input] {
+            margin-top: 30px;
+            width: 260px;
+        }
+    </style>
+    <div tag="state-manager" component="tester-state-manager" class="fill-parent">
+        <div tag="component-name-veil" name="component-name-veil" test-runner-name-veil>
+            <div tag="component-name-form" test-runner-component-form>
+                <div test-runner-component-form-card>
+                    <div test-runner-component-form-card-header>
+                        Type in a component url.
+                    </div>
+                    <div>
+                        <input tag="component-url" test-runner-component-form-input placeholder="test/componentName.html" type="text" />
+                        <div style="text-align:right;margin-right:30px;">
+                            <div tag="load-component" ui-button class="primary">Load</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div name="component-container" test-runner-component-container component="ui-navigation" class="fill-parent" header-height="60">
+            <div style="line-height:60px;background-color:#fff;border-bottom:1px solid #ccc;box-sizing:border-box;height:60px;">
+                <div component="ui-three-column-header">
+                    <span></span>
+                    <div tag="component-container-name" style="font-size:20px;color: #00457c;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"></div>
+                    <span tag="close-component-container" ui-button class="primary" style="margin-right: 12px;">Done</span>
+                </div>
+            </div>
+            <div tag="component-container" class="fill-parent">
+
+            </div>
+        </div>
+        <div tag="results" name="results" component="test-runner-results"></div>
+        <div tag="error" name="error" component="test-runner-error"></div>
+    </div>
+</div>

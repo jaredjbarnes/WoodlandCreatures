@@ -1,0 +1,44 @@
+﻿<div many-to-many-form controller="components.gem.forms.ManyToManyTargetForm">
+    <style component="./../Theme.html"></style>
+    <style>
+        [many-to-many-form] {
+            position: relative;
+            padding: 15px;
+        }
+
+        [many-to-many-form-container] {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        [many-to-many-form-search] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55px;
+        }
+
+        [many-to-many-form-table] {
+            position: absolute !important;
+            top: 55px;
+            bottom: 0px;
+            left: 0;
+            right: 0;
+        }
+    </style>
+    <div many-to-many-form-container>
+        <div many-to-many-form-search>
+            <div style="position:absolute;top:0;left:0;right:45px;">
+                <input tag="search" type="text" class="gem-input" style="width:100%;" />
+            </div>
+            <div style="text-align: center; width: 40px; height: 40px; line-height: 40px; position: absolute; top: 0; right: 0; ">
+                <i class="material-icons" style="font-size: 30px;">search</i>
+            </div>
+        </div>
+        <div tag="table" many-to-many-form-table component="./CheckboxTable.html">
+
+        </div>
+    </div>
+</div>

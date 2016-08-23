@@ -1,0 +1,53 @@
+﻿<div single-select-list controller="components.material.inputs.singleSelectList.SingleSelectList">
+    <style component="css-helpers"></style>
+    <style component="css-material-input"></style>
+    <style>
+        [single-select-list] {
+            position: relative;
+            overflow: hidden;
+            background-color: #FFF;
+            padding: 15px;
+            width: 100%;
+            height: 100%;
+        }
+
+        [single-select-list-state-manager] {
+            position: absolute;
+            top: 45px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        [single-select-list-collection] {
+            outline: 0;
+        }
+    </style>
+    <div class="relative">
+        <div tag="search" label="Search" component="input"></div>
+        <div single-select-list-state-manager tag="state-manager" component="ui-state-manager">
+            <div name="pre-search" initial>
+                <p single-select-helper class="text-info">Type to begin searching</p>
+            </div>
+            <div name="loading" class="background-light">
+                <div tag="preloader-line" component="preloader-line"></div>
+            </div>
+            <div name="results" class="background-light">
+                <div single-select-list-collection
+                     tag="list"
+                     component="ui-collection"
+                     controller="components.material.layouts.List"
+                     item-height="50"
+                     padding-top="10"
+                     item-component="./SingleSelectItem.html" class="fill-parent">
+                </div>
+            </div>
+            <div name="error" class="background-light">
+                <p single-select-helper tag="error-message" class="text-danger"></p>
+            </div>
+            <div name="no-results" class="background-light">
+                <p single-select-helper class="text-info">No Results Found</p>
+            </div>
+        </div>
+    </div>
+</div>

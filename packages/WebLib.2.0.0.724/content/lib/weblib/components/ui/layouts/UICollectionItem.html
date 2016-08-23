@@ -1,0 +1,17 @@
+﻿<div ui-collection-item controller="components.ui.layouts.UICollectionItem">
+    <style>
+        [ui-collection-item] {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <!-- This is bad styling, but speed really matters here. So we can use css.-->
+    <div tag="item" style="position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+                height: 100%;">
+        <embed select="*" />
+    </div>
+</div>

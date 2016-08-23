@@ -1,0 +1,35 @@
+﻿<div quick-add-entity-form controller="components.gem.forms.QuickAddIndependentEntityForm">
+    <style component="./../Theme.html"></style>
+    <style>
+        [quick-add-entity-form] {
+            position: relative;
+        }
+
+        [quick-add-entity-form-fields] {
+            position: absolute !important;
+            top: 15px;
+            left: 15px;
+            bottom: 65px;
+            right: 15px;
+            overflow-y: auto;
+        }
+
+        [quick-add-entity-form-buttons] {
+            position: absolute;
+            right: 15px;
+            height: 35px;
+            bottom: 15px;
+            left: 15px;
+            text-align: right;
+        }
+    </style>
+    <div tag="form" quick-add-entity-form-fields component="./DynamicForm.html">
+
+    </div>
+    <div quick-add-entity-form-buttons>
+        <div tag="add-actions">
+            <button tag="save" class="gem-button">Save</button>
+            <button tag="cancel" style="margin-left: 15px;" class="gem-button secondary">Cancel</button>
+        </div>
+    </div>
+</div>

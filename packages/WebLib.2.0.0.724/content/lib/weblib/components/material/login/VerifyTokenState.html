@@ -1,0 +1,33 @@
+﻿<div verify-token-state controller="components.material.login.VerifyTokenState">
+    <style css-helpers></style>
+    <style>
+        [verify-token-state] {
+            height: 194px;
+            position: relative;
+        }
+
+        [verify-token-state-cancel] {
+            position: absolute !important;
+            bottom: 0;
+        }
+
+        [verify-token-state-table] {
+            height: 150px;
+            display: table;
+            width: 100%;
+        }
+
+        [verify-token-state-table-cell] {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+    <div verify-token-state-table>
+        <div verify-token-state-table-cell>
+            <div tag="message-container" class="text-headline text-center no-margin-top extra-margin-bottom">Verifying Credentials</div>
+            <div tag="preloader" component="preloader-line"></div>
+        </div>
+    </div>
+
+    <div tag="cancel-button" verify-token-state-cancel component="raised-button" class="text-center input-block-level extra-padding-small background-light">Cancel</div>
+</div>

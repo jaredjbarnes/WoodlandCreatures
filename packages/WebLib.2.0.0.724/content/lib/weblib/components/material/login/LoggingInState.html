@@ -1,0 +1,32 @@
+﻿<div logging-in-state controller="components.material.login.LoggingInState">
+    <style component="css-helpers"></style>
+    <style>
+        [logging-in-state] {
+            height: 194px;
+            position: relative;
+        }
+
+        [logging-in-state-cancel] {
+            position: absolute !important;
+            bottom: 0;
+        }
+
+        [logging-in-state-table] {
+            height: 150px;
+            display: table;
+            width: 100%;
+        }
+
+        [logging-in-state-table-cell] {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+    <div logging-in-state-table>
+        <div logging-in-state-table-cell>
+            <div class="text-headline text-center no-margin-top extra-margin-bottom">Logging In</div>
+            <div tag="preloader" component="preloader-line"></div>
+        </div>
+    </div>
+    <div tag="cancel-button" logging-in-state-cancel component="raised-button" class="text-center input-block-level extra-padding-small background-light" tabindex="1">Cancel</div>
+</div>

@@ -1,0 +1,58 @@
+﻿<div login controller="components.material.login.Login">
+    <style compoent="css-helpers"></style>
+    <style>
+        [login-container] {
+            max-width: 360px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        [login-logo] {
+            max-width: 180px;
+            margin: 30px auto;
+        }
+
+        [login-state-manager-container] {
+            width: 100%;
+            height: 385px;
+            overflow: hidden;
+            padding: 30px;
+            -webkit-perspective: 1000px;
+            perspective: 1000px;
+        }
+
+        [login-profile-image] {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 10px auto;
+        }
+
+        [login-user-full-name] {
+            color: #666;
+            height: 21px;
+        }
+    </style>
+    <div login-container>
+        <div login-logo>
+            <embed />
+        </div>
+        <div login-state-manager-container class="box-shadow-1 background-light border-radius">
+            <div login-profile-image tag="leavitt-profile-image" component="leavitt-profile-image"></div>
+            <div login-user-full-name tag="user-full-name" class="text-title text-center no-margin-bottom"></div>
+            <div login-state-manager tag="state-manager" component="ui-state-manager">
+                <div name="empty" initial></div>
+                <div tag="verify-token" name="verify-token" component="lazy-load-state" lazy-load="./VerifyTokenState.html"></div>
+         
+                <div tag="login-form" name="login-form" component="lazy-load-state" lazy-load="./LoginFormState.html"></div>
+                <div tag="network-error" name="network-error" component="./NetworkErrorState.html"></div>
+                <div tag="permission-error" name="permission-error" component="lazy-load-state" lazy-load="./PermissionErrorState.html"></div>
+                <div tag="logged-in-state" name="logged-in-state" component="lazy-load-state" lazy-load="./LoggedInState.html"></div>
+                <div tag="session-expired-state" name="session-expired-state" component="./SessionExpiredState.html"></div>
+                <div tag="logged-out-state" name="logged-out-state" component="./LoggedOutState.html"></div>
+                
+            </div>
+        </div>
+
+    </div>
+
+</div>

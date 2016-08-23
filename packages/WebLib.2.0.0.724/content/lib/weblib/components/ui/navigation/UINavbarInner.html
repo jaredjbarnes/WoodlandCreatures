@@ -1,0 +1,44 @@
+﻿<div ui-navbar-inner controller="components.ui.navigation.UINavbarInner">
+    <style type="text/css">
+        [ui-navbar] [ui-navbar-inner] [tag="btn-collapse"] {
+            position: relative;
+            display: none;
+            margin: 4px 0 0 0;
+            float: right;
+        }
+
+        @media (max-width: 767px) {
+            [ui-navbar] [ui-navbar-inner] [tag="btn-collapse"] {
+                display: block;
+            }
+
+            [ui-navbar] [ui-navbar-inner] .nav-collapse {
+                position: relative;
+                clear: both;
+                padding-bottom: 8px;
+                display: none;
+            }
+
+            [ui-navbar] [ui-navbar-inner] .nav-collapse ul[ui-nav], [ui-navbar-inner] .nav-collapse ul[ui-nav] li {
+                margin: 0;
+                float: none;
+            }
+
+            [ui-navbar] [ui-navbar-inner] .nav-collapse .divider-vertical {
+                display: none;
+            }
+
+            [ui-navbar] [ui-navbar-inner] .nav-collapse ul[ui-nav] li [ui-button], [ui-navbar] [ui-navbar-inner] .nav-collapse ul[ui-nav] li [ui-button].navbar-last-child {
+                float: none;
+                display: block;
+                text-align: left;
+                max-width: 100%;
+                padding: 10px 15px;
+                margin: 0;
+            }
+        }
+    </style>
+    <embed select="*:not(.nav-collapse)" />
+    <span tag="btn-collapse" ui-button tabindex="-1" class="link"><span ui-icon image="menu-stacked"></span></span>
+    <embed select=".nav-collapse" />
+</div>

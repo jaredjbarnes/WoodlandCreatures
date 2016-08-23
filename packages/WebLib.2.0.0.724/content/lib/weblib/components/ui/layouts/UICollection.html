@@ -1,0 +1,16 @@
+﻿<div ui-collection controller="components.ui.layouts.UICollection">
+    <style>
+        [ui-collection] {
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        [ui-collection-content] {
+            position: relative;
+            min-width: 100%;
+        }
+    </style>
+    <div ui-collection-content tag="content">
+        <embed />
+    </div>
+</div>

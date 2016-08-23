@@ -1,0 +1,22 @@
+﻿<div preloader-line controller="components.material.feedback.PreloaderLine">
+    <style component="css-helpers"></style>
+    <style type="text/css">
+        [preloader-line] {
+            height: 4px;
+            position: relative;
+        }
+
+            [preloader-line] > div {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                z-index: 1;
+                transform: scaleX(0);
+                -webkit-transform: scaleX(0);
+            }
+    </style>
+    <div tag="line-a"></div>
+    <div tag="line-b"></div>
+</div>

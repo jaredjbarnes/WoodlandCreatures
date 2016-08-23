@@ -1,0 +1,112 @@
+﻿<div ui-mobile-table controller="components.ui.layouts.UIMobileTable">
+    <!- UI Mobile Table allows you to create tabular data that will resize to a more readable format
+    when displayed at smaller screen sizes and on mobile devices. UI Mobile Table will allow you
+    to stylize the resized table with basic colors in the reformated table headers.'
+    -->
+    <style type="text/css">
+        [ui-mobile-table] table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        [ui-mobile-table].muted th {
+            color: #bbb !important;
+        }
+
+        [ui-mobile-table].inverse th {
+            color: #222222 !important;
+        }
+
+        [ui-mobile-table].primary th {
+            color: #00457c !important;
+        }
+
+        [ui-mobile-table].warning th {
+            color: #f89406 !important;
+        }
+
+        [ui-mobile-table].danger th {
+            color: #bd362f !important;
+        }
+
+        [ui-mobile-table].info th {
+            color: #2f96b4 !important;
+        }
+
+        [ui-mobile-table].success th {
+            color: #51a351 !important;
+        }
+
+        [ui-mobile-table].light th {
+            color: #ffffff !important;
+        }
+
+        [ui-mobile-table].muted td > span.before {
+            color: #bbb !important;
+        }
+
+        [ui-mobile-table] td > span.before {
+            text-align: left !important;
+            font-weight: 300;
+        }
+
+        [ui-mobile-table].inverse td > span.before {
+            color: #222222 !important;
+        }
+
+        [ui-mobile-table].primary td > span.before {
+            color: #00457c !important;
+        }
+
+        [ui-mobile-table].warning td > span.before {
+            color: #f89406 !important;
+        }
+
+        [ui-mobile-table].danger td > span.before {
+            color: #bd362f !important;
+        }
+
+        [ui-mobile-table].info td > span.before {
+            color: #2f96b4 !important;
+        }
+
+        [ui-mobile-table].success td > span.before {
+            color: #51a351 !important;
+        }
+
+        [ui-mobile-table].light td > span.before {
+            color: #ffffff !important;
+        }
+
+        @media (max-width: 767px) {
+
+            [ui-mobile-table] table, [ui-mobile-table] thead, [ui-mobile-table] tbody, [ui-mobile-table] th, [ui-mobile-table] td, [ui-mobile-table] tr {
+                display: block;
+            }
+
+            [ui-mobile-table] thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            [ui-mobile-table] td {
+                border: none;
+                text-align: left !important;
+                position: relative;
+                padding-left: 50%;
+                line-height: normal !important;
+            }
+
+            [ui-mobile-table] td > span.before {
+                position: absolute;
+                top: 12px;
+                left: 12px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+            }
+        }
+    </style>
+    <embed />
+</div>

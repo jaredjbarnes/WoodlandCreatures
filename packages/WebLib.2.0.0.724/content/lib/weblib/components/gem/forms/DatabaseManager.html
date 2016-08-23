@@ -1,0 +1,67 @@
+﻿<div database-manager controller="components.gem.forms.DatabaseManager">
+    <style component="./../Theme.html"></style>
+    <style component="css-helpers"></style>
+    <style>
+        [database-manager] {
+            position: relative;
+            z-index: 1;
+        }
+
+        [database-manager-table-container] {
+            position: absolute !important;
+            top: 50px;
+            right: 0;
+            left: 265px;
+            bottom: 0;
+        }
+
+        [database-manager-table-name] {
+            position: absolute;
+            height: 50px;
+            top: 0;
+            left: 265px;
+            width: 100%;
+            font-size: 20px;
+            background-color: #58a3ff;
+            color: #fff;
+            padding-left: 15px;
+            line-height: 50px;
+        }
+
+        [database-manager-list] {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            width: 265px;
+            height: 100%;
+            box-sizing: border-box;
+            background-color: #263238 !important;
+        }
+
+        [database-manager-list-navigation] {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            height: 50px;
+            width: 265px;
+            color: #b2b2b2;
+            line-height: 50px;
+            font-size: 14px;
+            background-color: #263238 !important;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+    </style>
+    <div tag="name" database-manager-table-name></div>
+    <div tag="table-container" database-manager-table-container>
+    </div>
+    <div database-manager-list-navigation>NAVIGATION</div>
+    <div tag="table-names-list"
+         database-manager-list
+         table-form-data
+         component="ui-collection"
+         item-component="./TableNameListItem.html"
+         item-height="40"
+         controller="components.material.layouts.List">
+    </div>
+</div>

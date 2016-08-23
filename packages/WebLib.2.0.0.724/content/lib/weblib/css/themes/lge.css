@@ -1,0 +1,21 @@
+﻿/*--- ui-navbar ---*/
+
+[ui-navbar] [ui-nav] > li > [ui-button].link,
+[ui-navbar] [ui-nav] > li > * > [ui-button].link {
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+/*---- ui-navbar-inner ----*/
+
+[ui-navbar-inner] {
+    background-color: #00457c;
+}
+
+[ui-navbar-inner] .header-title {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25)!important;
+    color: #fff !important;
+}
+
+/*--- helpers ---*/
+

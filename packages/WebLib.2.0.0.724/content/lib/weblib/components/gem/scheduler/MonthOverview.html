@@ -1,0 +1,202 @@
+﻿<div gem-scheduler controller="components.gem.scheduler.MonthOverview">
+    <style component="./../Theme.html">
+    </style>
+    <style component="css-material-icons">
+    </style>
+    <style>
+        [gem-scheduler] {
+            position: relative;
+        }
+
+        [gem-scheduler-display] {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            box-sizing: border-box;
+        }
+
+        [gem-scheduler-display-header] {
+            position: relative;
+        }
+
+        .monthly-calendar-square {
+            height: 100%;
+            font-size: 12px;
+            display: inline-block;
+            box-sizing: border-box;
+            text-align: left;
+            color: #666;
+        }
+
+            /*.monthly-calendar-square:hover::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0,0,0,0.3);
+            }*/
+
+            .monthly-calendar-square.selected {
+                background-color: #0094ff;
+                color: #fff;
+            }
+
+        [gem-scheduler-header] {
+            height: 100px;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #999;
+        }
+
+        [gem-scheduler-dates] {
+            position: absolute;
+            top: 100px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        [gem-scheduler-week] {
+            position: relative;
+            width: 100%;
+            height: 16.67%;
+        }
+
+        [gem-scheduler-dates] > [gem-scheduler-week] {
+            border-top: 1px solid #d3d3d3;
+        }
+
+        [gem-scheduler-week] > * {
+            position: absolute;
+        }
+
+            [gem-scheduler-week] > *:nth-child(1) {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            [gem-scheduler-week] > *:nth-child(2) {
+                position: absolute;
+                top: 0;
+                left: 14%;
+            }
+
+            [gem-scheduler-week] > *:nth-child(3) {
+                position: absolute;
+                top: 0;
+                left: 28%;
+            }
+
+            [gem-scheduler-week] > *:nth-child(4) {
+                position: absolute;
+                top: 0;
+                left: 42%;
+            }
+
+            [gem-scheduler-week] > *:nth-child(5) {
+                position: absolute;
+                top: 0;
+                left: 56%;
+            }
+
+            [gem-scheduler-week] > *:nth-child(6) {
+                position: absolute;
+                top: 0;
+                left: 70%;
+            }
+
+            [gem-scheduler-week] > *:nth-child(7) {
+                position: absolute;
+                top: 0;
+                left: 84%;
+            }
+
+        [gem-scheduler-week] > div {
+            width: 14%;
+            background-color: #fff;
+        }
+    </style>
+    <div gem-scheduler-display>
+        <div gem-scheduler-header>
+            <div gem-scheduler-week style="position:absolute;bottom:0;left:0;height:20px;font-size:14px;">
+                <div class="ellipsis">Sunday</div>
+                <div class="ellipsis">Monday</div>
+                <div class="ellipsis">Tuesday</div>
+                <div class="ellipsis">Wednesday</div>
+                <div class="ellipsis">Thursday</div>
+                <div class="ellipsis">Friday</div>
+                <div class="ellipsis">Saturday</div>
+            </div>
+        </div>
+        <div style="position:absolute;top:0;left:0;height:75px;width:100%;line-height:75px;font-size:28px;color:#5b5b5b;">
+            <span tag="display-date"></span>
+            <div style="position:absolute;top:0;right:0;height:100%;color:#1966af;">
+                <i tag="previous-month" class="material-icons" unselectable style="cursor: pointer;">&#xE314;</i>
+                <i tag="next-month" class="material-icons" unselectable style="cursor: pointer;">&#xE315;</i>
+            </div>
+        </div>
+        <div tag="dates" gem-scheduler-dates>
+            <div gem-scheduler-week tag="first-week">
+                <div tag="0" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="1" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="2" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="3" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="4" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="5" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="6" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+            </div>
+            <div gem-scheduler-week tag="second-week">
+                <div tag="7" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="8" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="9" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="10" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="11" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="12" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="13" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+            </div>
+            <div gem-scheduler-week tag="third-week">
+                <div tag="14" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="15" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="16" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="17" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="18" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="19" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="20" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+            </div>
+            <div gem-scheduler-week tag="fourth-week">
+                <div tag="21" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="22" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="23" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="24" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="25" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="26" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="27" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+            </div>
+            <div gem-scheduler-week tag="fifth-week">
+                <div tag="28" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="29" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="30" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="31" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="32" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="33" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="34" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+            </div>
+            <div gem-scheduler-week tag="six-week">
+                <div tag="35" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="36" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="37" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="38" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="39" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="40" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+                <div tag="41" component="./DayThumbnail.html" class="monthly-calendar-square"></div>
+            </div>
+        </div>
+    </div>
+</div>

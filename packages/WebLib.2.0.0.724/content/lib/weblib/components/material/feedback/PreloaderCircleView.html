@@ -1,0 +1,29 @@
+﻿<div preloader-circle-view controller="components.material.feedback.PreloaderCircleView">
+    <style type="text/css">
+        [preloader-circle-view] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 5;
+            width: 100%;
+            height: 100%;
+        }
+        [preloader-circle-view-table] {
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
+        [preloader-circle-view-table-cell]{
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+    </style>
+    <div preloader-circle-view-table>
+        <div preloader-circle-view-table-cell>
+            <div tag="preloader-circle" component="preloader-circle"></div>
+        </div>
+    </div>
+</div>

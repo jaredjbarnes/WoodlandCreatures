@@ -1,0 +1,45 @@
+﻿<div input-container controller="components.material.inputs.InputContainer">
+    <style component="css-helpers"></style>
+    <style>
+        [input-container] {
+            position: relative;
+            outline: none;
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+
+            [input-container][float-label] [input-container-label] {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                backface-visibility: hidden;
+                filter: blur(0px);
+                -webkit-filter: blur(0px);
+                -moz-filter: blur(0px);
+                -ms-filter: blur(0px);
+                z-index: 1;
+            }
+
+                [input-container][float-label] [input-container-label] > div {
+                    position: absolute;
+                    top: 100%;
+                    width: 100%;
+                    backface-visibility: hidden;
+                    -webkit-transform: translateY(-100%) translateZ(0);
+                    transform: translateY(-100%) translateZ(0);
+                    -webkit-filter: blur(0px);
+                    -moz-filter: blur(0px);
+                    -ms-filter: blur(0px);
+                }
+
+            [input-container][float-label] [input-container-input] {
+                position: relative;
+                z-index: 2;
+            }
+    </style>
+    <div class="relative" style="backface-visibility: hidden;">
+        <div tag="label-container" input-container-label><embed select="div[selector='label']" /></div>
+        <div tag="input-container" input-container-input><embed select="[selector='input']" /> <embed select="[selector='input-component']" /></div>
+    </div>
+    <div tag="helper-container" input-container-helper><embed select="div[selector='helper']" /></div>
+</div>

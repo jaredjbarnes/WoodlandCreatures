@@ -1,0 +1,87 @@
+﻿<div ui-context-menu controller="components.ui.layouts.UIContextMenu">
+    <style type="text/css">
+        [ui-context-menu] {
+            display: block;
+            /*width: 100%;
+            height: 100%;*/
+            overflow: hidden;
+        }
+
+        [ui-context-menu] [tag="item-container"] {
+            width: 100%;
+            height: auto;
+            background-color: #1b1b1b;
+            border: 1px solid #252525;
+            background-color: rgba(27,27,27,0.8);
+            -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        [ui-context-menu] [tag="item-container-transition"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            z-index: 2;
+        }
+
+        [ui-context-menu] [tag="content-container"] {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+            z-index: 1;
+        }
+
+        [ui-context-menu] [tag="item-container"] [tag="empty-message"] {
+            display: none;
+            position: relative;
+            padding: 10px;
+            color: #CCCCCC;
+            font-size: 1.3em;
+        }
+
+        [ui-context-menu] [tag="item-container"] [tag="none-applicable"] {
+            display: none;
+            position: relative;
+            padding: 10px;
+            color: #CCCCCC;
+            font-size: 1.3em;
+        }
+
+        [ui-context-menu] [tag="item-container"].empty, [ui-context-menu] [tag="item-container"].none-applicable {
+            text-align: center;
+        }
+
+        [ui-context-menu] [tag="item-container"] [tag="item-container-table"] {
+            display: table;
+            height: 100%;
+            width: 100%;
+        }
+
+        [ui-context-menu] [tag="item-container"].empty [tag="empty-message"] {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        [ui-context-menu] [tag="item-container"].none-applicable [tag="none-applicable"] {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+    <div shadow-root>
+        <div tag="content-container">
+            <embed />
+        </div>
+        <div tag="item-container-transition" component="ui-transition">
+            <div tag="item-container">
+                <div tag="item-container-table">
+                    <div tag="none-applicable">No actions apply to all selected items.</div>
+                    <div tag="empty-message">Tap to select items.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -42,6 +42,20 @@
 
         for (var x = 0 ; x < this.components.length; x++) {
             component = this.components[x];
+            if (component.constructor === Type) {
+                matches.push(component);
+            }
+        }
+
+        return matches;
+    };
+
+    app.Entity.prototype.getComponentsOfType = function (Type) {
+        var matches = [];
+        var component = null;
+
+        for (var x = 0 ; x < this.components.length; x++) {
+            component = this.components[x];
             if (component instanceof Type) {
                 matches.push(component);
             }

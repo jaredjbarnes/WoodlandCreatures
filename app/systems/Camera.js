@@ -75,7 +75,6 @@
         var rect = null;
         var sprite = null;
         var context = this.context;
-        var source = null;
         var imageMap = this.imageMap;
         var image = null;
 
@@ -88,22 +87,19 @@
             entity = entities[x];
             rect = entity.getComponentByType(Rect);
             sprite = entity.getComponentByType(SpriteImage);
-            source = sprite.source;
-            image = imageMap[source.path];
+            image = imageMap[sprite.path];
 
             if (image == null) {
-                camera.loadImage(source.path);
+                camera.loadImage(sprite.path);
                 continue;
             }
 
-            intersection = rect.getIntersection(camera);
-
             context.drawImage(
                 image,
-                source.x,
-                source.y,
-                source.width,
-                source.height,
+                sprite.x,
+                sprite.y,
+                sprite.width,
+                sprite.height,
                 rect.x - this.x,
                 rect.y - this.y,
                 rect.width,
@@ -115,7 +111,7 @@
     app.systems.Camera.prototype.findImagePaths = function () {
         return this.rootEntity.filter(this.isRenderable).map(function (entity) {
             var sprite = entity.getComponentByType(SpriteImage);
-            return sprite.source.path;
+            return sprite.path;
         });
     };
 

@@ -20,6 +20,7 @@
         this.isReady = false;
         this.context = canvas.getContext("2d");
         this.imageMap = {};
+        this.entities = [];
 
         this.onScreenFilter = function (entity) {
             var rect = entity.getComponentByType(Rect);
@@ -49,7 +50,7 @@
 
     app.systems.Camera.prototype.getEnitiesOnScreen = function () {
         var camera = this;
-        return this.rootEntity.filter(this.onScreenFilter);
+        return this.entities.filter(this.onScreenFilter);
     };
 
     app.systems.Camera.prototype.placeWithinBounds = function () {
@@ -146,10 +147,15 @@
         });
     };
 
+    app.systems.Camera.prototype.cacheEntities = function (game) {
+        this.entities = this.rootEntity.filter(this.isRenderable);
+    };
+
     app.systems.Camera.prototype.activated = function (game) {
         this.game = game;
         this.rootEntity = game.rootEntity;
         this.loadImages();
+        this.cacheEntities();
     };
 
     app.systems.Camera.prototype.update = function () {

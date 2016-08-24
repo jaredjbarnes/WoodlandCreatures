@@ -15,7 +15,9 @@
             "app.Game",
             "app.Entity",
             "app.systems.Camera",
+            "app.systems.SpriteSystem",
             "app.components.Image",
+            "app.components.Sprite",
             "app.components.Rect",
             "app.Timer"
         ], function () {
@@ -25,6 +27,8 @@
             var Entity = app.Entity;
             var Rect = app.components.Rect;
             var SpriteImage = app.components.Image;
+            var Sprite = app.components.Sprite;
+            var SpriteSystem = app.systems.SpriteSystem;
 
             var makeEntities = function () {
                 var rootEntity = new Entity();
@@ -44,19 +48,41 @@
 
                 var image = new SpriteImage();
                 image.path = "/images/zelda.gif";
-                image.x = 57;
-                image.y = 0;
-                image.width = 16;
-                image.height = 22;
+                image.x = 17;
+                image.y = 137;
+                image.width = 23;
+                image.height = 24;
 
                 var characterRect = new Rect();
                 characterRect.x = 10;
                 characterRect.y = 10;
-                characterRect.width = 16;
-                characterRect.height = 22;
+                characterRect.width = 23;
+                characterRect.height = 24;
+
+                var sprite = new Sprite();
+                sprite.positions = [{
+                    y: 137,
+                    x: 15
+                }, {
+                    y: 137,
+                    x: 38
+                }, {
+                    y: 137,
+                    x: 61
+                }, {
+                    y: 137,
+                    x: 85
+                }, {
+                    y: 137,
+                    x: 109
+                }, {
+                    y: 137,
+                    x: 133
+                }];
 
                 character.components.push(image);
                 character.components.push(characterRect);
+                character.components.push(sprite);
 
                 rootEntity.appendChild(character);
 
@@ -66,11 +92,13 @@
             var canvas = document.querySelector("#viewport");
 
             var camera = new Camera(canvas);
+            var spriteSystem = new SpriteSystem();
             var timer = new Timer();
 
             var game = new Game(makeEntities(), timer);
 
             game.appendSystem(camera);
+            game.appendSystem(spriteSystem);
             game.play();
 
             window.game = game;

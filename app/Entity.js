@@ -28,8 +28,12 @@
         }
     };
 
-    app.Entity.prototype.hasComponentType = function (Type) {
+    app.Entity.prototype.hasComponentByType = function (Type) {
         return this.getComponentByType(Type) != null;
+    };
+
+    app.Entity.prototype.hasComponentOfType = function (Type) {
+        return this.getComponentOfType(Type) != null;
     };
 
     app.Entity.prototype.getComponentByType = function (Type) {

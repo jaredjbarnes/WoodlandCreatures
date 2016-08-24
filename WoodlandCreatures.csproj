@@ -96,10 +96,11 @@
   <ItemGroup>
     <Content Include="app\components\Rect.js" />
     <Content Include="app\components\Image.js" />
-    <Content Include="app\components\State.js" />
+    <Content Include="app\components\Sprite.js" />
     <Content Include="app\Entity.js" />
     <Content Include="app\Game.js" />
     <Content Include="app\systems\Camera.js" />
+    <Content Include="app\systems\SpriteSystem.js" />
     <Content Include="app\Timer.js" />
     <Content Include="images\zelda.gif" />
     <Content Include="index.html" />

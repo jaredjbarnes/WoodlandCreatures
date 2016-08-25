@@ -2,12 +2,14 @@
     BASE.namespace("app");
 
     var returnTrue = function () { return true; };
+    var id = 0;
 
     app.Entity = function () {
         this.type = null;
         this.children = [];
         this.parent = null;
         this.components = [];
+        this.id = id++;
     };
 
     app.Entity.prototype.appendChild = function (entity) {

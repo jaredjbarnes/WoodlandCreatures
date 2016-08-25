@@ -176,7 +176,7 @@
                             // mark this pair as checked
                             checked[hashA] = checked[hashB] = true;
 
-                            if (this.intersects(entityA, entityB)) {
+                            if (collidableA.enabled && collidableB.enabled && this.intersects(entityA, entityB)) {
                                 pairs.push([entityA, entityB]);
                             }
                         }
@@ -214,26 +214,26 @@
         }
     };
 
-    app.systems.CollisionSystem.prototype.handleCollision = function (pair, currentCollisionMap) {
+    app.systems.CollisionSystem.prototype.handleCollision = function (pair, currentCollisionsMap) {
         var entityA = pair[0];
         var entityB = pair[1];
         var key1 = entityA.id + "|" + entityB.id;
         var key2 = entityB.id + "|" + entityA.id;
-        var handlers = this.getHanldersByEntities(entityA, entityB);
+        var handlers = this.getHandlersByEntities(entityA, entityB);
 
         // New collision.
-        if (!this.lastCollisionsMap[key1] && !this.lastCollisionMap[key2]) {
-            invokeMethod(obj, "collisionStart", []);
+        if (!this.lastCollisionsMap[key1] && !this.lastCollisionsMap[key2]) {
+            this.invokeMethod(obj, "collisionStart", []);
         }
 
-        invokeMethod(obj, "collision", []);
+        this.invokeMethod(obj, "collision", []);
 
-        currentCollisionMap[key1] = {
+        currentCollisionsMap[key1] = {
             pair: pair,
             otherKey: key2
         };
 
-        currentCollisionMap[key2] = {
+        currentCollisionsMap[key2] = {
             pair: pair,
             otherKey: key1
         };
@@ -245,36 +245,36 @@
 
         var pairs = this.queryForCollisions();
         var pair = null;
-        var currentCollisionMap = {};
+        var currentCollisionsMap = {};
 
         // Handles collisionStart, and collision
         for (var x = 0 ; x < pairs.length; x++) {
             pair = pairs[x];
-            this.handleCollision(pair, currentCollisionMap);
+            this.handleCollision(pair, currentCollisionsMap);
         }
 
         // Handles collisionEnd
         var key = null;
-        var lastCollisionMap = this.lastCollisionMap;
-        var lastMapKeys = Object.keys(lastCollisionMap);
+        var lastCollisionsMap = this.lastCollisionsMap;
+        var lastMapKeys = Object.keys(lastCollisionsMap);
         var collision = null;
         var handlerCalledMap = {};
 
         for (var x = 0 ; x < lastMapKeys; x++) {
-            key = lastCollisionMap[x];
-            collision = currentCollisionMap[key];
+            key = lastCollisionsMap[x];
+            collision = currentCollisionsMap[key];
 
             if (!handlerCalledMap[key] && !collision) {
 
                 handlerCalledMap[collision.otherKey] = true;
                 handlerCalledMap[key] = true;
-                handlers = this.getHanldersByEntities(pair[0], pair[1]);
+                handlers = this.getHandlersByEntities(pair[0], pair[1]);
 
                 this.invokeMethod(handlers, "collisionEnd", []);
             }
         }
 
-        this.lastCollisionMap = currentCollisionMap;
+        this.lastCollisionsMap = currentCollisionsMap;
     };
 
     app.systems.CollisionSystem.prototype.activated = function (game) {

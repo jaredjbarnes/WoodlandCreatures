@@ -5,6 +5,7 @@
     BASE.namespace("app.components");
 
     app.components.Collidable = function () {
+        this.enabled = true;
         this.isStatic = false;
         this.points = [];
     };

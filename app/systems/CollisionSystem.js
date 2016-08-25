@@ -13,6 +13,8 @@
 
     var emptyFn = function () { };
 
+
+    //TODO: For large maps we could use a enabled cells to optimize collision detection.
     app.systems.CollisionSystem = function (cellSize) {
         this.game = null;
         this.top = 0;

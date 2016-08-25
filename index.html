@@ -16,86 +16,30 @@
             "app.Entity",
             "app.systems.Camera",
             "app.systems.SpriteSystem",
-            "app.components.Image",
-            "app.components.Sprite",
-            "app.components.Rect",
+            "app.entities.Map",
+            "app.entities.Player",
             "app.Timer"
         ], function () {
+            var canvas = document.querySelector("#viewport");
+
             var Timer = app.Timer;
             var Game = app.Game;
             var Camera = app.systems.Camera;
             var Entity = app.Entity;
-            var Rect = app.components.Rect;
-            var SpriteImage = app.components.Image;
-            var Sprite = app.components.Sprite;
+            var Player = app.entities.Player;
+            var Map = app.entities.Map;
             var SpriteSystem = app.systems.SpriteSystem;
-
-            var makeEntities = function () {
-                var rootEntity = new Entity();
-                rootEntity.type = "map";
-
-                var rootRect = new Rect();
-
-                rootRect.x = 0,
-                rootRect.y = 0;
-                rootRect.width = 100;
-                rootRect.height = 100;
-
-                rootEntity.components.push(rootRect);
-
-                var character = new Entity();
-                character.type = "character";
-
-                var image = new SpriteImage();
-                image.path = "/images/zelda.gif";
-                image.x = 17;
-                image.y = 137;
-                image.width = 23;
-                image.height = 24;
-
-                var characterRect = new Rect();
-                characterRect.x = 10;
-                characterRect.y = 10;
-                characterRect.width = 23;
-                characterRect.height = 24;
-
-                var sprite = new Sprite();
-                sprite.positions = [ {
-                    y: 137,
-                    x: 85
-                }, {
-                    y: 137,
-                    x: 109
-                }, {
-                    y: 137,
-                    x: 133
-                }, {
-                    y: 137,
-                    x: 15
-                }, {
-                    y: 137,
-                    x: 38
-                }, {
-                    y: 137,
-                    x: 61
-                }];
-
-                character.components.push(image);
-                character.components.push(characterRect);
-                character.components.push(sprite);
-
-                rootEntity.appendChild(character);
-
-                return rootEntity;
-            };
-
-            var canvas = document.querySelector("#viewport");
 
             var camera = new Camera(canvas);
             var spriteSystem = new SpriteSystem();
             var timer = new Timer();
 
-            var game = new Game(makeEntities(), timer);
+            var map = new Map();
+            var player = new Player();
+
+            map.appendChild(player);
+
+            var game = new Game(map, timer);
 
             game.appendSystem(camera);
             game.appendSystem(spriteSystem);

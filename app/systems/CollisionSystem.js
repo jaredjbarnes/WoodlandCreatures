@@ -38,12 +38,16 @@
         var key1 = entityType1 + "|" + entityType2;
         var key2 = entityType2 + "|" + entityType1;
 
-        var handler2 = function (entity1, entity2) {
-            handler(entity2, entity1);
-        };
+        // Iterate through the events and reverse the arguments.
+        var reverseHandlers = Object.keys(handlers).reduce(function (obj, key) {
+            obj[key] = function (entityA, entityB) {
+                return handlers[key].call(obj, entityB, entityA);
+            };
+            return obj;
+        }, {});
 
-        this.handlers[key1] = handler;
-        this.handlers[key2] = handler2;
+        this.handlers[key1] = handlers;
+        this.handlers[key2] = reverseHandlers;
     };
 
     app.systems.CollisionSystem.prototype.getHandlerByEntities = function (entityA, entityB) {
@@ -225,10 +229,10 @@
 
         // New collision.
         if (!this.lastCollisionsMap[key1] && !this.lastCollisionsMap[key2]) {
-            this.invokeMethod(obj, "collisionStart", []);
+            this.invokeMethod(obj, "collisionStart", pair);
         }
 
-        this.invokeMethod(obj, "collision", []);
+        this.invokeMethod(obj, "collision", pair);
 
         currentCollisionsMap[key1] = {
             pair: pair,
@@ -272,7 +276,7 @@
                 handlerCalledMap[key] = true;
                 handlers = this.getHandlersByEntities(pair[0], pair[1]);
 
-                this.invokeMethod(handlers, "collisionEnd", []);
+                this.invokeMethod(handlers, "collisionEnd", pair);
             }
         }
 

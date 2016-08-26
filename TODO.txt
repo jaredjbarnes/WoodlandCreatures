@@ -1,0 +1,30 @@
+﻿All complex systems that rely on collisions will be given the 
+the CollisionSystem as a dependency. This will allow the complex
+systems to react to collisions specific to their needs.
+
+Systems
+=============================
+Actionable
+    * Communicate
+    * Help
+    * Move (Not by character but by acting on it.)
+    * Dissappear
+    * Redirect (Redirects action to another actionable)
+    =========================
+        * Heal
+        * Serve
+        * Love (Hug)    
+
+Destructable (Destroyed by ammunition power)
+    
+Indestructable
+
+Movable
+
+Switchable
+    * onActions
+    * offActions
+
+Transportable
+
+Actionable have a list of Action types

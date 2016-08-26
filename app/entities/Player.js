@@ -14,6 +14,8 @@
     app.entities.Player = function () {
         app.Entity.call(this);
 
+        this.type = "Player";
+
         var image = new app.components.Image();
         image.path = "/images/zelda.gif";
         image.x = 0;

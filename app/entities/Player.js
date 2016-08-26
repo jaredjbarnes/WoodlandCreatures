@@ -10,6 +10,8 @@
     var Rect = app.components.Rect;
     var Sprite = app.components.Sprite;
 
+    // TODO: Put the current weapon as a child entity. And when striking, the state will show the child graphic.
+
     app.entities.Player = function () {
         app.Entity.call(this);
 

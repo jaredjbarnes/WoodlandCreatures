@@ -5,6 +5,9 @@
         play: function (game) {
             game.timer.play();
             game.state = startedState;
+            game.systems.forEach(function (system) {
+                game.invokeMethodOnSystem(system, "started", []);
+            });
         },
         pause: function () { }
     };
@@ -14,6 +17,9 @@
         pause: function (game) {
             game.timer.pause();
             game.state = pausedState;
+            game.systems.forEach(function (system) {
+                game.invokeMethodOnSystem(system, "paused", []);
+            });
         }
     };
 

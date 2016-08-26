@@ -13,17 +13,22 @@
     };
 
     app.Entity.prototype.appendChild = function (entity) {
+        entity.parent = this;
         this.children.push(entity);
     };
 
     app.Entity.prototype.removeChild = function (entity) {
+
         var index = this.children.indexOf(entity);
         if (index > -1) {
+            entity.parent = null;
             this.children.splice(index, 1);
         }
     };
 
     app.Entity.prototype.insertChildBefore = function (entity, referenceEntity) {
+        entity.parent = this;
+
         var index = this.children.indexOf(referenceEntity);
         if (index > -1) {
             this.children.splice(index, 0, entity);

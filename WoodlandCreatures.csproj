@@ -94,13 +94,18 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\components\PlayerState.js" />
     <Content Include="app\components\Collidable.js" />
     <Content Include="app\components\Rect.js" />
-    <Content Include="app\components\Image.js" />
+    <Content Include="app\components\Renderable.js" />
     <Content Include="app\components\Sprite.js" />
+    <Content Include="app\entities\Map.js" />
+    <Content Include="app\entities\Player.js" />
     <Content Include="app\Entity.js" />
     <Content Include="app\Game.js" />
     <Content Include="app\systems\Camera.js" />
+    <Content Include="app\systems\KeyboardInputSystem.js" />
+    <Content Include="app\systems\PlayerSystem.js" />
     <Content Include="app\systems\CollisionSystem.js" />
     <Content Include="app\systems\SpriteSystem.js" />
     <Content Include="app\Timer.js" />
@@ -1103,6 +1108,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TODO.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

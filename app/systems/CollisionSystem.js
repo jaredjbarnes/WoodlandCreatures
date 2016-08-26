@@ -162,15 +162,14 @@
 
                     // for every other object in a cell...
                     for (l = k + 1; l < gridCell.length; l++) {
+                        entityB = gridCell[l];
 
                         // We don't need to check static objects to other static objects.
                         collidableA = entityA.getComponentByType(Collidable);
-                        collidableB = entityA.getComponentByType(Collidable);
+                        collidableB = entityB.getComponentByType(Collidable);
                         if (collidableA.isStatic && collidableB.isStatic) {
                             continue;
                         }
-
-                        entityB = gridCell[l];
 
                         // create a unique key to mark this pair.
                         // use both combinations to ensure linear time

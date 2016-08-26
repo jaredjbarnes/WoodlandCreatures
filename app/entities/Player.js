@@ -1,14 +1,13 @@
 ﻿BASE.require([
     "app.Entity",
     "app.components.Rect",
-    "app.components.Image",
+    "app.components.Renderable",
     "app.components.Sprite"
 ], function () {
 
     BASE.namespace("app.entities");
 
     var Rect = app.components.Rect;
-    var Image = app.components.Image;
     var Sprite = app.components.Sprite;
 
     app.entities.Player = function () {
@@ -16,38 +15,44 @@
 
         this.type = "Player";
 
-        var image = new app.components.Image();
-        image.path = "/images/zelda.gif";
+        var image = new app.components.Renderable();
+        image.path = "/images/link.gif";
         image.x = 0;
         image.y = 0;
         image.width = 23;
-        image.height = 24;
+        image.height = 25;
 
         var rect = new Rect();
         rect.x = 10;
         rect.y = 10;
         rect.width = 23;
-        rect.height = 24;
+        rect.height = 25;
 
         var sprite = new Sprite();
         sprite.positions = [{
-            y: 138,
-            x: 85
+            y: 9,
+            x: 9
         }, {
-            y: 138,
-            x: 109
+            y: 9,
+            x: 34
         }, {
-            y: 138,
-            x: 133
+            y: 9,
+            x: 58
         }, {
-            y: 137,
-            x: 15
+            y: 9,
+            x: 80
         }, {
-            y: 138,
-            x: 38
+            y: 9,
+            x: 102
         }, {
-            y: 138,
-            x: 61
+            y: 9,
+            x: 127
+        }, {
+            y: 9,
+            x: 152
+        }, {
+            y: 9,
+            x: 174
         }];
 
         sprite.timeScale = .35;

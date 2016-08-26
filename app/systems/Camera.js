@@ -1,11 +1,11 @@
 ﻿BASE.require([
-    "app.components.Image",
+    "app.components.Renderable",
     "app.components.Rect"
 ], function () {
 
     BASE.namespace("app.systems");
 
-    var SpriteImage = app.components.Image;
+    var SpriteImage = app.components.Renderable;
     var Rect = app.components.Rect;
     var emptyFn = function () { };
 
@@ -36,13 +36,7 @@
         };
 
         this.isRenderable = function (entity) {
-            var sprite = entity.getComponentByType(SpriteImage);
-
-            if (sprite == null) {
-                return false;
-            }
-
-            return true;
+            return  entity.hasComponentByType(SpriteImage);
         };
     };
 

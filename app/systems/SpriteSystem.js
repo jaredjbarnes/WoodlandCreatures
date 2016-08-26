@@ -1,11 +1,11 @@
 ﻿BASE.require([
     "app.components.Sprite",
-    "app.components.Image"
+    "app.components.Renderable"
 ], function () {
     BASE.namespace("app.systems");
 
     var Sprite = app.components.Sprite;
-    var Image = app.components.Image;
+    var Image = app.components.Renderable;
 
     var isSprite = function (entity) {
         return entity.hasComponentByType(Sprite);

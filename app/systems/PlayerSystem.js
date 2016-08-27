@@ -21,13 +21,33 @@
         return entity.type === "Player" && entity.hasComponentByType(PlayerState) && entity.hasComponentByType(Renderable) && entity.hasComponentByType(Sprite);
     };
 
+    var movements = {
+        up: function (rect) {
+            rect.top -= 2;
+        },
+        left: function (rect) {
+            rect.left -= 2;
+        },
+        right: function (rect) {
+            rect.left += 2;
+        },
+        down: function (rect) {
+            rect.top += 2;
+        }
+    };
+
     var handleStateChangeByInput = function (entity, system, nothingState) {
         var inputSystem = system.inputSystem;
         var inputMapping = system.inputMapping;
         var mappingKeys = Object.keys(inputMapping);
         var playerState = entity.getComponentByType(PlayerState);
+        var rect = entity.getComponentByType(Rect);
 
         var isNothing = mappingKeys.every(function (key) {
+            if (inputSystem.pressedKeys[key]) {
+                invokeMethod(movements, key, [rect]);
+            }
+
             return !inputSystem.pressedKeys[key];
         });
 
@@ -80,8 +100,8 @@
             var sprite = entity.getComponentByType(Sprite);
             sprite.index = 0;
             sprite.positions = [{
-                y: 209,
-                x: 95
+                y: 208,
+                x: 94
             }];
         },
         update: function (entity, system) {
@@ -95,8 +115,8 @@
             var sprite = entity.getComponentByType(Sprite);
             sprite.index = 0;
             sprite.positions = [{
-                y: 211,
-                x: 49
+                y: 209,
+                x: 47
             }];
         },
         update: function (entity, system) {
@@ -205,7 +225,35 @@
     };
 
     var runningUpState = {
-        activated: function (entity, system) { },
+        activated: function (entity, system) {
+            var sprite = entity.getComponentByType(Sprite);
+            sprite.index = 0;
+            sprite.positions = [{
+                y: 42,
+                x: 8
+            }, {
+                y: 42,
+                x: 33
+            }, {
+                y: 42,
+                x: 57
+            }, {
+                y: 42,
+                x: 79
+            }, {
+                y: 42,
+                x: 101
+            }, {
+                y: 42,
+                x: 126
+            }, {
+                y: 42,
+                x: 151
+            }, {
+                y: 42,
+                x: 173
+            }];
+        },
         update: function (entity, system) {
             handleStateChangeByInput(entity, system, "standingUpState");
         },
@@ -213,8 +261,40 @@
     };
 
     var runningDownState = {
-        activated: function (entity, system) { },
+        activated: function (entity, system) {
+            var sprite = entity.getComponentByType(Sprite);
+            sprite.index = 0;
+            sprite.positions = [{
+                y: 42,
+                x: 198
+            }, {
+                y: 42,
+                x: 219
+            }, {
+                y: 42,
+                x: 244
+            }, {
+                y: 42,
+                x: 267
+            }, {
+                y: 42,
+                x: 291
+            }, {
+                y: 42,
+                x: 315
+            }, {
+                y: 42,
+                x: 336
+            }, {
+                y: 42,
+                x: 357
+            }];
+        },
         update: function (entity, system) {
+            var rect = entity.getComponentByType(Rect);
+
+
+
             handleStateChangeByInput(entity, system, "standingDownState");
         },
         deactivated: function (entity, system) { }
@@ -244,10 +324,10 @@
         this.collisionSystem = collisionSystem;
 
         this.inputMapping = inputMapping || {
-            "37": "runningLeftState",
-            "38": "runningUpState",
-            "39": "runningRightState",
-            "40": "runningDownState"
+            "left": "runningLeftState",
+            "up": "runningUpState",
+            "right": "runningRightState",
+            "down": "runningDownState"
         };
     };
 

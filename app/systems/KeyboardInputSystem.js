@@ -2,16 +2,16 @@
 
     BASE.namespace("app.systems");
 
-    app.systems.KeyboardInputSystem = function (document) {
+    app.systems.KeyboardInputSystem = function (document, mapping) {
 
         var pressedKeys = this.pressedKeys = {};
 
         var keyDownListener = function (event) {
-            pressedKeys[event.keyCode] = true;
+            pressedKeys[mapping[event.keyCode] || event.keyCode] = true;
         };
 
         var keyUpListener = function (event) {
-            pressedKeys[event.keyCode] = false;
+            pressedKeys[mapping[event.keyCode] || event.keyCode] = false;
         };
 
         var bind = function (game) {

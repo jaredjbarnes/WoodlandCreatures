@@ -41,7 +41,14 @@
             var KeyboardInputSystem = app.systems.KeyboardInputSystem;
             var CollisionSystem = app.systems.CollisionSystem;
 
-            var inputSystem = new KeyboardInputSystem(document);
+            var mapping = {
+                37: "left",
+                38: "up",
+                39: "right",
+                40: "down"
+            };
+
+            var inputSystem = new KeyboardInputSystem(document, mapping);
             var collisionSystem = new CollisionSystem();
             var camera = new Camera(canvas);
             var spriteSystem = new SpriteSystem();

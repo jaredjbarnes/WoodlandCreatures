@@ -51,7 +51,7 @@
             sprite.index = 0;
             sprite.positions = [{
                 y: 8,
-                x: 196
+                x: 198
             }];
         },
         update: function (entity, system) {
@@ -66,7 +66,7 @@
             sprite.index = 0;
             sprite.positions = [{
                 y: 9,
-                x: 9
+                x: 8
             }];
         },
         update: function (entity, system) {
@@ -137,28 +137,28 @@
             sprite.index = 0;
             sprite.positions = [{
                 y: 8,
-                x: 196
+                x: 198
             }, {
                 y: 8,
-                x: 217
+                x: 219
             }, {
                 y: 8,
-                x: 242
+                x: 244
             }, {
                 y: 8,
-                x: 265
+                x: 267
             }, {
                 y: 8,
-                x: 289
+                x: 291
             }, {
                 y: 8,
-                x: 313
+                x: 315
             }, {
                 y: 8,
-                x: 334
+                x: 336
             }, {
                 y: 8,
-                x: 355
+                x: 357
             }];
 
         },
@@ -174,28 +174,28 @@
             sprite.index = 0;
             sprite.positions = [{
                 y: 9,
-                x: 9
+                x: 8
             }, {
                 y: 9,
-                x: 34
+                x: 33
             }, {
                 y: 9,
-                x: 58
+                x: 57
             }, {
                 y: 9,
-                x: 80
+                x: 79
             }, {
                 y: 9,
-                x: 102
+                x: 101
             }, {
                 y: 9,
-                x: 127
+                x: 126
             }, {
                 y: 9,
-                x: 152
+                x: 151
             }, {
                 y: 9,
-                x: 174
+                x: 173
             }];
         },
         update: function (entity, system) {

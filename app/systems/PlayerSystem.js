@@ -42,13 +42,13 @@
         var mappingKeys = Object.keys(inputMapping);
         var playerState = entity.getComponentByType(PlayerState);
         var rect = entity.getComponentByType(Rect);
+        var isNothing = true;
 
-        var isNothing = mappingKeys.every(function (key) {
+        mappingKeys.forEach(function (key) {
             if (inputSystem.pressedKeys[key]) {
                 invokeMethod(movements, key, [rect]);
+                isNothing = false;
             }
-
-            return !inputSystem.pressedKeys[key];
         });
 
         if (isNothing) {

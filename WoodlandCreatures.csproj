@@ -107,6 +107,8 @@
     <Content Include="app\systems\KeyboardInputSystem.js" />
     <Content Include="app\systems\PlayerSystem.js" />
     <Content Include="app\systems\CollisionSystem.js" />
+    <Content Include="app\systems\player\PlayerInputSystem.js" />
+    <Content Include="app\systems\player\PlayerSpriteSystem.js" />
     <Content Include="app\systems\SpriteSystem.js" />
     <Content Include="app\Timer.js" />
     <Content Include="images\zelda.gif" />

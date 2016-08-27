@@ -17,108 +17,254 @@
         }
     };
 
-    var isPlayer = function (entity) {
+    var isPlayer = function (entity, system) {
         return entity.type === "Player" && entity.hasComponentByType(PlayerState) && entity.hasComponentByType(Renderable) && entity.hasComponentByType(Sprite);
     };
 
+    var handleStateChangeByInput = function (entity, system, nothingState) {
+        var inputSystem = system.inputSystem;
+        var inputMapping = system.inputMapping;
+        var mappingKeys = Object.keys(inputMapping);
+        var playerState = entity.getComponentByType(PlayerState);
+
+        var isNothing = mappingKeys.every(function (key) {
+            return !inputSystem.pressedKeys[key];
+        });
+
+        if (isNothing) {
+            playerState.name = nothingState;
+        } else {
+            mappingKeys.every(function (key) {
+                if (inputSystem.pressedKeys[key]) {
+                    playerState.name = inputMapping[key];
+                    return false;
+                }
+                return true;
+            });
+        }
+    };
+
+
     var standingRightState = {
-        activated: function (entity) {
-            // Change the sprite
+        activated: function (entity, system) {
+            var sprite = entity.getComponentByType(Sprite);
+            sprite.index = 0;
+            sprite.positions = [{
+                y: 8,
+                x: 196
+            }];
         },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        update: function (entity, system) {
+            handleStateChangeByInput(entity, system, "standingRightState");
+        },
+        deactivated: function (entity, system) { }
     };
 
     var standingLeftState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) {
+            var sprite = entity.getComponentByType(Sprite);
+            sprite.index = 0;
+            sprite.positions = [{
+                y: 9,
+                x: 9
+            }];
+        },
+        update: function (entity, system) {
+            handleStateChangeByInput(entity, system, "standingLeftState");
+        },
+        deactivated: function (entity, system) { }
     };
 
     var standingUpState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) {
+            var sprite = entity.getComponentByType(Sprite);
+            sprite.index = 0;
+            sprite.positions = [{
+                y: 209,
+                x: 95
+            }];
+        },
+        update: function (entity, system) {
+            handleStateChangeByInput(entity, system, "standingUpState");
+        },
+        deactivated: function (entity, system) { }
     };
 
     var standingDownState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) {
+            var sprite = entity.getComponentByType(Sprite);
+            sprite.index = 0;
+            sprite.positions = [{
+                y: 211,
+                x: 49
+            }];
+        },
+        update: function (entity, system) {
+            handleStateChangeByInput(entity, system, "standingDownState");
+        },
+        deactivated: function (entity, system) { }
     };
 
 
     var strikingRightState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) { },
+        update: function (entity, system) { },
+        deactivated: function (entity, system) { }
     };
 
     var strikingLeftState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) { },
+        update: function (entity, system) { },
+        deactivated: function (entity, system) { }
     };
 
     var strikingUpState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) { },
+        update: function (entity, system) { },
+        deactivated: function (entity, system) { }
     };
 
     var strikingDownState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) { },
+        update: function (entity, system) { },
+        deactivated: function (entity, system) { }
     };
 
 
     var runningRightState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) {
+            var sprite = entity.getComponentByType(Sprite);
+            sprite.index = 0;
+            sprite.positions = [{
+                y: 8,
+                x: 196
+            }, {
+                y: 8,
+                x: 217
+            }, {
+                y: 8,
+                x: 242
+            }, {
+                y: 8,
+                x: 265
+            }, {
+                y: 8,
+                x: 289
+            }, {
+                y: 8,
+                x: 313
+            }, {
+                y: 8,
+                x: 334
+            }, {
+                y: 8,
+                x: 355
+            }];
+
+        },
+        update: function (entity, system) {
+            handleStateChangeByInput(entity, system, "standingRightState");
+        },
+        deactivated: function (entity, system) { }
     };
 
     var runningLeftState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) {
+            var sprite = entity.getComponentByType(Sprite);
+            sprite.index = 0;
+            sprite.positions = [{
+                y: 9,
+                x: 9
+            }, {
+                y: 9,
+                x: 34
+            }, {
+                y: 9,
+                x: 58
+            }, {
+                y: 9,
+                x: 80
+            }, {
+                y: 9,
+                x: 102
+            }, {
+                y: 9,
+                x: 127
+            }, {
+                y: 9,
+                x: 152
+            }, {
+                y: 9,
+                x: 174
+            }];
+        },
+        update: function (entity, system) {
+            handleStateChangeByInput(entity, system, "standingLeftState");
+        },
+        deactivated: function (entity, system) { }
     };
 
     var runningUpState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) { },
+        update: function (entity, system) {
+            handleStateChangeByInput(entity, system, "standingUpState");
+        },
+        deactivated: function (entity, system) { }
     };
 
     var runningDownState = {
-        activated: function (entity) { },
-        update: function (entity) { },
-        deactivated: function (entity) { }
+        activated: function (entity, system) { },
+        update: function (entity, system) {
+            handleStateChangeByInput(entity, system, "standingDownState");
+        },
+        deactivated: function (entity, system) { }
     };
 
-    app.systems.PlayerSystem = function (inputMapping, inputSystem, collisionSystem) {
+    var movingStates = {
+        standingDownState: standingDownState,
+        standingUpState: standingUpState,
+        standingLeftState: standingLeftState,
+        standingRightState: standingRightState,
+        runningDownState: runningDownState,
+        runningUpState: runningUpState,
+        runningLeftState: runningLeftState,
+        runningRightState: runningRightState,
+        strikingDownState: strikingDownState,
+        strikingUpState: strikingUpState,
+        strikingLeftState: strikingLeftState,
+        strikingRightState: strikingRightState
+    };
+
+    app.systems.PlayerSystem = function (inputSystem, collisionSystem, inputMapping) {
         this.game = null;
-        var timer = this.game.timer;
+        var timer = null;
+        this.isReady = true;
         this.entities = [];
         this.inputSystem = inputSystem;
-        this.collisionsSystem = collisionsSystem;
+        this.collisionSystem = collisionSystem;
+
         this.inputMapping = inputMapping || {
-            "37": "left",
-            "38": "top",
-            "39": "right",
-            "40": "bottom"
+            "37": "runningLeftState",
+            "38": "runningUpState",
+            "39": "runningRightState",
+            "40": "runningDownState"
         };
     };
 
     app.systems.PlayerSystem.prototype.updatePlayer = function (entity) {
-        // Save the current state name.
-        // Invoke the current states update.
-        // Check if state changed with the invocation.
-        //      * If changed
-        //          - Invoke the deactivated on old state.
-        //          - Invoke the activated on new state.
-        //          - Invoke the update on the new state.
+        var playerState = entity.getComponentByType(PlayerState);
+        var stateName = playerState.name;
+        var system = this;
+
+        movingStates[stateName].update(entity, system);
+
+        var newStateName = playerState.name;
+
+        if (newStateName !== stateName) {
+            movingStates[stateName].deactivated(entity, system);
+            movingStates[newStateName].activated(entity, system);
+            movingStates[newStateName].update(entity, system);
+        }
     };
 
     app.systems.PlayerSystem.prototype.update = function () {
@@ -136,7 +282,22 @@
 
     app.systems.PlayerSystem.prototype.activated = function (game) {
         this.game = game;
+        this.timer = this.game.timer;
         this.cacheEntities();
+
+        var entity = null;
+        var entities = this.entities;
+        var length = entities.length;
+        var stateName = null;
+        var playerState = null;
+
+        for (var x = 0; x < length; x++) {
+            entity = entities[x];
+            playerState = entity.getComponentByType(PlayerState);
+            stateName = playerState.name;
+
+            movingStates[stateName].activated(entity, this);
+        }
     };
 
     app.systems.PlayerSystem.prototype.deactivated = function () {

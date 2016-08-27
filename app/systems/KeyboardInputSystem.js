@@ -4,14 +4,14 @@
 
     app.systems.KeyboardInputSystem = function (document) {
 
-        var currentKeyPresses = {};
+        var pressedKeys = this.pressedKeys = {};
 
         var keyDownListener = function (event) {
-            currentKeyPresses[event.keyCode] = true;
+            pressedKeys[event.keyCode] = true;
         };
 
         var keyUpListener = function (event) {
-            currentKeyPresses[event.keyCode] = false;
+            pressedKeys[event.keyCode] = false;
         };
 
         var bind = function (game) {
@@ -24,9 +24,9 @@
             document.body.removeEventListener("keyup", keyUpListener, false);
         };
 
-        this.started = bind;
-        this.paused = unbind;
-
+        this.activated = bind;
+        this.deactivated = unbind;
+        this.isReady = true;
     };
 
 });

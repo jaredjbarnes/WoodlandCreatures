@@ -3,7 +3,7 @@
     BASE.namespace("app.components");
 
     app.components.PlayerState = function () {
-        this.lastStateChangeTime = 0;
+        this.name = "standingRightState";
     };
 
 });

@@ -2,13 +2,15 @@
     "app.Entity",
     "app.components.Rect",
     "app.components.Renderable",
-    "app.components.Sprite"
+    "app.components.Sprite",
+    "app.components.PlayerState"
 ], function () {
 
     BASE.namespace("app.entities");
 
     var Rect = app.components.Rect;
     var Sprite = app.components.Sprite;
+    var PlayerState = app.components.PlayerState;
 
     // TODO: Put the current weapon as a child entity. And when striking, the state will show the child graphic.
 
@@ -31,35 +33,11 @@
         rect.height = 25;
 
         var sprite = new Sprite();
-        sprite.positions = [{
-            y: 9,
-            x: 9
-        }, {
-            y: 9,
-            x: 34
-        }, {
-            y: 9,
-            x: 58
-        }, {
-            y: 9,
-            x: 80
-        }, {
-            y: 9,
-            x: 102
-        }, {
-            y: 9,
-            x: 127
-        }, {
-            y: 9,
-            x: 152
-        }, {
-            y: 9,
-            x: 174
-        }];
-
         sprite.timeScale = .35;
 
-        this.components.push(image, rect, sprite);
+        var playerState = new PlayerState();
+
+        this.components.push(image, rect, sprite, playerState);
     };
 
     BASE.extend(app.entities.Player, app.Entity);

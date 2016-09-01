@@ -111,6 +111,7 @@
     <Content Include="app\systems\player\PlayerSpriteSystem.js" />
     <Content Include="app\systems\SpriteSystem.js" />
     <Content Include="app\Timer.js" />
+    <Content Include="app\Vector.js" />
     <Content Include="images\zelda.gif" />
     <Content Include="index.html" />
     <Content Include="lib\weblib\components\css\Help.html" />

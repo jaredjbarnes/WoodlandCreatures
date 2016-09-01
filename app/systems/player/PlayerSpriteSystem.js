@@ -16,8 +16,8 @@
                 var sprite = entity.getComponentByType(Sprite);
                 sprite.index = 0;
                 sprite.positions = [{
-                    y: 209,
-                    x: 47
+                    y: 50,
+                    x: 25
                 }];
             }
         },
@@ -26,8 +26,8 @@
                 var sprite = entity.getComponentByType(Sprite);
                 sprite.index = 0;
                 sprite.positions = [{
-                    y: 208,
-                    x: 94
+                    y: 50,
+                    x: 0
                 }];
             }
         },
@@ -36,8 +36,8 @@
                 var sprite = entity.getComponentByType(Sprite);
                 sprite.index = 0;
                 sprite.positions = [{
-                    y: 9,
-                    x: 8
+                    y: 0,
+                    x: 0
                 }];
             }
         },
@@ -46,8 +46,8 @@
                 var sprite = entity.getComponentByType(Sprite);
                 sprite.index = 0;
                 sprite.positions = [{
-                    y: 8,
-                    x: 198
+                    y: 0,
+                    x: 200
                 }];
             }
         },
@@ -56,29 +56,29 @@
                 var sprite = entity.getComponentByType(Sprite);
                 sprite.index = 0;
                 sprite.positions = [{
-                    y: 42,
-                    x: 198
+                    y: 25,
+                    x: 200
                 }, {
-                    y: 42,
-                    x: 219
+                    y: 25,
+                    x: 225
                 }, {
-                    y: 42,
-                    x: 244
+                    y: 25,
+                    x: 250
                 }, {
-                    y: 42,
-                    x: 267
+                    y: 25,
+                    x: 275
                 }, {
-                    y: 42,
-                    x: 291
+                    y: 25,
+                    x: 300
                 }, {
-                    y: 42,
-                    x: 315
+                    y: 25,
+                    x: 325
                 }, {
-                    y: 42,
-                    x: 336
+                    y: 25,
+                    x: 350
                 }, {
-                    y: 42,
-                    x: 357
+                    y: 25,
+                    x: 375
                 }];
             }
         },
@@ -87,29 +87,29 @@
                 var sprite = entity.getComponentByType(Sprite);
                 sprite.index = 0;
                 sprite.positions = [{
-                    y: 42,
-                    x: 8
+                    y: 25,
+                    x: 0
                 }, {
-                    y: 42,
-                    x: 33
+                    y: 25,
+                    x: 25
                 }, {
-                    y: 42,
-                    x: 57
+                    y: 25,
+                    x: 50
                 }, {
-                    y: 42,
-                    x: 79
+                    y: 25,
+                    x: 75
                 }, {
-                    y: 42,
-                    x: 101
+                    y: 25,
+                    x: 100
                 }, {
-                    y: 42,
-                    x: 126
+                    y: 25,
+                    x: 125
                 }, {
-                    y: 42,
-                    x: 151
+                    y: 25,
+                    x: 150
                 }, {
-                    y: 42,
-                    x: 173
+                    y: 25,
+                    x: 175
                 }];
             }
         },
@@ -118,29 +118,29 @@
                 var sprite = entity.getComponentByType(Sprite);
                 sprite.index = 0;
                 sprite.positions = [{
-                    y: 9,
-                    x: 8
+                    y: 0,
+                    x: 0
                 }, {
-                    y: 9,
-                    x: 33
+                    y: 0,
+                    x: 25
                 }, {
-                    y: 9,
-                    x: 57
+                    y: 0,
+                    x: 50
                 }, {
-                    y: 9,
-                    x: 79
+                    y: 0,
+                    x: 75
                 }, {
-                    y: 9,
-                    x: 101
+                    y: 0,
+                    x: 100
                 }, {
-                    y: 9,
-                    x: 126
+                    y: 0,
+                    x: 125
                 }, {
-                    y: 9,
-                    x: 151
+                    y: 0,
+                    x: 150
                 }, {
-                    y: 9,
-                    x: 173
+                    y: 0,
+                    x: 175
                 }];
             }
         },
@@ -149,29 +149,29 @@
                 var sprite = entity.getComponentByType(Sprite);
                 sprite.index = 0;
                 sprite.positions = [{
-                    y: 8,
-                    x: 198
+                    y: 0,
+                    x: 200
                 }, {
-                    y: 8,
-                    x: 219
+                    y: 0,
+                    x: 225
                 }, {
-                    y: 8,
-                    x: 244
+                    y: 0,
+                    x: 250
                 }, {
-                    y: 8,
-                    x: 267
+                    y: 0,
+                    x: 275
                 }, {
-                    y: 8,
-                    x: 291
+                    y: 0,
+                    x: 300
                 }, {
-                    y: 8,
-                    x: 315
+                    y: 0,
+                    x: 325
                 }, {
-                    y: 8,
-                    x: 336
+                    y: 0,
+                    x: 350
                 }, {
-                    y: 8,
-                    x: 357
+                    y: 0,
+                    x: 375
                 }];
 
             }

@@ -244,11 +244,23 @@
         };
     };
 
-    app.systems.CollisionSystem.prototype.update = function () {
+    app.systems.CollisionSystem.prototype.executeBroadphase = function () {
         this.updateWorldSize();
         this.sweepAndPrune();
+    };
 
-        var pairs = this.queryForCollisions();
+    app.systems.CollisionSystem.prototype.getNormals = function (collidable) {
+        collidable
+    };
+
+    app.systems.CollisionSystem.prototype.getPenetration = function (pair) {
+        var collidableA = pair[0].getComponentByType(Collidable);
+        var collidableB = pair[1].getComponentByType(Collidable);
+
+        
+    };
+
+    app.systems.CollidableSystem.prototype.handleCollisions = function (pairs) {
         var pair = null;
         var currentCollisionsMap = {};
 
@@ -280,6 +292,14 @@
         }
 
         this.lastCollisionsMap = currentCollisionsMap;
+    };
+
+    app.systems.CollisionSystem.prototype.update = function () {
+        this.executeBroadphase();
+
+        var pairs = this.queryForCollisions();
+
+        this.handleCollisions(pairs);
     };
 
     app.systems.CollisionSystem.prototype.activated = function (game) {

@@ -1,17 +1,16 @@
 ﻿BASE.require([
-    "app.components.Rect"
+    "app.components.Rect",
+    "app.Vector"
 ], function () {
 
     BASE.namespace("app.components");
 
+    var Vector = app.Vector;
+
     app.components.Collidable = function () {
         this.enabled = true;
-        this.isStatic = false;
-        this.points = [];
+        this.polygons = [];
+        this.normals = [];
     };
-
-    // Metadata for development environment.
-    app.components.Collidable.dependencies = [app.components.Rect];
-    app.components.Collidable.namespace = "app.components.Collidable";
 
 });

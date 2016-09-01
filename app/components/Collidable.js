@@ -1,5 +1,5 @@
 ﻿BASE.require([
-    "app.components.Rect",
+    "app.components.Transform",
     "app.Vector"
 ], function () {
 
@@ -10,7 +10,6 @@
     app.components.Collidable = function () {
         this.enabled = true;
         this.polygons = [];
-        this.normals = [];
     };
-
+    
 });

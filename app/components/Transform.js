@@ -5,7 +5,7 @@
     BASE.namespace("app.components");
     var Vector = app.Vector;
 
-    app.components.Rect = function () {
+    app.components.Transform = function () {
         var top = 0;
         var left = 0;
         var right = 0;
@@ -14,14 +14,27 @@
         var height = 0;
         var center = new Vector(0, 0);
 
+        var lastTop = 0;
+        var lastLeft = 0;
+        var lastRight = 0;
+        var lastBottom = 0;
+        var lastWidth = 0;
+        var lastHeight = 0;
+        var lastCenter = new Vector(0, 0);
+
         Object.defineProperties(this, {
             x: {
                 get: function () {
                     return left;
                 },
                 set: function (value) {
+                    lastLeft = left;
+                    lastRight = right;
+                    lastCenter.x = center.x;
+
                     left = value;
                     right = left + width;
+                    center.x = width / 2;
                 }
             },
             y: {
@@ -29,8 +42,13 @@
                     return top;
                 },
                 set: function (value) {
+                    lastTop = top;
+                    lastBottom = bottom;
+                    lastCenter.y = center.y;
+
                     top = value;
                     bottom = top + height;
+                    center.y = height / 2;
                 }
             },
             left: {
@@ -38,8 +56,13 @@
                     return left;
                 },
                 set: function (value) {
+                    lastLeft = left;
+                    lastRight = right;
+                    lastCenter.x = center.x;
+
                     left = value;
                     right = left + width;
+                    center.x = width / 2;
                 }
             },
             top: {
@@ -47,8 +70,13 @@
                     return top;
                 },
                 set: function (value) {
+                    lastTop = top;
+                    lastBottom = bottom;
+                    lastCenter.y = center.y;
+
                     top = value;
                     bottom = top + height;
+                    center.y = height / 2;
                 }
             },
             center: {
@@ -71,10 +99,12 @@
                     return width;
                 },
                 set: function (value) {
-                    width = value;
+                    lastWidth = width;
+                    lastCenter.x = center.x;
 
-                    center.x = width / 2;
+                    width = value;
                     right = left + width;
+                    center.x = width / 2;
                 }
             },
             height: {
@@ -82,22 +112,24 @@
                     return height;
                 },
                 set: function (value) {
-                    height = value;
+                    lastHeight = height;
+                    lastCenter.y = lastCenter.y;
 
-                    center.y = height / 2;
+                    height = value;
                     bottom = top + height;
+                    center.y = height / 2;
                 }
             }
         });
 
-        app.components.Rect.prototype.getIntersection = function (rect) {
+        app.components.Transform.prototype.getIntersection = function (rect) {
             var top = Math.max(rect.top, this.top);
             var right = Math.min(rect.right, this.right);
             var bottom = Math.max(rect.bottom, this.bottom);
             var left = Math.max(rect.left, this.left);
 
             if (top < bottom, left < right) {
-                var intersection = new app.components.Rect();
+                var intersection = new app.components.Transform();
 
                 intersection.top = top;
                 intersection.left = left;

@@ -1,11 +1,11 @@
 ﻿BASE.require([
     "app.Entity",
-    "app.components.Rect"
+    "app.components.Transform"
 ], function () {
 
     BASE.namespace("app.entities");
 
-    var Rect = app.components.Rect;
+    var Rect = app.components.Transform;
 
     app.entities.Map = function () {
         app.Entity.call(this);

@@ -1,6 +1,6 @@
 ﻿BASE.require([
     "app.Entity",
-    "app.components.Rect",
+    "app.components.Transform",
     "app.components.Renderable",
     "app.components.Sprite",
     "app.components.PlayerState"
@@ -8,7 +8,7 @@
 
     BASE.namespace("app.entities");
 
-    var Rect = app.components.Rect;
+    var Transform = app.components.Transform;
     var Sprite = app.components.Sprite;
     var PlayerState = app.components.PlayerState;
 
@@ -26,7 +26,7 @@
         image.width = 23;
         image.height = 25;
 
-        var rect = new Rect();
+        var rect = new Transform();
         rect.x = 10;
         rect.y = 10;
         rect.width = 23;

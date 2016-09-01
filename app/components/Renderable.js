@@ -1,16 +1,16 @@
 ﻿BASE.require([
-    "app.components.Rect"
+    "app.components.Transform"
 ], function () {
     BASE.namespace("app.components");
 
-    var Rect = app.components.Rect;
+    var Transform = app.components.Transform;
 
     app.components.Renderable = function () {
-        Rect.call(this);
+        Transform.call(this);
         this.path = null;
     };
 
-    BASE.extend(app.components.Renderable, Rect);
+    BASE.extend(app.components.Renderable, Transform);
 });
 
 

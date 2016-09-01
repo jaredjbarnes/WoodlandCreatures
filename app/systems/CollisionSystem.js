@@ -1,14 +1,14 @@
 ﻿BASE.require([
     "app.components.Collidable",
-    "app.components.Rect"
+    "app.components.Transform"
 ], function () {
     BASE.namespace("app.systems");
 
-    var Rect = app.components.Rect;
+    var Transform = app.components.Transform;
     var Collidable = app.components.Collidable;
 
     var isCollidable = function (entity) {
-        return entity.hasComponentByType(Collidable) && entity.hasComponentByType(Rect);
+        return entity.hasComponentByType(Collidable) && entity.hasComponentByType(Transform);
     };
 
     var emptyFn = function () { };
@@ -81,7 +81,7 @@
         // insert all entities into grid
         for (i = 0; i < this.entities.length; i++) {
             entity = this.entities[i];
-            rect = entity.getComponentByType(Rect);
+            rect = entity.getComponentByType(Transform);
 
             // if entity is outside the grid extents, then ignore it
             if (
@@ -204,7 +204,7 @@
 
     app.systems.CollisionSystem.prototype.updateWorldSize = function () {
         var entity = this.game.rootEntity;
-        var rect = entity.getComponentByType(Rect);
+        var rect = entity.getComponentByType(Transform);
 
         this.top = rect.top;
         this.right = rect.right;
@@ -249,18 +249,26 @@
         this.sweepAndPrune();
     };
 
-    app.systems.CollisionSystem.prototype.getNormals = function (collidable) {
-        collidable
+    app.systems.CollisionSystem.prototype.findApplicablePoints = function (entityA, entityB) {
+        var rectA  = entityA.getComponentByType(Transform);
+        var rectB  = entityB.getComponentByType(Transform);
     };
 
-    app.systems.CollisionSystem.prototype.getPenetration = function (pair) {
-        var collidableA = pair[0].getComponentByType(Collidable);
-        var collidableB = pair[1].getComponentByType(Collidable);
-
+    app.systems.CollisionSystem.prototype.getNormals = function (collidable) {
         
     };
 
-    app.systems.CollidableSystem.prototype.handleCollisions = function (pairs) {
+    app.systems.CollisionSystem.prototype.getPenetration = function (pair) {
+        var entityA = pair[0];
+        var entityB = pair[1];
+
+        var collidableA = entityA.getComponentByType(Collidable);
+        var collidableB = entityB.getComponentByType(Collidable);
+
+
+    };
+
+    app.systems.CollisionSystem.prototype.handleCollisions = function (pairs) {
         var pair = null;
         var currentCollisionsMap = {};
 

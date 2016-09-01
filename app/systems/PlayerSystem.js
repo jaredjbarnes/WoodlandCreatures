@@ -2,7 +2,7 @@
     "app.components.PlayerState",
     "app.components.Renderable",
     "app.components.Sprite",
-    "app.components.Rect",
+    "app.components.Transform",
     "app.systems.player.PlayerSpriteSystem",
     "app.systems.player.PlayerInputSystem"
 ], function () {
@@ -13,7 +13,7 @@
     var PlayerInputSystem = app.systems.player.PlayerInputSystem;
     var PlayerSpriteSystem = app.systems.player.PlayerSpriteSystem;
     var Sprite = app.components.Sprite;
-    var Rect = app.components.Rect;
+    var Transform = app.components.Transform;
 
     var invokeMethod = function (obj, methodName, args) {
         if (typeof obj[methodName] === "function") {

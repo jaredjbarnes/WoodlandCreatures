@@ -96,13 +96,14 @@
   <ItemGroup>
     <Content Include="app\components\PlayerState.js" />
     <Content Include="app\components\Collidable.js" />
-    <Content Include="app\components\Rect.js" />
+    <Content Include="app\components\Transform.js" />
     <Content Include="app\components\Renderable.js" />
     <Content Include="app\components\Sprite.js" />
     <Content Include="app\entities\Map.js" />
     <Content Include="app\entities\Player.js" />
     <Content Include="app\Entity.js" />
     <Content Include="app\Game.js" />
+    <Content Include="app\Polygon.js" />
     <Content Include="app\systems\Camera.js" />
     <Content Include="app\systems\KeyboardInputSystem.js" />
     <Content Include="app\systems\PlayerSystem.js" />

@@ -1,12 +1,12 @@
 ﻿BASE.require([
     "app.components.PlayerState",
-    "app.components.Rect"
+    "app.components.Transform"
 ], function () {
 
     BASE.namespace("app.systems.player");
 
     var PlayerState = app.components.PlayerState;
-    var Rect = app.components.Rect;
+    var Rect = app.components.Transform;
 
     var invokeMethod = function (obj, methodName, args) {
         if (typeof obj[methodName] === "function") {

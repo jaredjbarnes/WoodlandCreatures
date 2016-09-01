@@ -1,18 +1,18 @@
 ﻿BASE.require([
     "app.components.Renderable",
-    "app.components.Rect"
+    "app.components.Transform"
 ], function () {
 
     BASE.namespace("app.systems");
 
     var SpriteImage = app.components.Renderable;
-    var Rect = app.components.Rect;
+    var Transform = app.components.Transform;
     var emptyFn = function () { };
 
     app.systems.Camera = function (canvas) {
         var camera = this;
 
-        Rect.call(this);
+        Transform.call(this);
         this.game = null;
         this.rootEntity = null;
         this.width = canvas.width;
@@ -23,7 +23,7 @@
         this.entities = [];
 
         this.onScreenFilter = function (entity) {
-            var rect = entity.getComponentByType(Rect);
+            var rect = entity.getComponentByType(Transform);
             var sprite = entity.getComponentByType(SpriteImage);
 
             if (rect == null || sprite == null) {
@@ -40,7 +40,7 @@
         };
     };
 
-    BASE.extend(app.systems.Camera, Rect);
+    BASE.extend(app.systems.Camera, Transform);
 
     app.systems.Camera.prototype.getEnitiesOnScreen = function () {
         var camera = this;
@@ -51,10 +51,10 @@
         var x = this.x;
         var y = this.y;
 
-        var viewRect = this.rootEntity.getComponentByType(Rect);
+        var viewTransform = this.rootEntity.getComponentByType(Transform);
 
-        var right = Math.min(this.right, viewRect.width);
-        var bottom = Math.min(this.bottom, viewRect.height);
+        var right = Math.min(this.right, viewTransform.width);
+        var bottom = Math.min(this.bottom, viewTransform.height);
 
         x = right - this.width;
         y = bottom - this.height;
@@ -80,7 +80,7 @@
 
         for (var x = 0 ; x < entities.length; x++) {
             entity = entities[x];
-            rect = entity.getComponentByType(Rect);
+            rect = entity.getComponentByType(Transform);
             sprite = entity.getComponentByType(SpriteImage);
             image = imageMap[sprite.path];
 

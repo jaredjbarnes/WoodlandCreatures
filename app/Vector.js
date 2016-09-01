@@ -8,8 +8,24 @@
         this.y = y;
     };
 
+    Vector.add = function (vectorA, vectorB) {
+        return new Vector(vectorA.x + vectorB.x, vectorA.y + vectorB.y);
+    };
+
+    Vector.subtract = function (vectorA, vectorB) {
+        return new Vector(vectorA.x - vectorB.x, vectorA.y - vectorB.y);
+    };
+
+    Vector.multiply = function (vectorA, vectorB) {
+        return new Vector(vectorA.x * vectorB.x, vectorA.y * vectorB.y);
+    };
+
+    Vector.divide = function (vectorA, vectorB) {
+        return new Vector(vectorA.x / vectorB.x, vectorA.y / vectorB.y);
+    };
+
     Vector.prototype.magnitude = function () {
-        return Math.sqrt((this.x * this.x) + (this.y, this.y));
+        return Math.sqrt((this.x * this.x) + (this.y * this.y));
     };
 
     Vector.prototype.rotate = function (angle) {
@@ -50,15 +66,21 @@
         return this;
     };
 
+    Vector.prototype.divide = function (vector) {
+        this.x = this.x / vector.x;
+        this.y = this.y / vector.y;
+        return this;
+    };
+
     Vector.prototype.substract = function (vector) {
-        this.x = this.x * vector.x;
-        this.y = this.y * vector.y;
+        this.x = this.x - vector.x;
+        this.y = this.y - vector.y;
         return this;
     };
 
     Vector.prototype.add = function (vector) {
-        this.x = this.x * vector.x;
-        this.y = this.y * vector.y;
+        this.x = this.x + vector.x;
+        this.y = this.y + vector.y;
         return this;
     };
 

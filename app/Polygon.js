@@ -1,30 +1,46 @@
-﻿(function () {
+﻿BASE.require([
+    "app.Rect"
+], function () {
+
+    var Rect = app.Rect;
 
     var Polygon = function () {
         this.vertices = [];
+        this.edges = [];
+        this.normals = [];
     };
 
     Polygon.prototype.getNormals = function () {
-        return this.getEdges.map(function (edge) {
-            return edge.getNormal();
-        });
+        if (this.normals.length > 0) {
+            return this.normals;
+        } else {
+            return this.normals = this.getEdges.map(function (edge) {
+                return edge.getNormal();
+            });
+        }
     };
 
     Polygon.prototype.getEdges = function () {
-        var length = this.vertices.length;
-        var vertices = this.vertices;
+        if (this.edges.length > 0) {
+            return this.edges;
+        } else {
+            var length = this.vertices.length;
+            var vertices = this.vertices;
 
-        return vertices.map(function (vertexA, index) {
-            var vertexB;
+            return this.edges = vertices.map(function (vertexA, index) {
+                var vertexB;
 
-            if (index < length - 1) {
-                vertexB = vertices[index + 1];
-            } else {
-                vertexB = vertices[0];
-            }
+                if (index < length - 1) {
+                    vertexB = vertices[index + 1];
+                } else {
+                    vertexB = vertices[0];
+                }
 
-            return vertexB.clone().subtract(vertexA);
-        });
+                return vertexB.clone().subtract(vertexA);
+            });
+        }
+
+
     };
 
-}());
+});

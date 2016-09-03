@@ -9,7 +9,7 @@
 
     app.components.Collidable = function () {
         this.enabled = true;
-        this.polygons = [];
+        this.polygon = null;
     };
-    
+
 });

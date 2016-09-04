@@ -5,12 +5,12 @@
 
     var Rect = app.Rect;
 
-    app.properties.Renderable = function () {
+    app.properties.Render = function () {
         Rect.call(this);
         this.path = null;
     };
 
-    BASE.extend(app.properties.Renderable, Rect);
+    BASE.extend(app.properties.Render, Rect);
 });
 
 

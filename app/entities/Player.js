@@ -1,7 +1,7 @@
 ﻿BASE.require([
     "app.Entity",
     "app.components.Transform",
-    "app.components.Renderable",
+    "app.components.Render",
     "app.components.Sprite",
     "app.components.PlayerState"
 ], function () {
@@ -19,7 +19,7 @@
 
         this.type = "Player";
 
-        var image = new app.components.Renderable();
+        var image = new app.components.Render();
         image.path = "/images/link.gif";
         image.x = 0;
         image.y = 0;

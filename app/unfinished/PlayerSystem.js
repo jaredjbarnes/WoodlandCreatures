@@ -1,6 +1,6 @@
 ﻿BASE.require([
     "app.components.PlayerState",
-    "app.components.Renderable",
+    "app.components.Render",
     "app.components.Sprite",
     "app.components.Transform",
     "app.systems.player.PlayerSpriteSystem",
@@ -9,7 +9,7 @@
     BASE.namespace("app.systems");
 
     var PlayerState = app.components.PlayerState;
-    var Renderable = app.components.Renderable;
+    var Render = app.components.Render;
     var PlayerInputSystem = app.systems.player.PlayerInputSystem;
     var PlayerSpriteSystem = app.systems.player.PlayerSpriteSystem;
     var Sprite = app.components.Sprite;
@@ -22,7 +22,7 @@
     };
 
     var isPlayer = function (entity, system) {
-        return entity.type === "Player" && entity.hasComponentByType(PlayerState) && entity.hasComponentByType(Renderable) && entity.hasComponentByType(Sprite);
+        return entity.type === "Player" && entity.hasComponentByType(PlayerState) && entity.hasComponentByType(Render) && entity.hasComponentByType(Sprite);
     };
 
     app.systems.PlayerSystem = function (inputSystem, collisionSystem, inputMapping) {

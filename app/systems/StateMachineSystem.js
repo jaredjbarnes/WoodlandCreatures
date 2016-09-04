@@ -1,10 +1,10 @@
 ﻿BASE.require([
-    "app.components.StateMachine",
+    "app.components.ComponentState",
     "app.properties.State",
 ], function () {
     BASE.namespace("app.systems");
 
-    var StateMachine = app.components.StateMachine;
+    var ComponentState = app.components.ComponentState;
     var State = app.properties.State;
 
     var invokeMethod = function (obj, methodName, args) {
@@ -13,56 +13,81 @@
         }
     };
 
-    var isStateMachine = function (entity, system) {
-        return entity.hasComponentOfType(StateMachine) && entity.hasPropertyByType(State);
+    var isComponentState = function (entity, system) {
+        return entity.hasComponentOfType(ComponentState) && entity.hasPropertyByType(State);
     };
 
-    app.systems.StateMachineSystem = function () {
+    app.systems.ComponentStateSystem = function () {
         this.game = null;
         this.isReady = true;
         this.entities = [];
     };
 
-    app.systems.StateMachineSystem.prototype.updateSystems = function (stateName, entity) {
-        var stateMachines = entity.getComponentsOfType(StateMachine);
+    app.systems.ComponentStateSystem.prototype.initializeStates = function (stateName, entity) {
+        var states = entity.getComponentsOfType(ComponentState);
 
         for (var x = 0 ; x < length; x++) {
-            invokeMethod(stateMachines[x].states[stateName], "update", [entity, this]);
+            if (!state.isInitialized) {
+                invokeMethod([stateName], "initialize", [entity]);
+            }
         }
     };
 
-    app.systems.StateMachineSystem.prototype.activateSystems = function (stateName, entity) {
-        var stateMachines = entity.getComponentsOfType(StateMachine);
+    app.systems.ComponentStateSystem.prototype.updateStates = function (stateName, entity) {
+        var states = entity.getComponentsOfType(ComponentState);
+        var state;
 
         for (var x = 0 ; x < length; x++) {
-            invokeMethod(stateMachines[x].states[stateName], "activated", [entity, this]);
+            state = states[x];
+
+            if (state.name === stateName) {
+                invokeMethod([stateName], "update", []);
+            }
         }
     };
 
-    app.systems.StateMachineSystem.prototype.deactivateSystems = function (stateName, entity) {
-        var stateMachines = entity.getComponentsOfType(StateMachine);
+    app.systems.ComponentStateSystem.prototype.activateStates = function (stateName, entity) {
+        var states = entity.getComponentsOfType(ComponentState);
+        var state;
 
         for (var x = 0 ; x < length; x++) {
-            invokeMethod(stateMachines[x].states[stateName], "deactivated", [entity, this]);
+            state = states[x];
+
+            if (state.name === stateName) {
+                invokeMethod([stateName], "activated", []);
+            }
         }
     };
 
-    app.systems.StateMachineSystem.prototype.updateState = function (entity) {
+    app.systems.ComponentStateSystem.prototype.deactivateStates = function (stateName, entity) {
+        var states = entity.getComponentsOfType(ComponentState);
+        var state;
+
+        for (var x = 0 ; x < length; x++) {
+            state = states[x];
+
+            if (state.name === stateName) {
+                invokeMethod([stateName], "deactivated", []);
+            }
+        }
+    };
+
+    app.systems.ComponentStateSystem.prototype.updateState = function (entity) {
         var state = entity.getComponentByType(State);
         var stateName = state.name;
 
-        this.updateSystems(stateName, entity);
+        this.updateStates(stateName, entity);
 
         var newStateName = state.name;
 
         if (newStateName !== stateName) {
-            this.deactivateSystems(stateName, entity);
-            this.activateSystems(newStateName, entity);
-            this.updateSystems(newStateName, entity);
+            this.deactivateStates(stateName, entity);
+            this.activateStates(newStateName, entity);
+            this.updateStates(newStateName, entity);
         }
     };
 
-    app.systems.StateMachineSystem.prototype.update = function () {
+    app.systems.ComponentStateSystem.prototype.update = function () {
         var entities = this.entities;
         var length = entities.length;
 
@@ -71,14 +96,23 @@
         }
     };
 
-    app.systems.StateMachineSystem.prototype.cacheEntities = function () {
-        this.entities = this.game.rootEntity.filter(isStateMachine);
+    app.systems.ComponentStateSystem.prototype.cacheEntities = function () {
+        this.entities = this.game.rootEntity.filter(isComponentState);
     };
 
-    app.systems.StateMachineSystem.prototype.activated = function (game) {
+    app.systems.ComponentStateSystem.prototype.initializeEntities = function () {
+        var entities = this.entities;
+        var length = entities.length;
+
+        for (var x = 0; x < length; x++) {
+            this.initializeStates(entities[x]);
+        }
+    };
+
+    app.systems.ComponentStateSystem.prototype.activated = function (game) {
         this.game = game;
-        this.timer = this.game.timer;
         this.cacheEntities();
+        this.initializeEntities();
 
         var entity = null;
         var entities = this.entities;
@@ -91,11 +125,11 @@
             state = entity.getComponentByType(State);
             stateName = state.name;
 
-            this.activateSystems(stateName, entity);
+            this.activateStates(stateName, entity);
         }
     };
 
-    app.systems.StateMachineSystem.prototype.deactivated = function () {
+    app.systems.ComponentStateSystem.prototype.deactivated = function () {
         this.game = null;
         this.entities = [];
     };

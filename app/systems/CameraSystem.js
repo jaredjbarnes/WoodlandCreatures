@@ -1,15 +1,18 @@
 ﻿BASE.require([
-    "app.components.Renderable",
-    "app.components.Transform"
+    "app.properties.Render",
+    "app.properties.Transform",
+    "app.properties.Viewport"
 ], function () {
 
     BASE.namespace("app.systems");
 
-    var SpriteImage = app.components.Renderable;
-    var Transform = app.components.Transform;
+    var Render = app.properties.Render;
+    var Transform = app.properties.Transform;
+    var Viewport = app.properties.Viewport;
+
     var emptyFn = function () { };
 
-    app.systems.Camera = function (canvas) {
+    app.systems.CameraSystem = function (canvas) {
         var camera = this;
 
         Transform.call(this);
@@ -23,35 +26,41 @@
         this.entities = [];
 
         this.onScreenFilter = function (entity) {
-            var rect = entity.getComponentByType(Transform);
-            var sprite = entity.getComponentByType(SpriteImage);
-
-            if (rect == null || sprite == null) {
-                return false;
-            }
-
+            var rect = entity.getPropertyByType(Transform);
+            var viewport = entity.getPropertyByType(Viewport);
             var intersection = rect.getIntersection(camera);
 
-            return intersection == null ? false : true;
+            if (viewport == null) {
+                viewport = new Viewport();
+                entity.properties.push(viewport);
+            }
+
+            if (intersection != null) {
+                viewport.withInBounds = true;
+            } else {
+                viewport.withInBounds = false;
+            }
+
+            return viewport.withInBounds;
         };
 
-        this.isRenderable = function (entity) {
-            return  entity.hasComponentByType(SpriteImage);
+        this.isRender = function (entity) {
+            return entity.hasComponentByType(Render) && entity.hasComponentByType(Transform);
         };
     };
 
-    BASE.extend(app.systems.Camera, Transform);
+    BASE.extend(app.systems.CameraSystem, Transform);
 
-    app.systems.Camera.prototype.getEnitiesOnScreen = function () {
+    app.systems.CameraSystem.prototype.getEnitiesViewport = function () {
         var camera = this;
         return this.entities.filter(this.onScreenFilter);
     };
 
-    app.systems.Camera.prototype.placeWithinBounds = function () {
+    app.systems.CameraSystem.prototype.placeWithinBounds = function () {
         var x = this.x;
         var y = this.y;
 
-        var viewTransform = this.rootEntity.getComponentByType(Transform);
+        var viewTransform = this.rootEntity.getPropertyType(Transform);
 
         var right = Math.min(this.right, viewTransform.width);
         var bottom = Math.min(this.bottom, viewTransform.height);
@@ -63,7 +72,7 @@
         this.y = Math.floor(y > 0 ? y : 0);
     };
 
-    app.systems.Camera.prototype.draw = function () {
+    app.systems.CameraSystem.prototype.draw = function () {
         var camera = this;
         var entity = null;
         var intersection = null;
@@ -74,14 +83,19 @@
         var image = null;
 
         this.placeWithinBounds();
-        var entities = this.getEnitiesOnScreen();
+        var entities = this.getEnitiesViewport();
 
         context.clearRect(0, 0, this.width, this.height);
 
         for (var x = 0 ; x < entities.length; x++) {
             entity = entities[x];
-            rect = entity.getComponentByType(Transform);
-            sprite = entity.getComponentByType(SpriteImage);
+            rect = entity.getPropertyType(Transform);
+            sprite = entity.getPropertyType(Render);
+
+            if (sprite == null) {
+                continue;
+            }
+
             image = imageMap[sprite.path];
 
             if (image == null) {
@@ -103,14 +117,14 @@
         }
     };
 
-    app.systems.Camera.prototype.findImagePaths = function () {
-        return this.rootEntity.filter(this.isRenderable).map(function (entity) {
-            var sprite = entity.getComponentByType(SpriteImage);
+    app.systems.CameraSystem.prototype.findImagePaths = function () {
+        return this.rootEntity.filter(this.isRender).map(function (entity) {
+            var sprite = entity.getPropertyType(Render);
             return sprite.path;
         });
     };
 
-    app.systems.Camera.prototype.loadImage = function (path, callback) {
+    app.systems.CameraSystem.prototype.loadImage = function (path, callback) {
         callback = callback || emptyFn;
         var image = new Image(path);
         var camera = this;
@@ -125,7 +139,7 @@
         image.src = path;
     };
 
-    app.systems.Camera.prototype.loadImages = function () {
+    app.systems.CameraSystem.prototype.loadImages = function () {
         var paths = this.findImagePaths();
         var count = 0;
         var camera = this;
@@ -141,18 +155,18 @@
         });
     };
 
-    app.systems.Camera.prototype.cacheEntities = function (game) {
-        this.entities = this.rootEntity.filter(this.isRenderable);
+    app.systems.CameraSystem.prototype.cacheEntities = function (game) {
+        this.entities = this.rootEntity.filter(this.isRender);
     };
 
-    app.systems.Camera.prototype.activated = function (game) {
+    app.systems.CameraSystem.prototype.activated = function (game) {
         this.game = game;
         this.rootEntity = game.rootEntity;
         this.loadImages();
         this.cacheEntities();
     };
 
-    app.systems.Camera.prototype.update = function () {
+    app.systems.CameraSystem.prototype.update = function () {
         this.draw();
     };
 

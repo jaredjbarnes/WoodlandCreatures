@@ -5,12 +5,12 @@
 
     var Rect = app.Rect;
 
-    app.properties.Render = function () {
+    app.properties.ImageTexture = function () {
         Rect.call(this);
         this.path = null;
     };
 
-    BASE.extend(app.properties.Render, Rect);
+    BASE.extend(app.properties.ImageTexture, Rect);
 });
 
 

@@ -2,7 +2,7 @@
 
     BASE.namespace("app.properties");
 
-    app.properties.Binding = function () {
+    app.properties.OneWayBinding = function () {
         this.objects = [];
         this.propertyNames = [];
     };

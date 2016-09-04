@@ -1,11 +1,11 @@
 ﻿BASE.require([
     "app.properties.Sprite",
-    "app.properties.Render"
+    "app.properties.ImageTexture"
 ], function () {
     BASE.namespace("app.systems");
 
     var Sprite = app.properties.Sprite;
-    var Render = app.properties.Render;
+    var Render = app.properties.ImageTexture;
 
     var isSprite = function (entity) {
         return entity.hasComponentByType(Sprite);
@@ -29,8 +29,8 @@
 
         for (var x = 0 ; x < this.entities.length; x++) {
             entity = this.entities[x];
-            sprite = entity.getComponentByType(Sprite);
-            image = entity.getComponentByType(Render);
+            sprite = entity.getPropertyByType(Sprite);
+            image = entity.getPropertyByType(Render);
 
             index = Math.floor(sprite.index);
 

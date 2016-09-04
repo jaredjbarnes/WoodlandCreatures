@@ -1,6 +1,9 @@
-﻿(function () {
+﻿BASE.require([
+    "BASE.util.Guid"
+], function () {
     BASE.namespace("app");
 
+    var Guid = BASE.util.Guid;
     var returnTrue = function () { return true; };
     var id = 0;
 
@@ -10,7 +13,7 @@
         this.parent = null;
         this.components = [];
         this.properties = [];
-        this.id = id++;
+        this.id = Guid.create();
     };
 
     app.Entity.prototype.appendChild = function (entity) {
@@ -179,4 +182,4 @@
         return results;
     };
 
-}());
+});

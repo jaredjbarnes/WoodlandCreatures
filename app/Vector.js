@@ -53,9 +53,16 @@
         return this;
     };
 
-    Vector.prototype.projectOnVector = function (vector) {
+    //Optional vector is for more effecient memory usage.
+    Vector.prototype.projectOnVector = function (vector, optionalVector) {
         var scale = this.dot(vector) / vector.dot(vector);
-        var output = vector.clone();
+        var output;
+        if (optionalVector) {
+            optionalVector.x = vector.x;
+            optionalVector.y = vectory.y;
+        } else {
+            vector.clone();
+        }
 
         return output.scale(scale);
     };

@@ -1,15 +1,20 @@
 ﻿BASE.require([
     "app.components.Transform",
+    "app.components.Vector",
     "app.components.Collidable"
 ], function () {
     BASE.namespace("app");
 
     var Transform = app.components.Transform;
     var Collidable = app.components.Collidable;
+    var Vector = app.components.Vector;
 
     app.CollisionHandler = function (pair) {
         this.entityA = pair[0];
         this.entityB = pair[1];
+        this.vectorA = new Vector();
+        this.vectorB = new Vector();
+        this.joiningVector = new Vector();
     };
 
     app.CollisionHandler.prototype.getOverlap = function () {
@@ -66,9 +71,25 @@
 
         var indexToCheckALength = indexToCheckA.length;
         var indexToCheckBLength = indexToCheckB.length;
-        
-        for (x = 0 ; x < indexToCheckALength; x++) {
+        var joiningVector = this.joiningVector;
+        var normalA;
+        var vectorA = this.vectorA;
+        var vectorB = this.vectorB
+        var vertexA;
+        var vertexB;
+        var y;
 
+        joiningVector.x = transformB.center.x - transformA.center.x;
+        joiningVector.y = transformB.center.y - transformA.center.y;
+
+        outer: for (x = 0 ; x < indexToCheckALength; x++) {
+            normalA = normalsA[x];
+            vectorA.x = verticesA[x].x + transformA.center.x;
+            vectorA.y = verticesA[x].y + transformA.center.y;
+
+            for (y = 0 ; y < indexToCheckBLength; y++) {
+                vertexB = verticesB[y];
+            }
         }
 
     };

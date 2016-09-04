@@ -9,6 +9,7 @@
         this.children = [];
         this.parent = null;
         this.components = [];
+        this.properties = [];
         this.id = id++;
     };
 
@@ -47,6 +48,10 @@
         return this.getComponentsByType(Type)[0] || null;
     };
 
+    app.Entity.prototype.getComponentOfType = function (Type) {
+        return this.getComponentsOfType(Type)[0] || null;
+    };
+
     app.Entity.prototype.getComponentsByType = function (Type) {
         var matches = [];
         var component = null;
@@ -69,6 +74,50 @@
             component = this.components[x];
             if (component instanceof Type) {
                 matches.push(component);
+            }
+        }
+
+        return matches;
+    };
+
+    app.Entity.prototype.hasPropertyByType = function (Type) {
+        return this.getPropertyByType(Type) != null;
+    };
+
+    app.Entity.prototype.hasPropertyOfType = function (Type) {
+        return this.getPropertyOfType(Type) != null;
+    };
+
+    app.Entity.prototype.getPropertyByType = function (Type) {
+        return this.getPropertiesByType(Type)[0] || null;
+    };
+
+    app.Entity.prototype.getPropertyOfType = function (Type) {
+        return this.getPropertiesOfType(Type)[0] || null;
+    };
+
+    app.Entity.prototype.getPropertiesByType = function (Type) {
+        var matches = [];
+        var property = null;
+
+        for (var x = 0 ; x < this.properties.length; x++) {
+            property = this.properties[x];
+            if (property.constructor === Type) {
+                matches.push(property);
+            }
+        }
+
+        return matches;
+    };
+
+    app.Entity.prototype.getPropertiesOfType = function (Type) {
+        var matches = [];
+        var property = null;
+
+        for (var x = 0 ; x < this.properties.length; x++) {
+            property = this.properties[x];
+            if (property instanceof Type) {
+                matches.push(property);
             }
         }
 

@@ -49,7 +49,15 @@
             viewportSystem.width = canvas.width;
             viewportSystem.height = canvas.height;
 
-            map.appendChild(player);
+            for (var x = 0 ; x < 1000; x += 10) {
+                for (var y = 0 ; y < 1000; y += 10) {
+                    player = new Player();
+                    var transform = player.getPropertyByType(app.properties.Transform);
+                    transform.x = x;
+                    transform.y = y;
+                    map.appendChild(player);
+                }
+            }
 
             var game = new Game(map, timer);
 
@@ -59,6 +67,7 @@
             game.play();
 
             window.game = game;
+            window.viewportSystem = viewportSystem;
         });
     </script>
 </body>

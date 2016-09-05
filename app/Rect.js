@@ -6,6 +6,7 @@
     var Vector = app.Vector;
 
     app.Rect = function () {
+        var self = this;
         var top = 0;
         var left = 0;
         var right = 0;
@@ -22,6 +23,16 @@
         var lastHeight = 0;
         var lastCenter = new Vector(0, 0);
 
+        this._x = 0;
+        this._y = 0;
+        this._top = 0;
+        this._left = 0;
+        this._right = 0;
+        this._bottom = 0;
+        this._width = 0;
+        this._height = 0;
+        this._center = center;
+
         Object.defineProperties(this, {
             x: {
                 get: function () {
@@ -35,6 +46,10 @@
                     left = value;
                     right = left + width;
                     center.x = width / 2;
+
+                    self._left = left;
+                    self._x = left;
+                    self._right = right;
                 }
             },
             y: {
@@ -49,6 +64,10 @@
                     top = value;
                     bottom = top + height;
                     center.y = height / 2;
+
+                    self._top = top;
+                    self._y = top;
+                    self._bottom = bottom;
                 }
             },
             left: {
@@ -63,6 +82,10 @@
                     left = value;
                     right = left + width;
                     center.x = width / 2;
+
+                    self._left = left;
+                    self._x = left;
+                    self._right = right;
                 }
             },
             top: {
@@ -77,6 +100,10 @@
                     top = value;
                     bottom = top + height;
                     center.y = height / 2;
+
+                    self._top = top;
+                    self._y = top;
+                    self._bottom = bottom;
                 }
             },
             center: {
@@ -105,6 +132,9 @@
                     width = value;
                     right = left + width;
                     center.x = width / 2;
+
+                    self._width = width;
+                    self._right = right;
                 }
             },
             height: {
@@ -118,6 +148,9 @@
                     height = value;
                     bottom = top + height;
                     center.y = height / 2;
+
+                    self._bottom = bottom;
+                    self._height = height;
                 }
             }
         });
@@ -148,15 +181,13 @@
             return top <= bottom && left <= right;
         };
 
-        app.Rect.prototype.getIntersection = function (rect, intersectionProxy) {
-            var top = Math.max(rect.top, this.top);
-            var right = Math.min(rect.right, this.right);
-            var bottom = Math.max(rect.bottom, this.bottom);
-            var left = Math.max(rect.left, this.left);
+        app.Rect.prototype.getIntersection = function (rect, intersection) {
+            var top = Math.max(rect._top, this._top);
+            var right = Math.min(rect._right, this._right);
+            var bottom = Math.min(rect._bottom, this._bottom);
+            var left = Math.max(rect._left, this._left);
 
-            if (top < bottom, left < right) {
-                var intersection = intersectionProxy || new app.Rect();
-
+            if (top < bottom && left < right) {
                 intersection.top = top;
                 intersection.left = left;
                 intersection.bottom = bottom;

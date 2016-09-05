@@ -1,18 +1,17 @@
 ﻿BASE.require([
-    "app.components.Collidable",
+    "app.components.Collision",
     "app.components.Transform"
 ], function () {
     BASE.namespace("app.systems");
 
-    var Transform = app.components.Transform;
-    var Collidable = app.components.Collidable;
+    var Transform = app.properties.Transform;
+    var Collision = app.properties.Collision;
 
-    var isCollidable = function (entity) {
-        return entity.hasComponentByType(Collidable) && entity.hasComponentByType(Transform);
+    var isCollision = function (entity) {
+        return entity.hasComponentByType(Collision) && entity.hasComponentByType(Transform);
     };
 
     var emptyFn = function () { };
-
 
     //TODO: For large maps we could use a enabled cells to optimize collision detection.
     app.systems.CollisionSystem = function (cellSize) {
@@ -31,31 +30,10 @@
     };
 
     app.systems.CollisionSystem.prototype.cacheEntities = function () {
-        this.entities = this.game.rootEntity.filter(isCollidable);
-    };
-
-    app.systems.CollisionSystem.prototype.registerHandlers = function (entityType1, entityType2, handlers) {
-        var key1 = entityType1 + "|" + entityType2;
-        var key2 = entityType2 + "|" + entityType1;
-
-        // Iterate through the events and reverse the arguments.
-        var reverseHandlers = Object.keys(handlers).reduce(function (obj, key) {
-            obj[key] = function (entityA, entityB) {
-                return handlers[key].call(obj, entityB, entityA);
-            };
-            return obj;
-        }, {});
-
-        this.handlers[key1] = handlers;
-        this.handlers[key2] = reverseHandlers;
-    };
-
-    app.systems.CollisionSystem.prototype.getHandlerByEntities = function (entityA, entityB) {
-        return this.handlers[entityA.type + "|" + entityB.type] || emptyFn;
+        this.entities = this.game.rootEntity.filter(isCollision);
     };
 
     app.systems.CollisionSystem.prototype.sweepAndPrune = function () {
-
         var gridWidth = Math.floor((this.max.x - this.min.x) / this.cellSize);
         var gridHeight = Math.floor((this.max.y - this.min.y) / this.cellSize);
         var left;
@@ -136,8 +114,8 @@
         var l;
         var gridCol;
         var gridCell;
-        var collidableA;
-        var collidableB;
+        var collisionA;
+        var collisionB;
 
         // for every column in the grid...
         for (i = 0; i < this.grid.length; i++) {
@@ -165,9 +143,9 @@
                         entityB = gridCell[l];
 
                         // We don't need to check static objects to other static objects.
-                        collidableA = entityA.getComponentByType(Collidable);
-                        collidableB = entityB.getComponentByType(Collidable);
-                        if (collidableA.isStatic && collidableB.isStatic) {
+                        collisionA = entityA.getPropertyByType(Collision);
+                        collisionB = entityB.getPropertyByType(Collision);
+                        if (collisionA.isStatic && collisionB.isStatic) {
                             continue;
                         }
 
@@ -181,7 +159,7 @@
                             // mark this pair as checked
                             checked[hashA] = checked[hashB] = true;
 
-                            if (collidableA.enabled && collidableB.enabled && this.intersects(entityA, entityB)) {
+                            if (collisionA.enabled && collisionB.enabled && this.intersects(entityA, entityB)) {
                                 pairs.push([entityA, entityB]);
                             }
                         }
@@ -204,7 +182,7 @@
 
     app.systems.CollisionSystem.prototype.updateWorldSize = function () {
         var entity = this.game.rootEntity;
-        var rect = entity.getComponentByType(Transform);
+        var rect = entity.getPropertyByType(Transform);
 
         this.top = rect.top;
         this.right = rect.right;
@@ -219,95 +197,14 @@
         }
     };
 
-    app.systems.CollisionSystem.prototype.handleCollision = function (pair, currentCollisionsMap) {
-        var entityA = pair[0];
-        var entityB = pair[1];
-        var key1 = entityA.id + "|" + entityB.id;
-        var key2 = entityB.id + "|" + entityA.id;
-        var handlers = this.getHandlersByEntities(entityA, entityB);
-
-        // New collision.
-        if (!this.lastCollisionsMap[key1] && !this.lastCollisionsMap[key2]) {
-            this.invokeMethod(obj, "collisionStart", pair);
-        }
-
-        this.invokeMethod(obj, "collision", pair);
-
-        currentCollisionsMap[key1] = {
-            pair: pair,
-            otherKey: key2
-        };
-
-        currentCollisionsMap[key2] = {
-            pair: pair,
-            otherKey: key1
-        };
-    };
-
     app.systems.CollisionSystem.prototype.executeBroadphase = function () {
         this.updateWorldSize();
         this.sweepAndPrune();
     };
 
-    app.systems.CollisionSystem.prototype.findApplicablePoints = function (entityA, entityB) {
-        var rectA  = entityA.getComponentByType(Transform);
-        var rectB  = entityB.getComponentByType(Transform);
-    };
-
-    app.systems.CollisionSystem.prototype.getNormals = function (collidable) {
-        
-    };
-
-    app.systems.CollisionSystem.prototype.getPenetration = function (pair) {
-        var entityA = pair[0];
-        var entityB = pair[1];
-
-        var collidableA = entityA.getComponentByType(Collidable);
-        var collidableB = entityB.getComponentByType(Collidable);
-
-
-    };
-
-    app.systems.CollisionSystem.prototype.handleCollisions = function (pairs) {
-        var pair = null;
-        var currentCollisionsMap = {};
-
-        // Handles collisionStart, and collision
-        for (var x = 0 ; x < pairs.length; x++) {
-            pair = pairs[x];
-            this.handleCollision(pair, currentCollisionsMap);
-        }
-
-        // Handles collisionEnd
-        var key = null;
-        var lastCollisionsMap = this.lastCollisionsMap;
-        var lastMapKeys = Object.keys(lastCollisionsMap);
-        var collision = null;
-        var handlerCalledMap = {};
-
-        for (var x = 0 ; x < lastMapKeys; x++) {
-            key = lastCollisionsMap[x];
-            collision = currentCollisionsMap[key];
-
-            if (!handlerCalledMap[key] && !collision) {
-
-                handlerCalledMap[collision.otherKey] = true;
-                handlerCalledMap[key] = true;
-                handlers = this.getHandlersByEntities(pair[0], pair[1]);
-
-                this.invokeMethod(handlers, "collisionEnd", pair);
-            }
-        }
-
-        this.lastCollisionsMap = currentCollisionsMap;
-    };
-
     app.systems.CollisionSystem.prototype.update = function () {
         this.executeBroadphase();
-
         var pairs = this.queryForCollisions();
-
-        this.handleCollisions(pairs);
     };
 
     app.systems.CollisionSystem.prototype.activated = function (game) {

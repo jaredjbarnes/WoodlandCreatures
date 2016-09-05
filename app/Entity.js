@@ -48,11 +48,29 @@
     };
 
     app.Entity.prototype.getComponentByType = function (Type) {
-        return this.getComponentsByType(Type)[0] || null;
+        var component = null;
+
+        for (var x = 0 ; x < this.components.length; x++) {
+            component = this.components[x];
+            if (component.constructor === Type) {
+                return component;
+            }
+        }
+
+        return null;
     };
 
     app.Entity.prototype.getComponentOfType = function (Type) {
-        return this.getComponentsOfType(Type)[0] || null;
+        var component = null;
+
+        for (var x = 0 ; x < this.components.length; x++) {
+            component = this.components[x];
+            if (component instanceof Type) {
+                return component;
+            }
+        }
+
+        return null;
     };
 
     app.Entity.prototype.getComponentsByType = function (Type) {
@@ -92,11 +110,29 @@
     };
 
     app.Entity.prototype.getPropertyByType = function (Type) {
-        return this.getPropertiesByType(Type)[0] || null;
+        var property = null;
+
+        for (var x = 0 ; x < this.properties.length; x++) {
+            property = this.properties[x];
+            if (property.constructor === Type) {
+                return property;
+            }
+        }
+
+        return null;
     };
 
     app.Entity.prototype.getPropertyOfType = function (Type) {
-        return this.getPropertiesOfType(Type)[0] || null;
+        var property = null;
+
+        for (var x = 0 ; x < this.properties.length; x++) {
+            property = this.properties[x];
+            if (property instanceof Type) {
+                return property;
+            }
+        }
+
+        return null;
     };
 
     app.Entity.prototype.getPropertiesByType = function (Type) {
@@ -127,12 +163,12 @@
         return matches;
     };
 
-    app.Entity.prototype.filter = function (filter) {
+    app.Entity.prototype.filter = function (filter, accumulator) {
         if (typeof filter !== "function") {
             filter = returnTrue;
         }
 
-        var results = [];
+        var results = accumulator || [];
         var child = null;
 
         if (filter(this)) {
@@ -141,7 +177,7 @@
 
         for (var x = 0 ; x < this.children.length; x++) {
             child = this.children[x];
-            results = results.concat(child.filter(filter));
+            child.filter(filter, results);
         }
 
         return results;
@@ -164,19 +200,19 @@
         return accumulator;
     };
 
-    app.Entity.prototype.map = function (callback) {
+    app.Entity.prototype.map = function (callback, accumulator) {
         if (typeof callback !== "function") {
             throw new Error("Expected a callback.");
         }
 
         var child = null;
-        var results = [];
+        var results = accumulator || [];
 
         results.push(callback(this));
 
         for (var x = 0 ; x < this.children.length; x++) {
             child = this.children[x];
-            results = results.concat(child.map(callback));
+            child.map(callback, accumulator);
         }
 
         return results;

@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\components\State.js" />
+    <Content Include="app\properties\Collision.js" />
     <Content Include="app\properties\OneWayBinding.js" />
     <Content Include="app\properties\Color.js" />
     <Content Include="app\properties\Trace.js" />

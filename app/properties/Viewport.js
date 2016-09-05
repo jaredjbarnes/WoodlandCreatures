@@ -3,7 +3,7 @@
     BASE.namespace("app.properties");
 
     app.properties.Viewport = function () {
-        this.withInBounds = false;
+        this.isWithinBounds = false;
     };
 
 });

@@ -1,43 +1,40 @@
 ﻿BASE.require([
     "app.Entity",
-    "app.components.Transform",
-    "app.components.Render",
-    "app.components.Sprite",
-    "app.components.PlayerState"
+    "app.properties.Transform",
+    "app.properties.ImageTexture",
+    "app.properties.Sprite",
+    "app.components.State"
 ], function () {
 
     BASE.namespace("app.entities");
 
-    var Transform = app.components.Transform;
-    var Sprite = app.components.Sprite;
-    var PlayerState = app.components.PlayerState;
-
-    // TODO: Put the current weapon as a child entity. And when striking, the state will show the child graphic.
+    var Transform = app.properties.Transform;
+    var Sprite = app.properties.Sprite;
+    var ImageTexture = app.properties.ImageTexture;
+    var State = app.components.State;
 
     app.entities.Player = function () {
         app.Entity.call(this);
 
         this.type = "Player";
 
-        var image = new app.components.Render();
+        var image = new app.properties.ImageTexture();
         image.path = "/images/link.gif";
         image.x = 0;
         image.y = 0;
-        image.width = 23;
+        image.width = 25;
         image.height = 25;
 
-        var rect = new Transform();
-        rect.x = 10;
-        rect.y = 10;
-        rect.width = 23;
-        rect.height = 25;
+        var transform = new Transform();
+        transform.x = 10;
+        transform.y = 10;
+        transform.width = 25;
+        transform.height = 25;
 
         var sprite = new Sprite();
         sprite.timeScale = .35;
 
-        var playerState = new PlayerState();
-
-        this.components.push(image, rect, sprite, playerState);
+        this.properties.push(image, transform, sprite);
     };
 
     BASE.extend(app.entities.Player, app.Entity);

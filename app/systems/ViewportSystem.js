@@ -13,7 +13,7 @@
     var emptyFn = function () { };
 
     var isTransformable = function (entity) {
-        return entity.hasComponentByType(Transform);
+        return entity.hasPropertyByType(Transform);
     };
 
     app.systems.ViewportSystem = function () {
@@ -24,11 +24,12 @@
         this.game = null;
         this.rootEntity = null;
         this.isReady = true;
+        this.intersectionProxy = new app.Rect();
 
-        this.onScreenFilter = function (entity) {
+        this.isOnViewport = function (entity) {
             var transform = entity.getPropertyByType(Transform);
             var viewport = entity.getPropertyByType(Viewport);
-            var intersection = transform.getIntersection(self);
+            var intersection = transform.getIntersection(self, self.intersectionProxy);
 
             if (viewport == null) {
                 viewport = new Viewport();
@@ -36,12 +37,12 @@
             }
 
             if (intersection != null) {
-                viewport.withInBounds = true;
+                viewport.isWithinBounds = true;
             } else {
-                viewport.withInBounds = false;
+                viewport.isWithinBounds = false;
             }
 
-            return viewport.withInBounds;
+            return viewport.isWithinBounds;
         };
 
     };
@@ -49,14 +50,14 @@
     BASE.extend(app.systems.ViewportSystem, Rect);
 
     app.systems.ViewportSystem.prototype.getEntitiesOnViewport = function () {
-        return this.rootEntity.filter(isTransformable).filter(this.onScreenFilter);
+        return this.rootEntity.filter(isTransformable).filter(this.isOnViewport);
     };
 
     app.systems.ViewportSystem.prototype.placeWithinBounds = function () {
         var x = this.x;
         var y = this.y;
 
-        var entityTransform = this.rootEntity.getPropertyType(Transform);
+        var entityTransform = this.rootEntity.getPropertyByType(Transform);
 
         var right = Math.min(this.right, entityTransform.width);
         var bottom = Math.min(this.bottom, entityTransform.height);
@@ -75,6 +76,7 @@
 
     app.systems.ViewportSystem.prototype.update = function () {
         this.placeWithinBounds();
+        this.getEntitiesOnViewport();
     };
 
 });

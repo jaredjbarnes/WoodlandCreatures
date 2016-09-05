@@ -20,53 +20,42 @@
         BASE.require([
             "app.Game",
             "app.Entity",
-            "app.systems.Camera",
+            "app.systems.ImageTextureSystem",
             "app.systems.SpriteSystem",
-            "app.systems.PlayerSystem",
-            "app.systems.CollisionSystem",
+            "app.systems.ViewportSystem",
             "app.entities.Map",
             "app.entities.Player",
             "app.Timer",
-            "app.systems.KeyboardInputSystem"
         ], function () {
             var canvas = document.querySelector("#viewport");
 
             var Timer = app.Timer;
             var Game = app.Game;
             var Camera = app.systems.Camera;
-            var PlayerSystem = app.systems.PlayerSystem;
             var Entity = app.Entity;
-            var Player = app.entities.Player;
             var Map = app.entities.Map;
             var SpriteSystem = app.systems.SpriteSystem;
-            var KeyboardInputSystem = app.systems.KeyboardInputSystem;
-            var CollisionSystem = app.systems.CollisionSystem;
+            var ViewportSystem = app.systems.ViewportSystem;
+            var ImageTextureSystem = app.systems.ImageTextureSystem;
+            var Player = app.entities.Player;
 
-            var mapping = {
-                37: "left",
-                38: "up",
-                39: "right",
-                40: "down"
-            };
-
-            var inputSystem = new KeyboardInputSystem(document, mapping);
-            var collisionSystem = new CollisionSystem();
-            var camera = new Camera(canvas);
+            var imageTextureSystem = new ImageTextureSystem(canvas);
+            var viewportSystem = new ViewportSystem();
             var spriteSystem = new SpriteSystem();
-            var playerSystem = new PlayerSystem(inputSystem, collisionSystem);
             var timer = new Timer();
-
             var map = new Map();
             var player = new Player();
+
+            viewportSystem.width = canvas.width;
+            viewportSystem.height = canvas.height;
 
             map.appendChild(player);
 
             var game = new Game(map, timer);
 
-            game.appendSystem(camera);
+            game.appendSystem(imageTextureSystem);
             game.appendSystem(spriteSystem);
-            game.appendSystem(playerSystem);
-            game.appendSystem(inputSystem);
+            game.appendSystem(viewportSystem);
             game.play();
 
             window.game = game;

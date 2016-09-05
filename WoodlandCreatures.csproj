@@ -108,7 +108,7 @@
     <Content Include="app\properties\State.js" />
     <Content Include="app\properties\RigidBody.js" />
     <Content Include="app\properties\Transform.js" />
-    <Content Include="app\properties\Render.js" />
+    <Content Include="app\properties\ImageTexture.js" />
     <Content Include="app\properties\Sprite.js" />
     <Content Include="app\entities\Map.js" />
     <Content Include="app\entities\Player.js" />

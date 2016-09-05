@@ -148,14 +148,14 @@
             return top <= bottom && left <= right;
         };
 
-        app.Rect.prototype.getIntersection = function (rect) {
+        app.Rect.prototype.getIntersection = function (rect, intersectionProxy) {
             var top = Math.max(rect.top, this.top);
             var right = Math.min(rect.right, this.right);
             var bottom = Math.max(rect.bottom, this.bottom);
             var left = Math.max(rect.left, this.left);
 
             if (top < bottom, left < right) {
-                var intersection = new app.Rect();
+                var intersection = intersectionProxy || new app.Rect();
 
                 intersection.top = top;
                 intersection.left = left;

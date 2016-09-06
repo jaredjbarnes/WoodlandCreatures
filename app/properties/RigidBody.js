@@ -3,7 +3,9 @@
     BASE.namespace("app.properties");
 
     app.properties.RigidBody = function () {
-        this.type = null;
+        this["@type"] = "app.properties.RigidBody";
+        this.type = "app.properties.RigidBody";
+        this.bodyType = "polygon"
     };
 
 });

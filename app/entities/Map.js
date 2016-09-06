@@ -33,7 +33,7 @@
         this.appendChild(characters);
         this.appendChild(environment);
 
-        this.properties.push(worldSize);
+        this.addProperty(worldSize);
     };
 
     BASE.extend(app.entities.Map, app.Entity);

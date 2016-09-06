@@ -1,6 +1,6 @@
 ﻿BASE.require([
-    "app.components.Collision",
-    "app.components.Transform"
+    "app.properties.Collision",
+    "app.properties.Transform"
 ], function () {
     BASE.namespace("app.systems");
 
@@ -8,7 +8,12 @@
     var Collision = app.properties.Collision;
 
     var isCollision = function (entity) {
-        return entity.hasComponentByType(Collision) && entity.hasComponentByType(Transform);
+        var collisionProperties = entity.properties["app.properties.Collision"];
+        var transformProperties = entity.properties["app.properties.Transform"];
+        return collisionProperties &&
+            collisionProperties[0] &&
+            transformProperties &&
+            transformProperties[0]
     };
 
     var emptyFn = function () { };
@@ -16,26 +21,22 @@
     //TODO: For large maps we could use a enabled cells to optimize collision detection.
     app.systems.CollisionSystem = function (cellSize) {
         this.game = null;
-        this.top = 0;
-        this.right = 0;
-        this.bottom = 0;
-        this.left = 0;
+        this.x = 0;
+        this.y = 0;
+        this.width = 0;
+        this.height = 0;
         this.grid = [[]];
         this.entities = [];
         this.handlers = {};
-        this.cellSize = cellSize || 100;
+        this.cellSize = cellSize || 50;
         this.totalCells = 0;
         this.lastCollisionsMap = {};
         this.isReady = true;
     };
 
-    app.systems.CollisionSystem.prototype.cacheEntities = function () {
-        this.entities = this.game.rootEntity.filter(isCollision);
-    };
-
     app.systems.CollisionSystem.prototype.sweepAndPrune = function () {
-        var gridWidth = Math.floor((this.max.x - this.min.x) / this.cellSize);
-        var gridHeight = Math.floor((this.max.y - this.min.y) / this.cellSize);
+        var gridWidth = Math.floor((this.height) / this.cellSize);
+        var gridHeight = Math.floor((this.width) / this.cellSize);
         var left;
         var right;
         var top;
@@ -59,21 +60,21 @@
         // insert all entities into grid
         for (i = 0; i < this.entities.length; i++) {
             entity = this.entities[i];
-            rect = entity.getComponentByType(Transform);
+            rect = entity.properties["app.properties.Transform"][0];
 
             // if entity is outside the grid extents, then ignore it
             if (
-				rect.left < this.left || rect.right > this.right
-				|| rect.top < this.top || rect.bottom > this.bottom
+				rect.x < this.x || rect.x + rect.width > this.x + this.width
+            || rect.y < this.y || rect.y + rect.height > this.y + this.height
 			) {
                 continue;
             }
 
             // Find the cells that the entity overlap.
-            left = Math.floor((rect.left - this.left) / this.cellSize);
-            right = Math.floor((rect.right - this.left) / this.cellSize);
-            top = Math.floor((rect.top - this.top) / this.cellSize);
-            bottom = Math.floor((rect.bottom - this.top) / this.cellSize);
+            left = Math.floor((rect.x - this.x) / this.cellSize);
+            right = Math.floor((rect.x + rect.width - this.x) / this.cellSize);
+            top = Math.floor((rect.y - this.y) / this.cellSize);
+            bottom = Math.floor((rect.y + rect.height - this.y) / this.cellSize);
 
             // Insert entity into each cell it overlaps
             for (cX = left; cX <= right; cX++) {
@@ -102,12 +103,10 @@
     };
 
     app.systems.CollisionSystem.prototype.queryForCollisions = function () {
-        var checked = {};
         var pairs = [];
         var entityA;
         var entityB;
-        var hashA;
-        var hashB;
+        var hash;
         var i;
         var j;
         var k;
@@ -116,6 +115,8 @@
         var gridCell;
         var collisionA;
         var collisionB;
+        var transformA;
+        var transformB;
 
         // for every column in the grid...
         for (i = 0; i < this.grid.length; i++) {
@@ -142,26 +143,20 @@
                     for (l = k + 1; l < gridCell.length; l++) {
                         entityB = gridCell[l];
 
+                        collisionA = entityA.properties["app.properties.Collision"][0];
+                        collisionB = entityB.properties["app.properties.Collision"][0];
+
+
                         // We don't need to check static objects to other static objects.
-                        collisionA = entityA.getPropertyByType(Collision);
-                        collisionB = entityB.getPropertyByType(Collision);
                         if (collisionA.isStatic && collisionB.isStatic) {
                             continue;
                         }
 
-                        // create a unique key to mark this pair.
-                        // use both combinations to ensure linear time
-                        hashA = entityA.id + "|" + entityB.id;
-                        hashB = entityB.id + "|" + entityA.id;
+                        transformA = entityA.properties["app.properties.Transform"][0];
+                        transformB = entityB.properties["app.properties.Transform"][0];
 
-                        if (!checked[hashA] && !checked[hashB]) {
-
-                            // mark this pair as checked
-                            checked[hashA] = checked[hashB] = true;
-
-                            if (collisionA.enabled && collisionB.enabled && this.intersects(entityA, entityB)) {
-                                pairs.push([entityA, entityB]);
-                            }
+                        if (collisionA.enabled && collisionB.enabled && this.intersects(transformA, transformB)) {
+                            pairs.push([entityA, entityB]);
                         }
                     }
                 }
@@ -171,23 +166,23 @@
         return pairs;
     };
 
-    app.systems.CollisionSystem.prototype.intersects = function (entityA, entityB) {
-        var top = Math.max(entityA.top, entityB.top);
-        var bottom = Math.min(entityA.bottom, entityB.bottom);
-        var left = Math.max(entityA.left, entityB.left);
-        var right = Math.min(entityA.right, entityB.right);
+    app.systems.CollisionSystem.prototype.intersects = function (collisionA, collisionB) {
+        var top = Math.max(collisionA.y, collisionB.y);
+        var bottom = Math.min(collisionA.y + collisionA.height, collisionB.y + collisionB.height);
+        var left = Math.max(collisionA.x, collisionB.x);
+        var right = Math.min(collisionA.x + collisionA.width, collisionB.x + collisionB.width);
 
         return top < bottom && left < right;
     };
 
     app.systems.CollisionSystem.prototype.updateWorldSize = function () {
         var entity = this.game.rootEntity;
-        var rect = entity.getPropertyByType(Transform);
+        var rect = entity.properties["app.properties.Transform"][0];
 
-        this.top = rect.top;
-        this.right = rect.right;
-        this.bottom = rect.bottom;
-        this.left = rect.bottom;
+        this.y = rect.y;
+        this.x = rect.x;
+        this.height = rect.height;
+        this.width = rect.width;
     };
 
     app.systems.CollisionSystem.prototype.invokeMethod = function (obj, methodName, args) {
@@ -209,16 +204,16 @@
 
     app.systems.CollisionSystem.prototype.activated = function (game) {
         this.game = game;
-        this.cacheEntities();
+        this.entities = game.rootEntity.filter(isCollision);
         this.updateWorldSize();
     };
 
     app.systems.CollisionSystem.prototype.deactivated = function () {
         this.game = null;
-        this.top = 0;
-        this.right = 0;
-        this.bottom = 0;
-        this.left = 0;
+        this.x = 0;
+        this.y = 0;
+        this.width = 0;
+        this.height = 0;
         this.grid = [[]];
         this.entities = [];
         this.handlers = {};

@@ -29,10 +29,27 @@
         this.rootEntity = rootEntity;
         this.state = pausedState;
         this.frame = null;
+        this.rootEntity.delegate = this;
+    };
+
+    app.Game.prototype.entityAdded = function (entity) {
+        var systems = systems;
+        var length = systems.length;
+        for (var x = 0; x < length; x++) {
+            this.invokeMethodOnSystem(systems[x], "entityAdded", entity);
+        }
+    };
+
+    app.Game.prototype.entityRemoved = function (entity) {
+        var systems = systems;
+        var length = systems.length;
+        for (var x = 0; x < length; x++) {
+            this.invokeMethodOnSystem(systems[x], "entityRemoved", entity);
+        }
     };
 
     app.Game.prototype.invokeMethodOnSystem = function (system, methodName, args) {
-        if (typeof system[methodName] === "function") {
+        if (system && typeof system[methodName] === "function") {
             return system[methodName].apply(system, args);
         }
     };

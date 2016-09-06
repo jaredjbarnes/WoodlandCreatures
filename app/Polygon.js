@@ -1,8 +1,5 @@
 ﻿BASE.require([
-    "app.Rect"
 ], function () {
-
-    var Rect = app.Rect;
 
     var Polygon = function () {
         this.vertices = [];

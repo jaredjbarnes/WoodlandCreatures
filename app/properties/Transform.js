@@ -1,14 +1,16 @@
 ﻿BASE.require([
-    "app.Rect"
 ], function () {
 
     BASE.namespace("app.properties");
 
     app.properties.Transform = function () {
-        app.Rect.call(this);
+        this["@type"] = "app.properties.Transform";
+        this.type = "app.properties.Transform";
+        this.x = 0;
+        this.y = 0;
+        this.width = 0;
+        this.height = 0;
     };
-
-    BASE.extend(app.properties.Transform, app.Rect);
 
 });
 

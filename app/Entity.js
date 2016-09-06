@@ -5,28 +5,91 @@
 
     var Guid = BASE.util.Guid;
     var returnTrue = function () { return true; };
-    var id = 0;
+
+    var invokeMethod = function (obj, methodName, args) {
+        if (obj && typeof obj[methodName] === "function") {
+            return obj[methodName].apply(obj, args);
+        }
+    };
 
     app.Entity = function () {
+        this["@type"] = "app.Entity";
         this.type = null;
         this.children = [];
         this.parent = null;
-        this.components = [];
-        this.properties = [];
+        this.components = {};
+        this.properties = {};
+        this.delegate = null;
         this.id = Guid.create();
+    };
+
+    app.Entity.prototype.addComponent = function (component) {
+        var components = this.components[component.type];
+
+        if (!Array.isArray(components)) {
+            components = this.components[component.type] = [];
+        }
+
+        components.push(property);
+    };
+
+    app.Entity.prototype.removeComponent = function (component) {
+        var components = this.components[component.type];
+
+        if (!Array.isArray(components)) {
+            components = this.components[component.type] = [];
+        }
+
+        var index = components.indexOf(component);
+
+        if (index > -1) {
+            components.splice(index, 1);
+        }
+    };
+
+    app.Entity.prototype.addProperty = function (property) {
+        var properties = this.properties[property.type];
+        if (!Array.isArray(properties)) {
+            properties = this.properties[property.type] = [];
+        }
+        properties.push(property);
+    };
+
+    app.Entity.prototype.removeProperty = function (property) {
+        var properties = this.properties[property.type];
+
+        if (!Array.isArray(properties)) {
+            properties = this.properties[property.type] = [];
+        }
+
+        var index = properties.indexOf(property);
+
+        if (index > -1) {
+            properties.splice(index, 1);
+        }
+    };
+
+    app.Entity.prototype.notify = function (eventName, args) {
+        invokeMethod(this.delegate, eventName, args);
+
+        if (this.parent !== null) {
+            this.parent.notify(eventName, args);
+        }
     };
 
     app.Entity.prototype.appendChild = function (entity) {
         entity.parent = this;
         this.children.push(entity);
+        this.notify("entityAdded", [entity]);
     };
 
     app.Entity.prototype.removeChild = function (entity) {
-
         var index = this.children.indexOf(entity);
+
         if (index > -1) {
             entity.parent = null;
             this.children.splice(index, 1);
+            this.notify("entityRemoved", [entity]);
         }
     };
 
@@ -36,131 +99,8 @@
         var index = this.children.indexOf(referenceEntity);
         if (index > -1) {
             this.children.splice(index, 0, entity);
+            this.notify("entityAdded", [entity]);
         }
-    };
-
-    app.Entity.prototype.hasComponentByType = function (Type) {
-        return this.getComponentByType(Type) != null;
-    };
-
-    app.Entity.prototype.hasComponentOfType = function (Type) {
-        return this.getComponentOfType(Type) != null;
-    };
-
-    app.Entity.prototype.getComponentByType = function (Type) {
-        var component = null;
-
-        for (var x = 0 ; x < this.components.length; x++) {
-            component = this.components[x];
-            if (component.constructor === Type) {
-                return component;
-            }
-        }
-
-        return null;
-    };
-
-    app.Entity.prototype.getComponentOfType = function (Type) {
-        var component = null;
-
-        for (var x = 0 ; x < this.components.length; x++) {
-            component = this.components[x];
-            if (component instanceof Type) {
-                return component;
-            }
-        }
-
-        return null;
-    };
-
-    app.Entity.prototype.getComponentsByType = function (Type) {
-        var matches = [];
-        var component = null;
-
-        for (var x = 0 ; x < this.components.length; x++) {
-            component = this.components[x];
-            if (component.constructor === Type) {
-                matches.push(component);
-            }
-        }
-
-        return matches;
-    };
-
-    app.Entity.prototype.getComponentsOfType = function (Type) {
-        var matches = [];
-        var component = null;
-
-        for (var x = 0 ; x < this.components.length; x++) {
-            component = this.components[x];
-            if (component instanceof Type) {
-                matches.push(component);
-            }
-        }
-
-        return matches;
-    };
-
-    app.Entity.prototype.hasPropertyByType = function (Type) {
-        return this.getPropertyByType(Type) != null;
-    };
-
-    app.Entity.prototype.hasPropertyOfType = function (Type) {
-        return this.getPropertyOfType(Type) != null;
-    };
-
-    app.Entity.prototype.getPropertyByType = function (Type) {
-        var property = null;
-
-        for (var x = 0 ; x < this.properties.length; x++) {
-            property = this.properties[x];
-            if (property.constructor === Type) {
-                return property;
-            }
-        }
-
-        return null;
-    };
-
-    app.Entity.prototype.getPropertyOfType = function (Type) {
-        var property = null;
-
-        for (var x = 0 ; x < this.properties.length; x++) {
-            property = this.properties[x];
-            if (property instanceof Type) {
-                return property;
-            }
-        }
-
-        return null;
-    };
-
-    app.Entity.prototype.getPropertiesByType = function (Type) {
-        var matches = [];
-        var property = null;
-
-        for (var x = 0 ; x < this.properties.length; x++) {
-            property = this.properties[x];
-            if (property.constructor === Type) {
-                matches.push(property);
-            }
-        }
-
-        return matches;
-    };
-
-    app.Entity.prototype.getPropertiesOfType = function (Type) {
-        var matches = [];
-        var property = null;
-
-        for (var x = 0 ; x < this.properties.length; x++) {
-            property = this.properties[x];
-            if (property instanceof Type) {
-                matches.push(property);
-            }
-        }
-
-        return matches;
     };
 
     app.Entity.prototype.filter = function (filter, accumulator) {
@@ -170,49 +110,16 @@
 
         var results = accumulator || [];
         var child = null;
+        var children = this.children;
+        var length = children.length;
 
         if (filter(this)) {
             results.push(this);
         }
 
-        for (var x = 0 ; x < this.children.length; x++) {
-            child = this.children[x];
+        for (var x = 0 ; x < length; x++) {
+            child = children[x];
             child.filter(filter, results);
-        }
-
-        return results;
-    };
-
-    app.Entity.prototype.reduce = function (callback, accumulator) {
-        if (typeof callback !== "function") {
-            throw new Error("Expected a callback.");
-        }
-
-        var child = null;
-
-        accumulator = callback(accumulator, this);
-
-        for (var x = 0 ; x < this.children.length; x++) {
-            child = this.children[x];
-            accumulator = results.concat(child.reduce(callback, accumulator));
-        }
-
-        return accumulator;
-    };
-
-    app.Entity.prototype.map = function (callback, accumulator) {
-        if (typeof callback !== "function") {
-            throw new Error("Expected a callback.");
-        }
-
-        var child = null;
-        var results = accumulator || [];
-
-        results.push(callback(this));
-
-        for (var x = 0 ; x < this.children.length; x++) {
-            child = this.children[x];
-            child.map(callback, accumulator);
         }
 
         return results;

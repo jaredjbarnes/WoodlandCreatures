@@ -1,22 +1,23 @@
 ﻿BASE.require([
     "app.Entity",
     "app.properties.Transform",
+    "app.properties.Collision",
     "app.properties.ImageTexture",
-    "app.properties.Sprite",
-    "app.components.State"
+    "app.properties.Sprite"
 ], function () {
 
     BASE.namespace("app.entities");
 
     var Transform = app.properties.Transform;
+    var Collision = app.properties.Collision;
     var Sprite = app.properties.Sprite;
     var ImageTexture = app.properties.ImageTexture;
-    var State = app.components.State;
 
     app.entities.Player = function () {
         app.Entity.call(this);
 
-        this.type = "Player";
+        this["@type"] = "app.entities.Player";
+        this.type = "app.entities.Player";
 
         var image = new app.properties.ImageTexture();
         image.path = "/images/link.gif";
@@ -31,10 +32,15 @@
         transform.width = 25;
         transform.height = 25;
 
+        var collision = new Collision();
+
         var sprite = new Sprite();
         sprite.timeScale = .35;
 
-        this.properties.push(image, transform, sprite);
+        this.addProperty(image);
+        this.addProperty(transform);
+        this.addProperty(sprite);
+        this.addProperty(collision);
     };
 
     BASE.extend(app.entities.Player, app.Entity);

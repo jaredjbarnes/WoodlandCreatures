@@ -20,9 +20,9 @@
         BASE.require([
             "app.Game",
             "app.Entity",
-            "app.systems.ImageTextureSystem",
+            "app.systems.CameraSystem",
+            "app.systems.CollisionSystem",
             "app.systems.SpriteSystem",
-            "app.systems.ViewportSystem",
             "app.entities.Map",
             "app.entities.Player",
             "app.Timer",
@@ -35,24 +35,21 @@
             var Entity = app.Entity;
             var Map = app.entities.Map;
             var SpriteSystem = app.systems.SpriteSystem;
-            var ViewportSystem = app.systems.ViewportSystem;
-            var ImageTextureSystem = app.systems.ImageTextureSystem;
+            var CollisionSystem = app.systems.CollisionSystem;
+            var CameraSystem = app.systems.CameraSystem;
             var Player = app.entities.Player;
 
-            var imageTextureSystem = new ImageTextureSystem(canvas);
-            var viewportSystem = new ViewportSystem();
+            var cameraSystem = new CameraSystem(canvas);
+            var collisionSystem = new CollisionSystem();
             var spriteSystem = new SpriteSystem();
             var timer = new Timer();
             var map = new Map();
             var player = new Player();
 
-            viewportSystem.width = canvas.width;
-            viewportSystem.height = canvas.height;
-
             for (var x = 0 ; x < 1000; x += 10) {
-                for (var y = 0 ; y < 1000; y += 10) {
+                for (var y = 0 ; y < 1000; y += 25) {
                     player = new Player();
-                    var transform = player.getPropertyByType(app.properties.Transform);
+                    var transform = player.properties["app.properties.Transform"][0]
                     transform.x = x;
                     transform.y = y;
                     map.appendChild(player);
@@ -61,13 +58,12 @@
 
             var game = new Game(map, timer);
 
-            game.appendSystem(imageTextureSystem);
-            game.appendSystem(spriteSystem);
-            game.appendSystem(viewportSystem);
+            game.appendSystem(collisionSystem);
+            //game.appendSystem(spriteSystem);
+            game.appendSystem(cameraSystem);
             game.play();
 
             window.game = game;
-            window.viewportSystem = viewportSystem;
         });
     </script>
 </body>

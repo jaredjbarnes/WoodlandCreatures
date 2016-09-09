@@ -13,7 +13,7 @@
     };
 
     app.Entity = function () {
-        this["@type"] = "app.Entity";
+        this["@class"] = "app.Entity";
         this.type = null;
         this.children = [];
         this.parent = null;

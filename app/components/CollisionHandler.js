@@ -3,8 +3,8 @@
     BASE.namespace("app.components");
 
     app.components.CollisionHandler = function () {
-        this["@type"] = "app.components.CollisionHandler";
-        this.type = "app.components.CollisionHandler";
+        this["@class"] = "app.components.CollisionHandler";
+        this.type = "collision-handler";
         this.entity = null;
         this.isInitialized = false;
 

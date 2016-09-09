@@ -3,10 +3,11 @@
     BASE.namespace("app.properties");
 
     app.properties.Collision = function () {
-        this["@type"] = "app.properties.Collision";
-        this.type = "app.properties.Collision";
+        this["@class"] = "app.properties.Collision";
+        this.type = "collision";
         this.isStatic = false;
         this.enabled = true;
+        this.active = [];
     };
 
 });

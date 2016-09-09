@@ -5,10 +5,13 @@
     BASE.namespace("app.systems");
 
     var Sprite = app.properties.Sprite;
-    var Render = app.properties.ImageTexture;
+    var ImageTexture = app.properties.ImageTexture;
 
     var isSprite = function (entity) {
-        return entity.hasComponentByType(Sprite);
+        var sprites = entity.properties["sprite"];
+        var imageTextures = entity.properties["image-texture"];
+
+        return sprites && sprites.length > 0 && imageTextures && imageTextures.length > 0;
     };
 
     app.systems.SpriteSystem = function () {
@@ -29,12 +32,15 @@
 
         for (var x = 0 ; x < this.entities.length; x++) {
             entity = this.entities[x];
-            sprite = entity.getPropertyByType(Sprite);
-            image = entity.getPropertyByType(Render);
+            sprite = entity.properties["sprite"][0];
+            image = entity.properties["image-texture"][0];
 
             index = Math.floor(sprite.index);
-
             position = sprite.positions[index];
+
+            if (position == null) {
+                continue;
+            }
 
             image.x = position.x;
             image.y = position.y;

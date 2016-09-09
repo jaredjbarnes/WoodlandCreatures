@@ -3,8 +3,8 @@
     BASE.namespace("app.properties");
 
     app.properties.Camera = function () {
-        this["@type"] = "app.properties.Camera";
-        this.type = "app.properties.Camera";
+        this["@class"] = "app.properties.Camera";
+        this.type = "camera";
         this.name = null;
         this.x = 0;
         this.y = 0;

@@ -96,9 +96,9 @@
   <ItemGroup>
     <Content Include="app\components\CameraCollisionHandler.js" />
     <Content Include="app\components\CollisionHandler.js" />
-    <Content Include="app\components\State.js" />
     <Content Include="app\properties\Collision.js" />
     <Content Include="app\properties\Camera.js" />
+    <Content Include="app\properties\KeyboardInput.js" />
     <Content Include="app\properties\OneWayBinding.js" />
     <Content Include="app\properties\Color.js" />
     <Content Include="app\properties\Trace.js" />
@@ -116,7 +116,7 @@
     <Content Include="app\Entity.js" />
     <Content Include="app\Game.js" />
     <Content Include="app\Polygon.js" />
-    <Content Include="app\unfinished\KeyboardInputSystem.js" />
+    <Content Include="app\systems\KeyboardInputSystem.js" />
     <Content Include="app\unfinished\PlayerSystem.js" />
     <Content Include="app\systems\CollisionSystem.js" />
     <Content Include="app\unfinished\player\PlayerInputSystem.js" />

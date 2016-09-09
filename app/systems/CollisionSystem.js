@@ -8,8 +8,8 @@
     var Collision = app.properties.Collision;
 
     var isCollision = function (entity) {
-        var collisionProperties = entity.properties["app.properties.Collision"];
-        var transformProperties = entity.properties["app.properties.Transform"];
+        var collisionProperties = entity.properties["collision"];
+        var transformProperties = entity.properties["transform"];
         return collisionProperties &&
             collisionProperties[0] &&
             transformProperties &&
@@ -27,10 +27,10 @@
         this.height = 0;
         this.grid = [[]];
         this.entities = [];
-        this.handlers = {};
         this.cellSize = cellSize || 50;
         this.totalCells = 0;
-        this.lastCollisionsMap = {};
+        this.lastTimestamp = null;
+        this.currentTimestamp = 0;
         this.isReady = true;
     };
 
@@ -49,6 +49,7 @@
         var gridCol;
         var gridCell;
         var rect;
+        var collision;
 
         // the total number of cells this grid will contain
         this.totalCells = gridWidth * gridHeight;
@@ -60,7 +61,8 @@
         // insert all entities into grid
         for (i = 0; i < this.entities.length; i++) {
             entity = this.entities[i];
-            rect = entity.properties["app.properties.Transform"][0];
+            rect = entity.properties["transform"][0];
+            collision = entity.properties["collision"][0];
 
             // if entity is outside the grid extents, then ignore it
             if (
@@ -143,17 +145,16 @@
                     for (l = k + 1; l < gridCell.length; l++) {
                         entityB = gridCell[l];
 
-                        collisionA = entityA.properties["app.properties.Collision"][0];
-                        collisionB = entityB.properties["app.properties.Collision"][0];
-
+                        collisionA = entityA.properties["collision"][0];
+                        collisionB = entityB.properties["collision"][0];
 
                         // We don't need to check static objects to other static objects.
                         if (collisionA.isStatic && collisionB.isStatic) {
                             continue;
                         }
 
-                        transformA = entityA.properties["app.properties.Transform"][0];
-                        transformB = entityB.properties["app.properties.Transform"][0];
+                        transformA = entityA.properties["transform"][0];
+                        transformB = entityB.properties["transform"][0];
 
                         if (collisionA.enabled && collisionB.enabled && this.intersects(transformA, transformB)) {
                             pairs.push([entityA, entityB]);
@@ -177,7 +178,7 @@
 
     app.systems.CollisionSystem.prototype.updateWorldSize = function () {
         var entity = this.game.rootEntity;
-        var rect = entity.properties["app.properties.Transform"][0];
+        var rect = entity.properties["transform"][0];
 
         this.y = rect.y;
         this.x = rect.x;
@@ -192,14 +193,32 @@
         }
     };
 
+    app.systems.CollisionSystem.prototype.handleCollisions = function (pairs) {
+        for (var x = 0 ; x < pairs.length; x++) {
+            this.handleCollision(pairs[x]);
+        }
+    };
+
+    app.systems.CollisionSystem.prototype.handleCollision = function (pair) {
+        var entityA = pair[0];
+        var entityB = pair[1];
+        var collisionA = entityA.properties["collision"][0];
+        var collisionB = entityB.properties["collision"][0];
+    };
+
     app.systems.CollisionSystem.prototype.executeBroadphase = function () {
         this.updateWorldSize();
         this.sweepAndPrune();
     };
 
     app.systems.CollisionSystem.prototype.update = function () {
+        this.currentTimestamp = this.game.timer.now();
         this.executeBroadphase();
+
         var pairs = this.queryForCollisions();
+        this.handleCollisions(pairs);
+
+        this.lastTimestamp = this.currentTimestamp;
     };
 
     app.systems.CollisionSystem.prototype.activated = function (game) {
@@ -216,8 +235,6 @@
         this.height = 0;
         this.grid = [[]];
         this.entities = [];
-        this.handlers = {};
         this.totalCells = 0;
-        this.lastCollisionsMap = {};
     };
 });

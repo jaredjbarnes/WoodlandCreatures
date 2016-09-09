@@ -3,7 +3,7 @@
     BASE.namespace("app.properties");
 
     app.properties.ImageTexture = function () {
-        this.type = "app.properties.ImageTexture";
+        this.type = "image-texture";
         this.path = null;
         this.x = 0;
         this.y = 0;

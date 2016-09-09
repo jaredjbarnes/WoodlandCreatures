@@ -38,6 +38,7 @@
 
         this["@class"] = "app.entities.Player";
         this.type = "player";
+        this.id = "main-character";
 
         var image = new app.properties.ImageTexture();
         image.path = "/images/link.gif";

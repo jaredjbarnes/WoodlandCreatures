@@ -4,6 +4,12 @@
 
     var emptyFn = function () { };
 
+    var invokeMethod = function (obj, methodName, args) {
+        if (obj && typeof obj[methodName] === "function") {
+            obj[methodName].apply(obj, args);
+        }
+    };
+
     app.systems.CameraSystem = function (canvas) {
         var self = this;
 
@@ -11,6 +17,7 @@
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
         this.imageMap = {};
+        this.game = null;
 
         // This is how the camera system knows what to render.
         // It finds the entity with a camera on it named the 
@@ -18,6 +25,7 @@
         this.cameraName = null;
         this.cameraProperty = null;
         this.cameraCollisionHandler = null;
+        this.cameraController = null;
 
         this.isCamera = function (entity) {
             var cameraProperties = entity.properties["camera"];
@@ -89,8 +97,11 @@
         if (this.cameraProperty == null && this.isCamera(entity)) {
             this.cameraProperty = entity.properties["transform"][0];
             this.cameraCollisionHandler = entity.components["collision-handler"][0];
+            this.cameraController = entity.components["camera-controller"] && entity.components["camera-controller"][0];
             this.canvas.width = this.cameraProperty.width;
             this.canvas.height = this.cameraProperty.height;
+
+            invokeMethod(this.cameraController, "activated", [entity, this.game]);
         }
     };
 
@@ -98,19 +109,26 @@
         if (this.cameraProperty != null && this.isCamera(entity)) {
             this.cameraProperty = null;
             this.cameraCollisionHandler = null;
+            this.cameraController = null;
+
+            invokeMethod(this.cameraController, "deactivated", []);
         }
     };
 
     app.systems.CameraSystem.prototype.activated = function (game) {
+        this.game = game;
         this.findCamera(game.rootEntity);
     };
 
     app.systems.CameraSystem.prototype.update = function () {
         var cameraCollisionHandler = this.cameraCollisionHandler;
+        var cameraController = this.cameraController;
         var camera = this.cameraProperty;
         var context = this.context;
 
         if (cameraCollisionHandler != null) {
+            invokeMethod(this.cameraController, "update", []);
+
             context.clearRect(0, 0, camera.width, camera.height);
 
             var entities = cameraCollisionHandler.intersectingEntitiesById;

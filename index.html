@@ -55,19 +55,17 @@
             var spriteSystem = new SpriteSystem();
             var timer = new Timer();
             var map = new Map();
-            var player = new Player();
+            var player;
+            var transform;
 
             cameraSystem.cameraName = "character";
 
-            for (var x = 0 ; x < 400; x += 25) {
-                for (var y = 0 ; y < 400; y += 25) {
-                    player = new Player();
-                    var transform = player.properties["transform"][0]
-                    transform.x = x;
-                    transform.y = y;
-                    map.appendChild(player);
-                }
-            }
+            // for (var x = 0 ; x < 400; x += 25) {
+            //   for (var y = 0 ; y < 400; y += 25) {
+            player = new Player();
+            map.appendChild(player);
+            // }
+            //}
 
             var game = new Game(map, timer);
 

@@ -20,7 +20,7 @@
             return entity.id === followId;
         })[0] || null;
 
-        if (this.followEntity == null) {
+        if (this.followEntity != null) {
             this.followEntityTransform = this.followEntity.properties["transform"][0];
         }
     };
@@ -35,7 +35,13 @@
     app.components.FollowCameraController.prototype.update = function () {
         if (this.followEntity != null) {
             var transform = this.followEntityTransform;
+            var cameraTransform = this.cameraTransform;
 
+            var middleX = transform.x + (transform.width / 2);
+            var middleY = transform.y + (transform.height / 2);
+
+            cameraTransform.x = middleX - (cameraTransform.width / 2);
+            cameraTransform.y = middleY - (cameraTransform.height / 2);
         }
     };
 

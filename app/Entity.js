@@ -33,6 +33,10 @@
         components.push(property);
     };
 
+    app.Entity.prototype.getComponents = function (name) {
+        return this.components[name] || [];
+    };
+
     app.Entity.prototype.removeComponent = function (component) {
         var components = this.components[component.type];
 
@@ -53,6 +57,10 @@
             properties = this.properties[property.type] = [];
         }
         properties.push(property);
+    };
+
+    app.Entity.prototype.getProperties = function (name) {
+        return this.properties[name] || [];
     };
 
     app.Entity.prototype.removeProperty = function (property) {

@@ -7,10 +7,7 @@
         this.type = "collision-handler";
         this.entity = null;
         this.isInitialized = false;
-
-        // null means it will handle all collisions. Otherwise you can specify
-        // a type with a string and have multiple collision handlers on an entity.
-        this.type = null;
+        this.name = null;
     };
 
     app.components.CollisionHandler.initialize = function (entity) {

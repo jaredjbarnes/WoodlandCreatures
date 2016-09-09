@@ -46,10 +46,10 @@
             var map = new Map();
             var player = new Player();
 
-            for (var x = 0 ; x < 1000; x += 10) {
-                for (var y = 0 ; y < 1000; y += 25) {
+            for (var x = 0 ; x < 400; x += 15) {
+                for (var y = 0 ; y < 400; y += 25) {
                     player = new Player();
-                    var transform = player.properties["app.properties.Transform"][0]
+                    var transform = player.properties["transform"][0]
                     transform.x = x;
                     transform.y = y;
                     map.appendChild(player);

@@ -96,6 +96,7 @@
   <ItemGroup>
     <Content Include="app\components\CameraCollisionHandler.js" />
     <Content Include="app\components\CollisionHandler.js" />
+    <Content Include="app\entities\Camera.js" />
     <Content Include="app\properties\Collision.js" />
     <Content Include="app\properties\Camera.js" />
     <Content Include="app\properties\KeyboardInput.js" />

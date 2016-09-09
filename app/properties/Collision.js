@@ -7,7 +7,8 @@
         this.type = "collision";
         this.isStatic = false;
         this.enabled = true;
-        this.active = [];
+        this.activeCollisions = {};
+        this.name = null;
     };
 
 });

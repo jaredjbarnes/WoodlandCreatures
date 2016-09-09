@@ -17,6 +17,7 @@
     };
 
     var emptyFn = function () { };
+    var emptyArray = [];
 
     //TODO: For large maps we could use a enabled cells to optimize collision detection.
     app.systems.CollisionSystem = function (cellSize) {
@@ -29,7 +30,6 @@
         this.entities = [];
         this.cellSize = cellSize || 50;
         this.totalCells = 0;
-        this.lastTimestamp = null;
         this.currentTimestamp = 0;
         this.isReady = true;
     };
@@ -49,7 +49,6 @@
         var gridCol;
         var gridCell;
         var rect;
-        var collision;
 
         // the total number of cells this grid will contain
         this.totalCells = gridWidth * gridHeight;
@@ -62,7 +61,6 @@
         for (i = 0; i < this.entities.length; i++) {
             entity = this.entities[i];
             rect = entity.properties["transform"][0];
-            collision = entity.properties["collision"][0];
 
             // if entity is outside the grid extents, then ignore it
             if (
@@ -119,6 +117,11 @@
         var collisionB;
         var transformA;
         var transformB;
+        var top;
+        var bottom;
+        var left;
+        var right;
+        var collisionIndex;
 
         // for every column in the grid...
         for (i = 0; i < this.grid.length; i++) {
@@ -167,11 +170,11 @@
         return pairs;
     };
 
-    app.systems.CollisionSystem.prototype.intersects = function (collisionA, collisionB) {
-        var top = Math.max(collisionA.y, collisionB.y);
-        var bottom = Math.min(collisionA.y + collisionA.height, collisionB.y + collisionB.height);
-        var left = Math.max(collisionA.x, collisionB.x);
-        var right = Math.min(collisionA.x + collisionA.width, collisionB.x + collisionB.width);
+    app.systems.CollisionSystem.prototype.intersects = function (transformA, transformB) {
+        var top = Math.max(transformA.y, transformB.y);
+        var bottom = Math.min(transformA.y + transformA.height, transformB.y + transformB.height);
+        var left = Math.max(transformA.x, transformB.x);
+        var right = Math.min(transformA.x + transformA.width, transformB.x + transformB.width);
 
         return top < bottom && left < right;
     };
@@ -193,17 +196,69 @@
         }
     };
 
-    app.systems.CollisionSystem.prototype.handleCollisions = function (pairs) {
-        for (var x = 0 ; x < pairs.length; x++) {
-            this.handleCollision(pairs[x]);
+    app.systems.CollisionSystem.prototype.invokeCollisionHandlers = function (entityA, entityB, handlerName) {
+        var collisionHandler;
+
+        var collisionHandlers = entityA.components["collision-handler"];
+
+        if (collisionHandlers == null) {
+            return;
         }
+
+        var collision = entityB.properties["collision"][0];
+        var length = collisionHandlers.length;
+
+        for (var x = 0 ; x < length; x++) {
+            collisionHandler = collisionHandlers[x];
+            if (collisionHandler.name === null || collisionHandler.name === collision.name) {
+                collisionHandler[handlerName](entityB);
+            }
+        }
+
     };
 
-    app.systems.CollisionSystem.prototype.handleCollision = function (pair) {
-        var entityA = pair[0];
-        var entityB = pair[1];
-        var collisionA = entityA.properties["collision"][0];
-        var collisionB = entityB.properties["collision"][0];
+
+    app.systems.CollisionSystem.prototype.handleCollisionHandlers = function () {
+        var entities = this.entities;
+        var length = entities.length;
+        var entity;
+        var collisions;
+        var collision;
+        var keys;
+        var key;
+        var keysLength;
+
+        for (var x = 0 ; x < length ; x++) {
+            entity = entities[x];
+            collisions = entity.properties["collision"][0].activeCollisions;
+            keys = Object.keys(collisions);
+            keysLength = keys.length;
+
+            for (var y = 0; y < keysLength; y++) {
+                key = keys[y];
+                collision = collisions[key];
+
+                // CollisionStartHandlers
+                if (collision.timestamp === collision.startTimestamp) {
+                    this.invokeCollisionHandlers(entity, collision.entity, "collisionStart");
+                }
+
+                // CollisionActiveHandlers
+                if (collision.timestamp === this.currentTimestamp) {
+                    this.invokeCollisionHandlers(entity, collision.entity, "collisionActive");
+                }
+
+                // CollisionEndHandlers
+                if (collision.timestamp !== this.currentTimestamp) {
+                    this.invokeCollisionHandlers(entity, collision.entity, "collisionEnd");
+
+                    // Allow for some time to pass, before removing, because its likely they'll hit again.
+                    if (this.currentTimestamp - collision.timestamp > 3000) {
+                        delete collisions[key];
+                    }
+                }
+            }
+        }
     };
 
     app.systems.CollisionSystem.prototype.executeBroadphase = function () {
@@ -211,14 +266,49 @@
         this.sweepAndPrune();
     };
 
+    app.systems.CollisionSystem.prototype.assignTimeStamp = function (pairs) {
+        var pair;
+        var entityA;
+        var entityB;
+        var collisionDataA;
+        var collisionDataB;
+
+        for (var x = 0; x < pairs.length; x++) {
+            pair = pairs[x];
+            entityA = pair[0];
+            entityB = pair[1];
+
+            collisionDataA = entityA.getProperties("collision")[0].activeCollisions[entityB.id];
+            collisionDataB = entityB.getProperties("collision")[0].activeCollisions[entityA.id];
+
+            if (collisionDataA == null) {
+                collisionDataA = entityA.getProperties("collision")[0].activeCollisions[entityB.id] = {
+                    startTimestamp: this.currentTimestamp
+                };
+            }
+
+            if (collisionDataB == null) {
+                collisionDataB = entityB.getProperties("collision")[0].activeCollisions[entityA.id] = {
+                    startTimestamp: this.currentTimestamp
+                };
+            }
+
+            collisionDataA.timestamp = this.currentTimestamp;
+            collisionDataA.entity = entityB;
+            collisionDataB.timestamp = this.currentTimestamp;
+            collisionDataB.entity = entityA;
+
+        }
+
+    };
+
     app.systems.CollisionSystem.prototype.update = function () {
         this.currentTimestamp = this.game.timer.now();
         this.executeBroadphase();
 
         var pairs = this.queryForCollisions();
-        this.handleCollisions(pairs);
-
-        this.lastTimestamp = this.currentTimestamp;
+        this.assignTimeStamp(pairs);
+        this.handleCollisionHandlers();
     };
 
     app.systems.CollisionSystem.prototype.activated = function (game) {

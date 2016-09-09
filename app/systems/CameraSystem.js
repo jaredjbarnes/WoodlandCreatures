@@ -2,6 +2,8 @@
 
     BASE.namespace("app.systems");
 
+    var emptyFn = function () { };
+
     app.systems.CameraSystem = function (canvas) {
         var self = this;
 
@@ -19,12 +21,14 @@
 
         this.isCamera = function (entity) {
             var cameraProperties = entity.properties["camera"];
-            var cameraCollisionHandler = entity.components["camera-collision-handler"];
+            var transform = entity.properties["transform"];
+            var cameraCollisionHandler = entity.components["collision-handler"];
 
             return cameraProperties &&
+                transform[0] &&
                 cameraProperties[0] &&
                 cameraProperties[0].name === self.cameraName &&
-                cameraCollisionHandler[0];
+                cameraCollisionHandler && cameraCollisionHandler[0] && cameraCollisionHandler[0]["@class"] === "app.components.CameraCollisionHandler";
         };
     };
 
@@ -47,14 +51,17 @@
         var camera = this.cameraProperty;
         var transform = entity.properties["transform"][0];
         var imageTexture = entity.properties["image-texture"][0];
+        var imageMap = this.imageMap;
         var image = imageMap[imageTexture.path];
+        var context = this.context;
 
-        if (tranform == null || imageTexture == null) {
+        if (transform == null || imageTexture == null) {
             return;
         }
 
         if (image == null) {
             this.loadImage(imageTexture.path);
+            return;
         }
 
         context.drawImage(
@@ -80,10 +87,10 @@
     // System specific methods.
     app.systems.CameraSystem.prototype.entityAdded = function (entity) {
         if (this.cameraProperty == null && this.isCamera(entity)) {
-            this.cameraProperty = entity.properties["camera"][0];
-            this.cameraCollisionHandler = entity.properties["camera-collision-handler"][0];
-            this.cameraProperty.width = this.canvas.width;
-            this.cameraProperty.height = this.canvas.height;
+            this.cameraProperty = entity.properties["transform"][0];
+            this.cameraCollisionHandler = entity.components["collision-handler"][0];
+            this.canvas.width = this.cameraProperty.width;
+            this.canvas.height = this.cameraProperty.height;
         }
     };
 

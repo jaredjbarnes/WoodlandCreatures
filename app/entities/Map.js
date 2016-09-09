@@ -1,11 +1,13 @@
 ﻿BASE.require([
     "app.Entity",
-    "app.properties.Transform"
+    "app.properties.Transform",
+    "app.entities.Camera"
 ], function () {
 
     BASE.namespace("app.entities");
 
     var Transform = app.properties.Transform;
+    var Camera = app.entities.Camera;
 
     app.entities.Map = function () {
         app.Entity.call(this);
@@ -28,10 +30,13 @@
         worldSize.width = 2000;
         worldSize.height = 2000;
 
+        var camera = new Camera();
+
         this.appendChild(ground);
         this.appendChild(props);
         this.appendChild(characters);
         this.appendChild(environment);
+        this.appendChild(camera);
 
         this.addProperty(worldSize);
     };

@@ -210,7 +210,8 @@
 
         for (var x = 0 ; x < length; x++) {
             collisionHandler = collisionHandlers[x];
-            if (collisionHandler.name === null || collisionHandler.name === collision.name) {
+            if ((collisionHandler.name == null || collisionHandler.name === collision.name) &&
+                typeof collisionHandler[handlerName] === "function") {
                 collisionHandler[handlerName](entityB);
             }
         }

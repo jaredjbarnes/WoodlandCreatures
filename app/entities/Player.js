@@ -21,7 +21,7 @@
         app.Entity.call(this);
 
         this["@class"] = "app.entities.Player";
-        this.type = "app.entities.Player";
+        this.type = "player";
 
         var image = new app.properties.ImageTexture();
         image.path = "/images/link.gif";

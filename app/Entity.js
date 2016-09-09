@@ -30,7 +30,7 @@
             components = this.components[component.type] = [];
         }
 
-        components.push(property);
+        components.push(component);
     };
 
     app.Entity.prototype.getComponents = function (name) {

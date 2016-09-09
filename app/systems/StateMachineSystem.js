@@ -24,13 +24,14 @@
 
     app.systems.StateMachineSystem.prototype.initializeStates = function (entity) {
         var states = entity.components["state"];
+        var length = states.length;
         var state;
 
         for (var x = 0 ; x < length; x++) {
             state = states[x];
 
             if (!state.isInitialized) {
-                invokeMethod(state, "initialize", [entity]);
+                invokeMethod(state, "initialize", [entity, this.game]);
                 state.isInitialized = true;
             }
         }
@@ -38,6 +39,7 @@
 
     app.systems.StateMachineSystem.prototype.updateStates = function (stateName, entity) {
         var states = entity.components["state"];
+        var length = states.length;
         var state;
 
         for (var x = 0 ; x < length; x++) {
@@ -51,6 +53,7 @@
 
     app.systems.StateMachineSystem.prototype.activateStates = function (stateName, entity) {
         var states = entity.components["state"];
+        var length = states.length;
         var state;
 
         for (var x = 0 ; x < length; x++) {
@@ -64,6 +67,7 @@
 
     app.systems.StateMachineSystem.prototype.deactivateStates = function (stateName, entity) {
         var states = entity.components["state"];
+        var length = states.length;
         var state;
 
         for (var x = 0 ; x < length; x++) {

@@ -240,7 +240,7 @@
                 collision = collisions[key];
 
                 // CollisionStartHandlers
-                if (collision.timestamp === collision.startTimestamp) {
+                if (collision.timestamp === collision.startTimestamp && collision.timestamp === this.currentTimestamp) {
                     this.invokeCollisionHandlers(entity, collision.entity, "collisionStart");
                 }
 
@@ -295,8 +295,11 @@
             }
 
             collisionDataA.timestamp = this.currentTimestamp;
+            collisionDataA.startTimestamp = this.currentTimestamp;
             collisionDataA.entity = entityB;
+
             collisionDataB.timestamp = this.currentTimestamp;
+            collisionDataB.startTimestamp = this.currentTimestamp;
             collisionDataB.entity = entityA;
 
         }

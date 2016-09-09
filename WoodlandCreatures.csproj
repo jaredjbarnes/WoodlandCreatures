@@ -94,8 +94,18 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\components\FollowCameraController.js" />
     <Content Include="app\components\CameraCollisionHandler.js" />
     <Content Include="app\components\CollisionHandler.js" />
+    <Content Include="app\components\player\states\handleStateChangeByInput.js" />
+    <Content Include="app\components\player\states\RunningRight.js" />
+    <Content Include="app\components\player\states\RunningLeft.js" />
+    <Content Include="app\components\player\states\RunningUp.js" />
+    <Content Include="app\components\player\states\RunningDown.js" />
+    <Content Include="app\components\player\states\StandingDown.js" />
+    <Content Include="app\components\player\states\StandingLeft.js" />
+    <Content Include="app\components\player\states\StandingUp.js" />
+    <Content Include="app\components\player\states\StandingRight.js" />
     <Content Include="app\entities\Camera.js" />
     <Content Include="app\properties\Collision.js" />
     <Content Include="app\properties\Camera.js" />
@@ -106,7 +116,6 @@
     <Content Include="app\systems\CameraSystem.js" />
     <Content Include="app\systems\ColorSystem.js" />
     <Content Include="app\systems\StateMachineSystem.js" />
-    <Content Include="app\unfinished\CollisionHandler.js" />
     <Content Include="app\properties\State.js" />
     <Content Include="app\properties\RigidBody.js" />
     <Content Include="app\properties\Transform.js" />
@@ -118,10 +127,7 @@
     <Content Include="app\Game.js" />
     <Content Include="app\Polygon.js" />
     <Content Include="app\systems\KeyboardInputSystem.js" />
-    <Content Include="app\unfinished\PlayerSystem.js" />
     <Content Include="app\systems\CollisionSystem.js" />
-    <Content Include="app\unfinished\player\PlayerInputSystem.js" />
-    <Content Include="app\unfinished\player\PlayerSpriteSystem.js" />
     <Content Include="app\systems\SpriteSystem.js" />
     <Content Include="app\Timer.js" />
     <Content Include="app\Vector.js" />

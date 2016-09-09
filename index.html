@@ -10,7 +10,7 @@
     </style>
 </head>
 <body>
-    <canvas id="viewport" width="600" height="300"></canvas>
+    <canvas id="viewport" width="600" height="300" style="width:1200px;height:600px;border:1px solid #ff0000"></canvas>
     <script src="lib/weblib/lib/BASE/BASE.js"></script>
     <script>
         BASE.require.loader.setRoot("lib/weblib/lib/BASE/");
@@ -23,6 +23,8 @@
             "app.systems.CameraSystem",
             "app.systems.CollisionSystem",
             "app.systems.SpriteSystem",
+            "app.systems.StateMachineSystem",
+            "app.systems.KeyboardInputSystem",
             "app.entities.Map",
             "app.entities.Player",
             "app.Timer",
@@ -37,10 +39,19 @@
             var SpriteSystem = app.systems.SpriteSystem;
             var CollisionSystem = app.systems.CollisionSystem;
             var CameraSystem = app.systems.CameraSystem;
+            var StateMachineSystem = app.systems.StateMachineSystem;
+            var KeyboardInputSystem = app.systems.KeyboardInputSystem;
             var Player = app.entities.Player;
 
             var cameraSystem = new CameraSystem(canvas);
             var collisionSystem = new CollisionSystem();
+            var stateMachineSystem = new StateMachineSystem();
+            var keyboardInputSystem = new KeyboardInputSystem(document, {
+                37: "left",
+                38: "up",
+                39: "right",
+                40: "down"
+            });
             var spriteSystem = new SpriteSystem();
             var timer = new Timer();
             var map = new Map();
@@ -48,7 +59,7 @@
 
             cameraSystem.cameraName = "character";
 
-            for (var x = 0 ; x < 400; x += 15) {
+            for (var x = 0 ; x < 400; x += 25) {
                 for (var y = 0 ; y < 400; y += 25) {
                     player = new Player();
                     var transform = player.properties["transform"][0]
@@ -61,8 +72,10 @@
             var game = new Game(map, timer);
 
             game.appendSystem(collisionSystem);
+            game.appendSystem(stateMachineSystem);
             game.appendSystem(spriteSystem);
             game.appendSystem(cameraSystem);
+            game.appendSystem(keyboardInputSystem);
             game.play();
 
             window.game = game;

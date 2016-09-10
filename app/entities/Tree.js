@@ -24,15 +24,15 @@
         image.width = 65;
         image.height = 80;
         image.offset = {
-            x: -5,
-            y: -20
+            x: -10,
+            y: -25
         };
 
         var transform = new Transform();
         transform.x = 200;
         transform.y = 200;
-        transform.width = 55;
-        transform.height = 55;
+        transform.width = 45;
+        transform.height = 50;
 
         var collision = new Collision();
         collision.isStatic = true;

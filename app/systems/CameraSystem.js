@@ -100,8 +100,13 @@
             this.cameraProperty = entity.properties["transform"][0];
             this.cameraCollisionHandler = entity.components["collision-handler"][0];
             this.cameraController = entity.components["camera-controller"] && entity.components["camera-controller"][0];
+
+
             this.canvas.width = this.cameraProperty.width;
             this.canvas.height = this.cameraProperty.height;
+
+            this.cameraProperty.width += 50;
+            this.cameraProperty.height += 50;
 
             invokeMethod(this.cameraController, "activated", [entity, this.game]);
         }

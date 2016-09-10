@@ -54,14 +54,14 @@
         image.height = 25;
         image.offset = {
             x: -5,
-            y: -10
+            y: -15
         };
 
         var transform = new Transform();
         transform.x = 10;
         transform.y = 10;
         transform.width = 15;
-        transform.height = 15;
+        transform.height = 10;
 
         var collision = new Collision();
         var movement = new Movement();

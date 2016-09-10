@@ -42,8 +42,8 @@
             var middleX = transform.x + (transform.width / 2);
             var middleY = transform.y + (transform.height / 2);
 
-            cameraTransform.x = middleX - (cameraTransform.width / 2);
-            cameraTransform.y = middleY - (cameraTransform.height / 2);
+            cameraTransform.x = Math.floor(middleX - (cameraTransform.width / 2));
+            cameraTransform.y = Math.floor(middleY - (cameraTransform.height / 2));
 
             if (restraint == null || cameraTransform == null) {
                 return;

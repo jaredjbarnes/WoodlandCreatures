@@ -210,6 +210,12 @@
 
         for (var x = 0 ; x < length; x++) {
             collisionHandler = collisionHandlers[x];
+
+            if (!collisionHandler.isInitialized && typeof collisionHandler.initialize === "function") {
+                collisionHandler.initialize(entityA);
+                collisionHandler.isInitialized = true;
+            }
+
             if ((collisionHandler.name == null || collisionHandler.name === collision.name) &&
                 typeof collisionHandler[handlerName] === "function") {
                 collisionHandler[handlerName](entityB);

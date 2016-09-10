@@ -10,17 +10,17 @@
     };
 
     var movements = {
-        up: function (transform) {
-            transform.y -= 2;
+        up: function (movement) {
+            movement.y -= 2;
         },
-        left: function (transform) {
-            transform.x -= 2;
+        left: function (movement) {
+            movement.x -= 2;
         },
-        right: function (transform) {
-            transform.x += 2;
+        right: function (movement) {
+            movement.x += 2;
         },
-        down: function (transform) {
-            transform.y += 2;
+        down: function (movement) {
+            movement.y += 2;
         }
     };
 
@@ -35,13 +35,13 @@
 
     app.components.player.states.handleStateChangeByInput = function (entity, nothingState) {
         var keyboardInput = entity.properties["keyboard-input"][0];
-        var transform = entity.properties["transform"][0];
+        var movement = entity.properties["movement"][0];
         var state = entity.properties["state"][0];
         var isNothing = true;
 
         movementKeys.forEach(function (key) {
             if (keyboardInput.pressedKeys[key]) {
-                invokeMethod(movements, key, [transform]);
+                invokeMethod(movements, key, [movement]);
                 isNothing = false;
             }
         });

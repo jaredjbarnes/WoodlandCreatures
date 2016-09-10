@@ -49,6 +49,8 @@
         this.addComponent(followCameraController);
         this.addComponent(cameraCollisionHandler);
 
+        window.camera = transform;
+
     };
 
     BASE.extend(app.entities.Camera, app.Entity);

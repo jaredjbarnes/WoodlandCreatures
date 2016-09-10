@@ -1,4 +1,6 @@
-﻿BASE.require([], function () {
+﻿BASE.require([
+    "Array.prototype.orderBy"
+], function () {
 
     BASE.namespace("app.systems");
 
@@ -131,12 +133,23 @@
 
             context.clearRect(0, 0, camera.width, camera.height);
 
-            var entities = cameraCollisionHandler.intersectingEntitiesById;
-            var keys = Object.keys(entities);
+            var entitiesById = cameraCollisionHandler.intersectingEntitiesById;
+            var keys = Object.keys(entitiesById);
             var length = keys.length;
+            var entities = [];
 
             for (var x = 0 ; x < length ; x++) {
-                this.drawEntity(entities[keys[x]])
+                entities.push(entitiesById[keys[x]]);
+            }
+
+            entities.orderBy(function (entity) {
+                var transform = entity.properties["transform"][0];
+
+                return transform.y + transform.height;
+            });
+
+            for (var x = 0 ; x < entities.length ; x++) {
+                this.drawEntity(entities[x]);
             }
         }
     };

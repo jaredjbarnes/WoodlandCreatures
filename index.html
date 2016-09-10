@@ -10,7 +10,7 @@
     </style>
 </head>
 <body>
-    <canvas id="viewport" width="600" height="300" style="width:1200px;height:600px;border:1px solid #ff0000"></canvas>
+    <canvas id="viewport" width="600" height="300" style="width:1200px;height:600px;background-color:#1ebd65"></canvas>
     <script src="lib/weblib/lib/BASE/BASE.js"></script>
     <script>
         BASE.require.loader.setRoot("lib/weblib/lib/BASE/");
@@ -21,6 +21,7 @@
             "app.Game",
             "app.Entity",
             "app.systems.CameraSystem",
+            "app.systems.MovementSystem",
             "app.systems.CollisionSystem",
             "app.systems.RestraintSystem",
             "app.systems.CameraControllerSystem",
@@ -29,6 +30,7 @@
             "app.systems.KeyboardInputSystem",
             "app.entities.Map",
             "app.entities.Player",
+            "app.entities.Tree",
             "app.Timer",
         ], function () {
             var canvas = document.querySelector("#viewport");
@@ -38,6 +40,7 @@
             var Camera = app.systems.Camera;
             var Entity = app.Entity;
             var Map = app.entities.Map;
+            var MovementSystem = app.systems.MovementSystem;
             var SpriteSystem = app.systems.SpriteSystem;
             var CollisionSystem = app.systems.CollisionSystem;
             var RestraintSystem = app.systems.RestraintSystem;
@@ -46,9 +49,13 @@
             var StateMachineSystem = app.systems.StateMachineSystem;
             var KeyboardInputSystem = app.systems.KeyboardInputSystem;
             var Player = app.entities.Player;
+            var Tree = app.entities.Tree;
 
             var cameraSystem = new CameraSystem(canvas);
+            cameraSystem.cameraName = "character";
+
             var collisionSystem = new CollisionSystem();
+            var movementSystem = new MovementSystem();
             var restraintSystem = new RestraintSystem();
             var cameraControllerSystem = new CameraControllerSystem();
             var stateMachineSystem = new StateMachineSystem();
@@ -63,18 +70,27 @@
             var spriteSystem = new SpriteSystem();
             var timer = new Timer();
             var map = new Map();
-            var player;
-            var transform;
+            var player = new Player();
+            var tree;
+            var treeTransform;
 
-            cameraSystem.cameraName = "character";
+            for (var x = 0 ; x < 10; x++) {
+                tree = new Tree();
+                transform = tree.properties["transform"][0];
 
-            player = new Player();
+                transform.x = Math.random() * 2000;
+                transform.y = Math.random() * 2000;
+
+                map.appendChild(tree);
+            }
+
             map.appendChild(player);
 
             var game = new Game(map, timer);
 
             game.appendSystem(keyboardInputSystem);
             game.appendSystem(stateMachineSystem);
+            game.appendSystem(movementSystem);
             game.appendSystem(spriteSystem);
             game.appendSystem(cameraControllerSystem);
             game.appendSystem(restraintSystem);

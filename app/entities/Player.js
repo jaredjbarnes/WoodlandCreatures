@@ -1,8 +1,10 @@
 ﻿BASE.require([
     "app.Entity",
     "app.properties.KeyboardInput",
+    "app.properties.Movement",
     "app.properties.Transform",
     "app.properties.Collision",
+    "app.components.PropCollisionHandler",
     "app.properties.ImageTexture",
     "app.properties.Restraint",
     "app.properties.Sprite",
@@ -21,7 +23,9 @@
 
     var KeyboardInput = app.properties.KeyboardInput;
     var Transform = app.properties.Transform;
+    var Movement = app.properties.Movement;
     var Collision = app.properties.Collision;
+    var PropCollisionHandler = app.components.PropCollisionHandler;
     var Sprite = app.properties.Sprite;
     var State = app.properties.State;
     var Restraint = app.properties.Restraint;
@@ -60,6 +64,7 @@
         transform.height = 15;
 
         var collision = new Collision();
+        var movement = new Movement();
         var keyboardInput = new KeyboardInput();
 
         var sprite = new Sprite();
@@ -67,6 +72,8 @@
 
         var state = new State();
         state.name = "standingRight";
+
+        var propCollisionHandler = new PropCollisionHandler();
 
         var standingRight = new StandingRight();
         var standingLeft = new StandingLeft();
@@ -80,6 +87,7 @@
         var restraint = new Restraint();
         restraint.byEntityId = "root";
 
+        this.addProperty(movement);
         this.addProperty(restraint);
         this.addProperty(state);
         this.addProperty(image);
@@ -88,6 +96,7 @@
         this.addProperty(sprite);
         this.addProperty(collision);
 
+        this.addComponent(propCollisionHandler);
         this.addComponent(standingRight);
         this.addComponent(standingLeft);
         this.addComponent(standingUp);

@@ -94,6 +94,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\components\PropCollisionHandler.js" />
     <Content Include="app\components\FollowCameraController.js" />
     <Content Include="app\components\CameraCollisionHandler.js" />
     <Content Include="app\components\CollisionHandler.js" />
@@ -107,13 +108,16 @@
     <Content Include="app\components\player\states\StandingUp.js" />
     <Content Include="app\components\player\states\StandingRight.js" />
     <Content Include="app\entities\Camera.js" />
+    <Content Include="app\entities\Tree.js" />
     <Content Include="app\properties\Restraint.js" />
     <Content Include="app\properties\Collision.js" />
     <Content Include="app\properties\Camera.js" />
     <Content Include="app\properties\KeyboardInput.js" />
     <Content Include="app\properties\OneWayBinding.js" />
     <Content Include="app\properties\Color.js" />
+    <Content Include="app\properties\Movement.js" />
     <Content Include="app\systems\CameraControllerSystem.js" />
+    <Content Include="app\systems\MovementSystem.js" />
     <Content Include="app\systems\RestraintSystem.js" />
     <Content Include="app\systems\CameraSystem.js" />
     <Content Include="app\systems\ColorSystem.js" />

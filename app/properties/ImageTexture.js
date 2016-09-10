@@ -9,6 +9,10 @@
         this.y = 0;
         this.width = 0;
         this.height = 0;
+        this.offset = {
+            x: 0,
+            y: 0
+        };
     };
 
 });

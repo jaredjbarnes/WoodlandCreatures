@@ -33,8 +33,8 @@
             var cameraCollisionHandler = entity.components["collision-handler"];
 
             return cameraProperties &&
-                transform[0] &&
-                cameraProperties[0] &&
+                transform && transform[0] &&
+                cameraProperties && cameraProperties[0] &&
                 cameraProperties[0].name === self.cameraName &&
                 cameraCollisionHandler && cameraCollisionHandler[0] && cameraCollisionHandler[0]["@class"] === "app.components.CameraCollisionHandler";
         };
@@ -78,10 +78,10 @@
             imageTexture.y,
             imageTexture.width,
             imageTexture.height,
-            transform.x - camera.x,
-            transform.y - camera.y,
-            transform.width,
-            transform.height
+            transform.x - camera.x + imageTexture.offset.x,
+            transform.y - camera.y + imageTexture.offset.y,
+            imageTexture.width,
+            imageTexture.height
             );
     };
 

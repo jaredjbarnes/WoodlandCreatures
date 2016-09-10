@@ -4,6 +4,7 @@
     "app.properties.Transform",
     "app.properties.Collision",
     "app.properties.ImageTexture",
+    "app.properties.Restraint",
     "app.properties.Sprite",
     "app.properties.State",
     "app.components.player.states.StandingRight",
@@ -23,6 +24,7 @@
     var Collision = app.properties.Collision;
     var Sprite = app.properties.Sprite;
     var State = app.properties.State;
+    var Restraint = app.properties.Restraint;
     var ImageTexture = app.properties.ImageTexture;
     var StandingRight = app.components.player.states.StandingRight;
     var StandingLeft = app.components.player.states.StandingLeft;
@@ -46,12 +48,16 @@
         image.y = 0;
         image.width = 25;
         image.height = 25;
+        image.offset = {
+            x: -5,
+            y: -10
+        };
 
         var transform = new Transform();
         transform.x = 10;
         transform.y = 10;
-        transform.width = 25;
-        transform.height = 25;
+        transform.width = 15;
+        transform.height = 15;
 
         var collision = new Collision();
         var keyboardInput = new KeyboardInput();
@@ -71,6 +77,10 @@
         var runningUp = new RunningUp();
         var runningDown = new RunningDown();
 
+        var restraint = new Restraint();
+        restraint.byEntityId = "root";
+
+        this.addProperty(restraint);
         this.addProperty(state);
         this.addProperty(image);
         this.addProperty(transform);

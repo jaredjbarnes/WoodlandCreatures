@@ -107,12 +107,14 @@
     <Content Include="app\components\player\states\StandingUp.js" />
     <Content Include="app\components\player\states\StandingRight.js" />
     <Content Include="app\entities\Camera.js" />
+    <Content Include="app\properties\Restraint.js" />
     <Content Include="app\properties\Collision.js" />
     <Content Include="app\properties\Camera.js" />
     <Content Include="app\properties\KeyboardInput.js" />
     <Content Include="app\properties\OneWayBinding.js" />
     <Content Include="app\properties\Color.js" />
-    <Content Include="app\properties\Trace.js" />
+    <Content Include="app\systems\CameraControllerSystem.js" />
+    <Content Include="app\systems\RestraintSystem.js" />
     <Content Include="app\systems\CameraSystem.js" />
     <Content Include="app\systems\ColorSystem.js" />
     <Content Include="app\systems\StateMachineSystem.js" />

@@ -13,6 +13,7 @@
         app.Entity.call(this);
 
         this.type = "map";
+        this.id = "root";
 
         var ground = new app.Entity();
         ground.type = "ground";

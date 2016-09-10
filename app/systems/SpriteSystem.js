@@ -44,6 +44,7 @@
 
             image.x = position.x;
             image.y = position.y;
+            image.offset = position.offest || image.offset;
 
             sprite.index += (sprite.timeScale * 1);
             sprite.index = sprite.index >= sprite.positions.length ? 0 : sprite.index;

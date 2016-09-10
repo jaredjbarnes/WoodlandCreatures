@@ -4,6 +4,7 @@
     "app.components.CameraCollisionHandler",
     "app.components.FollowCameraController",
     "app.properties.Collision",
+    "app.properties.Restraint",
     "app.properties.Transform"
 ], function () {
 
@@ -11,6 +12,7 @@
 
     var Camera = app.properties.Camera;
     var Transform = app.properties.Transform;
+    var Restraint = app.properties.Restraint;
     var Collision = app.properties.Collision;
     var CameraCollisionHandler = app.components.CameraCollisionHandler;
     var FollowCameraController = app.components.FollowCameraController;
@@ -36,6 +38,10 @@
         var followCameraController = new FollowCameraController();
         followCameraController.followId = "main-character";
 
+        var restraint = new Restraint();
+        restraint.byEntityId = "root";
+
+        this.addProperty(restraint);
         this.addProperty(transform);
         this.addProperty(collision);
         this.addProperty(camera);
@@ -43,7 +49,6 @@
         this.addComponent(followCameraController);
         this.addComponent(cameraCollisionHandler);
 
-        window.camera = transform;
     };
 
     BASE.extend(app.entities.Camera, app.Entity);

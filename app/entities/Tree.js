@@ -32,7 +32,7 @@
         transform.x = 200;
         transform.y = 200;
         transform.width = 55;
-        transform.height = 60;
+        transform.height = 55;
 
         var collision = new Collision();
         collision.isStatic = true;

@@ -25,9 +25,9 @@
     };
 
     var movementToState = {
-        up: "runningUp",
         left: "runningLeft",
         right: "runningRight",
+        up: "runningUp",
         down: "runningDown"
     };
 

@@ -8,12 +8,7 @@
     var Collision = app.properties.Collision;
 
     var isCollision = function (entity) {
-        var collisionProperties = entity.properties["collision"];
-        var transformProperties = entity.properties["transform"];
-        return collisionProperties &&
-            collisionProperties[0] &&
-            transformProperties &&
-            transformProperties[0]
+        return entity.hasProperties(["collision", "position", "size"]);
     };
 
     var emptyFn = function () { };
@@ -48,7 +43,8 @@
         var cY;
         var gridCol;
         var gridCell;
-        var rect;
+        var size;
+        var position;
 
         // the total number of cells this grid will contain
         this.totalCells = gridWidth * gridHeight;
@@ -60,21 +56,22 @@
         // insert all entities into grid
         for (i = 0; i < this.entities.length; i++) {
             entity = this.entities[i];
-            rect = entity.properties["transform"][0];
+            size = entity.properties["size"][0];
+            position = entity.properties["position"][0];
 
             // if entity is outside the grid extents, then ignore it
             if (
-				rect.x < this.x || rect.x + rect.width > this.x + this.width
-            || rect.y < this.y || rect.y + rect.height > this.y + this.height
+				position.x < this.x || position.x + size.width > this.x + this.width
+            || position.y < this.y || position.y + size.height > this.y + this.height
 			) {
                 continue;
             }
 
             // Find the cells that the entity overlap.
-            left = Math.floor((rect.x - this.x) / this.cellSize);
-            right = Math.floor((rect.x + rect.width - this.x) / this.cellSize);
-            top = Math.floor((rect.y - this.y) / this.cellSize);
-            bottom = Math.floor((rect.y + rect.height - this.y) / this.cellSize);
+            left = Math.floor((position.x - this.x) / this.cellSize);
+            right = Math.floor((position.x + size.width - this.x) / this.cellSize);
+            top = Math.floor((position.y - this.y) / this.cellSize);
+            bottom = Math.floor((position.y + size.height - this.y) / this.cellSize);
 
             // Insert entity into each cell it overlaps
             for (cX = left; cX <= right; cX++) {
@@ -115,8 +112,10 @@
         var gridCell;
         var collisionA;
         var collisionB;
-        var transformA;
-        var transformB;
+        var sizeA;
+        var positionA;
+        var sizeB;
+        var positionB;
         var top;
         var bottom;
         var left;
@@ -156,10 +155,13 @@
                             continue;
                         }
 
-                        transformA = entityA.properties["transform"][0];
-                        transformB = entityB.properties["transform"][0];
+                        positionA = entityA.properties["position"][0];
+                        sizeA = entityA.properties["size"][0];
 
-                        if (collisionA.enabled && collisionB.enabled && this.intersects(transformA, transformB)) {
+                        positionB = entityB.properties["position"][0];
+                        sizeB = entityB.properties["size"][0];
+
+                        if (collisionA.enabled && collisionB.enabled && this.intersects(positionA, sizeA, positionB, sizeB)) {
                             pairs.push([entityA, entityB]);
                         }
                     }
@@ -170,23 +172,28 @@
         return pairs;
     };
 
-    app.systems.CollisionSystem.prototype.intersects = function (transformA, transformB) {
-        var top = Math.max(transformA.y, transformB.y);
-        var bottom = Math.min(transformA.y + transformA.height, transformB.y + transformB.height);
-        var left = Math.max(transformA.x, transformB.x);
-        var right = Math.min(transformA.x + transformA.width, transformB.x + transformB.width);
+    app.systems.CollisionSystem.prototype.intersects = function (positionA, sizeA, positionB, sizeB) {
+        var top = Math.max(positionA.y, positionB.y);
+        var bottom = Math.min(positionA.y + sizeA.height, positionB.y + sizeB.height);
+        var left = Math.max(positionA.x, positionB.x);
+        var right = Math.min(positionA.x + sizeA.width, positionB.x + sizeB.width);
 
         return top < bottom && left < right;
     };
 
     app.systems.CollisionSystem.prototype.updateWorldSize = function () {
         var entity = this.game.rootEntity;
-        var rect = entity.properties["transform"][0];
+        var position = entity.getProperty("position");
+        var size = entity.getProperty("size");
 
-        this.y = rect.y;
-        this.x = rect.x;
-        this.height = rect.height;
-        this.width = rect.width;
+        if (position == null || size == null) {
+            return;
+        }
+
+        this.y = position.y;
+        this.x = position.x;
+        this.height = size.height;
+        this.width = size.width;
     };
 
     app.systems.CollisionSystem.prototype.invokeMethod = function (obj, methodName, args) {
@@ -285,17 +292,17 @@
             entityA = pair[0];
             entityB = pair[1];
 
-            collisionDataA = entityA.getProperties("collision")[0].activeCollisions[entityB.id];
-            collisionDataB = entityB.getProperties("collision")[0].activeCollisions[entityA.id];
+            collisionDataA = entityA.properties["collision"][0].activeCollisions[entityB.id];
+            collisionDataB = entityB.properties["collision"][0].activeCollisions[entityA.id];
 
             if (collisionDataA == null) {
-                collisionDataA = entityA.getProperties("collision")[0].activeCollisions[entityB.id] = {
+                collisionDataA = entityA.properties["collision"][0].activeCollisions[entityB.id] = {
                     startTimestamp: this.currentTimestamp
                 };
             }
 
             if (collisionDataB == null) {
-                collisionDataB = entityB.getProperties("collision")[0].activeCollisions[entityA.id] = {
+                collisionDataB = entityB.properties["collision"][0].activeCollisions[entityA.id] = {
                     startTimestamp: this.currentTimestamp
                 };
             }

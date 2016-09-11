@@ -4,15 +4,19 @@
     "app.components.CameraCollisionHandler",
     "app.components.FollowCameraController",
     "app.properties.Collision",
-    "app.properties.Restraint",
-    "app.properties.Transform"
+    "app.properties.PositionConstraint",
+    "app.properties.Size",
+    "app.properties.Position",
+    "app.properties.Movement"
 ], function () {
 
     BASE.namespace("app.entities");
 
     var Camera = app.properties.Camera;
-    var Transform = app.properties.Transform;
-    var Restraint = app.properties.Restraint;
+    var Size = app.properties.Size;
+    var Position = app.properties.Position;
+    var Movement = app.properties.Movement;
+    var PositionConstraint = app.properties.PositionConstraint;
     var Collision = app.properties.Collision;
     var CameraCollisionHandler = app.components.CameraCollisionHandler;
     var FollowCameraController = app.components.FollowCameraController;
@@ -23,11 +27,15 @@
         this["@class"] = "app.entities.Camera";
         this.type = "camera";
 
-        var transform = new Transform();
-        transform.x = 10;
-        transform.y = 10;
-        transform.width = 500;
-        transform.height = 300;
+        var size = new Size();
+        size.width = 600;
+        size.height = 300;
+
+        var position = new Position();
+        position.x = 10;
+        position.y = 10;
+
+        var movement = new Movement();
 
         var cameraCollisionHandler = new CameraCollisionHandler();
         var collision = new Collision();
@@ -38,18 +46,18 @@
         var followCameraController = new FollowCameraController();
         followCameraController.followId = "main-character";
 
-        var restraint = new Restraint();
-        restraint.byEntityId = "root";
+        var positionConstraint = new PositionConstraint();
+        positionConstraint.byEntityId = "root";
 
-        this.addProperty(restraint);
-        this.addProperty(transform);
+        this.addProperty(positionConstraint);
+        this.addProperty(position);
+        this.addProperty(movement);
+        this.addProperty(size);
         this.addProperty(collision);
         this.addProperty(camera);
 
         this.addComponent(followCameraController);
         this.addComponent(cameraCollisionHandler);
-
-        window.camera = transform;
 
     };
 

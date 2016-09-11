@@ -8,10 +8,12 @@
         this.type = "camera-controller";
         this.name = null;
         this.entity = null;
-        this.cameraTransform = null;
+        this.cameraSize = null;
+        this.cameraMovement = null;
         this.followId = null;
         this.followEntity = null;
-        this.followEntityTransform = null;
+        this.followEntitySize = null;
+        this.followEntityPosition = null;
     };
 
     app.components.FollowCameraController.prototype.findFollowEntity = function () {
@@ -21,49 +23,54 @@
         })[0] || null;
 
         if (this.followEntity != null) {
-            this.followEntityTransform = this.followEntity.properties["transform"][0];
+            this.followEntitySize = this.followEntity.getProperty("size");
+            this.followEntityPosition = this.followEntity.getProperty("position");
         }
     };
 
     app.components.FollowCameraController.prototype.activated = function (entity, game) {
         this.game = game;
         this.entity = entity;
-        this.cameraTransform = entity.properties["transform"][0];
-        this.restraint = entity.properties["restraint"][0];
+        this.cameraSize = entity.getProperty("size");
+        this.cameraMovement = entity.getProperty("movement");
+        this.positionConstraint = entity.getProperty("position-constraint");
         this.findFollowEntity();
     };
 
     app.components.FollowCameraController.prototype.update = function () {
         if (this.followEntity != null) {
-            var transform = this.followEntityTransform;
-            var cameraTransform = this.cameraTransform;
-            var restraint = this.restraint;
+            var followEntitySize = this.followEntitySize;
+            var followEntityPosition = this.followEntityPosition;
+            var cameraSize = this.cameraSize;
+            var cameraMovement = this.cameraMovement;
+            var positionConstraint = this.positionConstraint;
 
-            var middleX = transform.x + (transform.width / 2);
-            var middleY = transform.y + (transform.height / 2);
+            var middleX = followEntityPosition.x + (followEntitySize.width / 2);
+            var middleY = followEntityPosition.y + (followEntitySize.height / 2);
 
-            cameraTransform.x = Math.floor(middleX - (cameraTransform.width / 2));
-            cameraTransform.y = Math.floor(middleY - (cameraTransform.height / 2));
+            cameraMovement.position.x = Math.floor(middleX - (cameraSize.width / 2));
+            cameraMovement.position.y = Math.floor(middleY - (cameraSize.height / 2));
 
-            if (restraint == null || cameraTransform == null) {
+            if (positionConstraint == null || cameraSize == null || cameraMovement == null) {
                 return;
             }
 
-            if (cameraTransform.x < restraint.transform.x) {
-                cameraTransform.x = restraint.transform.x;
+            if (cameraMovement.position.x + cameraSize.width > positionConstraint.position.x + positionConstraint.size.width) {
+                cameraMovement.position.x = positionConstraint.position.x + positionConstraint.size.width - cameraSize.width;
             }
 
-            if (cameraTransform.y < restraint.transform.y) {
-                cameraTransform.y = restraint.transform.y
+            if (cameraMovement.position.y + cameraSize.height > positionConstraint.position.y + positionConstraint.size.height) {
+                cameraMovement.position.y = positionConstraint.position.y + positionConstraint.size.height - cameraSize.height;
             }
 
-            if (cameraTransform.x + cameraTransform.width > restraint.transform.x + restraint.transform.width) {
-                cameraTransform.x = restraint.transform.x + restraint.transform.width - cameraTransform.width;
+            if (cameraMovement.position.x < positionConstraint.position.x) {
+                cameraMovement.position.x = positionConstraint.position.x;
             }
 
-            if (cameraTransform.y + cameraTransform.height > restraint.transform.y + restraint.transform.height) {
-                cameraTransform.y = restraint.transform.y + restraint.transform.height - cameraTransform.height;
+            if (cameraMovement.position.y < positionConstraint.position.y) {
+                cameraMovement.position.y = positionConstraint.position.y
             }
+
         }
     };
 

@@ -1,12 +1,14 @@
 ﻿BASE.require([
     "app.Entity",
-    "app.properties.Transform",
+    "app.properties.Size",
+    "app.properties.Position",
     "app.entities.Camera"
 ], function () {
 
     BASE.namespace("app.entities");
 
-    var Transform = app.properties.Transform;
+    var Position = app.properties.Position;
+    var Size = app.properties.Size;
     var Camera = app.entities.Camera;
 
     app.entities.Map = function () {
@@ -27,9 +29,13 @@
         var environment = new app.Entity();
         environment.type = "environment";
 
-        var worldSize = new Transform();
+        var worldSize = new Size();
         worldSize.width = 2000;
         worldSize.height = 2000;
+
+        var position = new Position();
+        position.x = 0;
+        position.y = 0;
 
         var camera = new Camera();
 
@@ -40,6 +46,7 @@
         this.appendChild(camera);
 
         this.addProperty(worldSize);
+        this.addProperty(position);
     };
 
     BASE.extend(app.entities.Map, app.Entity);

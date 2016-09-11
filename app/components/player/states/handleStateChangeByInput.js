@@ -11,16 +11,16 @@
 
     var movements = {
         up: function (movement) {
-            movement.y -= 2;
+            movement.position.y -= 2;
         },
         left: function (movement) {
-            movement.x -= 2;
+            movement.position.x -= 2;
         },
         right: function (movement) {
-            movement.x += 2;
+            movement.position.x += 2;
         },
         down: function (movement) {
-            movement.y += 2;
+            movement.position.y += 2;
         }
     };
 

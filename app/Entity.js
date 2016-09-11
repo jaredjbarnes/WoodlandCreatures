@@ -37,6 +37,10 @@
         return this.components[name] || [];
     };
 
+    app.Entity.prototype.getComponent = function (name) {
+        return (this.components[name] && this.components[name][0]) || null;
+    };
+
     app.Entity.prototype.removeComponent = function (component) {
         var components = this.components[component.type];
 
@@ -51,6 +55,15 @@
         }
     };
 
+    app.Entity.prototype.hasComponents = function (components) {
+        for (var x = 0 ; x < components.length; x++) {
+            if (this.components[components[x]] == null) {
+                return false;
+            }
+        }
+        return true;
+    };
+
     app.Entity.prototype.addProperty = function (property) {
         var properties = this.properties[property.type];
         if (!Array.isArray(properties)) {
@@ -61,6 +74,10 @@
 
     app.Entity.prototype.getProperties = function (name) {
         return this.properties[name] || [];
+    };
+
+    app.Entity.prototype.getProperty = function (name) {
+        return (this.properties[name] && this.properties[name][0]) || null;
     };
 
     app.Entity.prototype.removeProperty = function (property) {
@@ -75,6 +92,15 @@
         if (index > -1) {
             properties.splice(index, 1);
         }
+    };
+
+    app.Entity.prototype.hasProperties = function (properties) {
+        for (var x = 0 ; x < properties.length; x++) {
+            if (this.properties[properties[x]] == null) {
+                return false;
+            }
+        }
+        return true;
     };
 
     app.Entity.prototype.notify = function (eventName, args) {

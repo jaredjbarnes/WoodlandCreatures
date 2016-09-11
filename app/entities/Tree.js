@@ -1,13 +1,15 @@
 ﻿BASE.require([
     "app.Entity",
-    "app.properties.Transform",
+    "app.properties.Position",
+    "app.properties.Size",
     "app.properties.Collision",
     "app.properties.ImageTexture"
 ], function () {
 
     BASE.namespace("app.entities");
 
-    var Transform = app.properties.Transform;
+    var Size = app.properties.Size;
+    var Position = app.properties.Position;
     var Collision = app.properties.Collision;
     var ImageTexture = app.properties.ImageTexture;
 
@@ -23,23 +25,22 @@
         image.y = 539;
         image.width = 65;
         image.height = 80;
-        image.offset = {
-            x: -10,
-            y: -25
-        };
 
-        var transform = new Transform();
-        transform.x = 200;
-        transform.y = 200;
-        transform.width = 45;
-        transform.height = 50;
+        var size = new Size();
+        size.width = 65;
+        size.height = 80;
+
+        var position = new Position();
+        position.x = 0;
+        position.y = 0;
 
         var collision = new Collision();
         collision.isStatic = true;
         collision.name = "prop";
 
         this.addProperty(image);
-        this.addProperty(transform);
+        this.addProperty(position);
+        this.addProperty(size);
         this.addProperty(collision);
 
     };

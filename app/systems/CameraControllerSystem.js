@@ -17,11 +17,12 @@
         this.cameraController = null;
 
         this.isCamera = function (entity) {
-            var cameraProperties = entity.properties["camera"];
-            var transform = entity.properties["transform"];
-            var cameraController = entity.properties["camera-controller"];
+            var camera = entity.getProperty("camera");
+            var size = entity.getProperty("size");
+            var position = entity.getProperty("position");
+            var cameraController = entity.getProperty("camera-controller");
 
-            return cameraProperties && transform && cameraController && cameraController[0];
+            return camera && size && cameraController;
         };
     };
 
@@ -35,7 +36,7 @@
     // System specific methods.
     app.systems.CameraControllerSystem.prototype.entityAdded = function (entity) {
         if (this.isCamera(entity)) {
-            this.cameraController = entity.components["camera-controller"] && entity.components["camera-controller"][0];
+            this.cameraController = entity.getComponent("camera-controller");
             invokeMethod(this.cameraController, "activated", [entity, this.game]);
         }
     };

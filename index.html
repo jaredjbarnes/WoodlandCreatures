@@ -23,7 +23,7 @@
             "app.systems.CameraSystem",
             "app.systems.MovementSystem",
             "app.systems.CollisionSystem",
-            "app.systems.RestraintSystem",
+            "app.systems.PositionConstraintSystem",
             "app.systems.CameraControllerSystem",
             "app.systems.SpriteSystem",
             "app.systems.StateMachineSystem",
@@ -43,7 +43,7 @@
             var MovementSystem = app.systems.MovementSystem;
             var SpriteSystem = app.systems.SpriteSystem;
             var CollisionSystem = app.systems.CollisionSystem;
-            var RestraintSystem = app.systems.RestraintSystem;
+            var PositionConstraintSystem = app.systems.PositionConstraintSystem;
             var CameraControllerSystem = app.systems.CameraControllerSystem;
             var CameraSystem = app.systems.CameraSystem;
             var StateMachineSystem = app.systems.StateMachineSystem;
@@ -56,7 +56,7 @@
 
             var collisionSystem = new CollisionSystem();
             var movementSystem = new MovementSystem();
-            var restraintSystem = new RestraintSystem();
+            var constraintSystem = new PositionConstraintSystem();
             var cameraControllerSystem = new CameraControllerSystem();
             var stateMachineSystem = new StateMachineSystem();
 
@@ -72,14 +72,14 @@
             var map = new Map();
             var player = new Player();
             var tree;
-            var treeTransform;
+            var position;
 
-            for (var x = 0 ; x < 750; x++) {
+            for (var x = 0 ; x < 100; x++) {
                 tree = new Tree();
-                transform = tree.properties["transform"][0];
+                position = tree.getProperty("position");
 
-                transform.x = Math.random() * 2000;
-                transform.y = Math.random() * 2000;
+                position.x = Math.random() * 2000;
+                position.y = Math.random() * 2000;
 
                 map.appendChild(tree);
             }
@@ -91,10 +91,10 @@
             game.appendSystem(keyboardInputSystem);
             game.appendSystem(stateMachineSystem);
             game.appendSystem(movementSystem);
+            game.appendSystem(collisionSystem);
             game.appendSystem(spriteSystem);
             game.appendSystem(cameraControllerSystem);
-            game.appendSystem(restraintSystem);
-            game.appendSystem(collisionSystem);
+            game.appendSystem(constraintSystem);
             game.appendSystem(cameraSystem);
 
             game.play();

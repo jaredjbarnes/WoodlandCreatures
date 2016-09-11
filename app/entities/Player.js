@@ -2,11 +2,12 @@
     "app.Entity",
     "app.properties.KeyboardInput",
     "app.properties.Movement",
-    "app.properties.Transform",
+    "app.properties.Size",
+    "app.properties.Position",
     "app.properties.Collision",
     "app.components.PropCollisionHandler",
     "app.properties.ImageTexture",
-    "app.properties.Restraint",
+    "app.properties.PositionConstraint",
     "app.properties.Sprite",
     "app.properties.State",
     "app.components.player.states.StandingRight",
@@ -22,13 +23,14 @@
     BASE.namespace("app.entities");
 
     var KeyboardInput = app.properties.KeyboardInput;
-    var Transform = app.properties.Transform;
+    var Position = app.properties.Position;
+    var Size = app.properties.Size;
     var Movement = app.properties.Movement;
     var Collision = app.properties.Collision;
     var PropCollisionHandler = app.components.PropCollisionHandler;
     var Sprite = app.properties.Sprite;
     var State = app.properties.State;
-    var Restraint = app.properties.Restraint;
+    var PositionConstraint = app.properties.PositionConstraint;
     var ImageTexture = app.properties.ImageTexture;
     var StandingRight = app.components.player.states.StandingRight;
     var StandingLeft = app.components.player.states.StandingLeft;
@@ -52,16 +54,14 @@
         image.y = 0;
         image.width = 25;
         image.height = 25;
-        image.offset = {
-            x: -5,
-            y: -15
-        };
 
-        var transform = new Transform();
-        transform.x = 10;
-        transform.y = 10;
-        transform.width = 15;
-        transform.height = 10;
+        var size = new Size();
+        size.width = 25;
+        size.height = 25;
+
+        var position = new Position();
+        position.x = 10;
+        position.y = 10;
 
         var collision = new Collision();
         var movement = new Movement();
@@ -84,14 +84,15 @@
         var runningUp = new RunningUp();
         var runningDown = new RunningDown();
 
-        var restraint = new Restraint();
-        restraint.byEntityId = "root";
+        var positionConstraint = new PositionConstraint();
+        positionConstraint.byEntityId = "root";
 
         this.addProperty(movement);
-        this.addProperty(restraint);
+        this.addProperty(positionConstraint);
         this.addProperty(state);
         this.addProperty(image);
-        this.addProperty(transform);
+        this.addProperty(size);
+        this.addProperty(position);
         this.addProperty(keyboardInput);
         this.addProperty(sprite);
         this.addProperty(collision);

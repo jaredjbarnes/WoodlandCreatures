@@ -5,10 +5,7 @@
     var emptyFn = function () { };
 
     var isMovable = function (entity) {
-        var movement = entity.properties["movement"];
-        var transform = entity.properties["transform"];
-
-        return movement && movement[0] && transform && transform[0];
+        return entity.hasProperties(["movement", "position"]);
     };
 
     app.systems.MovementSystem = function (canvas) {
@@ -23,7 +20,7 @@
 
         if (isMovable(entity)) {
             this.entities.push(entity);
-            movement = entity.properties["movement"][0];
+            movement = entity.getProperty("movement");
         }
     };
 
@@ -55,18 +52,18 @@
 
         for (var x = 0; x < length; x++) {
             entity = entities[x];
-            movement = entity.properties["movement"][0];
-            transform = entity.properties["transform"][0];
+            movement = entity.getProperty("movement");
+            position = entity.getProperty("position");
 
-            if (movement == null || transform == null) {
+            if (movement == null || position == null) {
                 return;
             }
 
-            movement.lastX = transform.x;
-            movement.lastY = transform.y;
+            movement.previousPosition.x = position.x;
+            movement.previousPosition.y = position.y;
 
-            transform.x = movement.x;
-            transform.y = movement.y;
+            position.x = movement.position.x;
+            position.y = movement.position.y;
 
         }
     };

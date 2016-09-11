@@ -5,10 +5,11 @@
     "app.properties.Size",
     "app.properties.Position",
     "app.properties.Collision",
-    "app.components.PropCollisionHandler",
     "app.properties.ImageTexture",
     "app.properties.PositionConstraint",
     "app.properties.Sprite",
+    "app.properties.RectangleBody",
+    "app.components.RectangleBodyCollisionHandler",
     "app.properties.State",
     "app.components.player.states.StandingRight",
     "app.components.player.states.StandingLeft",
@@ -27,7 +28,8 @@
     var Size = app.properties.Size;
     var Movement = app.properties.Movement;
     var Collision = app.properties.Collision;
-    var PropCollisionHandler = app.components.PropCollisionHandler;
+    var RectangleBody = app.properties.RectangleBody;
+    var RectangleBodyCollisionHandler = app.components.RectangleBodyCollisionHandler;
     var Sprite = app.properties.Sprite;
     var State = app.properties.State;
     var PositionConstraint = app.properties.PositionConstraint;
@@ -73,7 +75,12 @@
         var state = new State();
         state.name = "standingRight";
 
-        var propCollisionHandler = new PropCollisionHandler();
+        var rectangleBodyCollisionHandler = new RectangleBodyCollisionHandler();
+        var rectangleBody = new RectangleBody();
+        rectangleBody.size.width = 15;
+        rectangleBody.size.height = 10;
+        rectangleBody.position.y = 15;
+        rectangleBody.position.x = 5;
 
         var standingRight = new StandingRight();
         var standingLeft = new StandingLeft();
@@ -88,6 +95,7 @@
         positionConstraint.byEntityId = "root";
 
         this.addProperty(movement);
+        this.addProperty(rectangleBody);
         this.addProperty(positionConstraint);
         this.addProperty(state);
         this.addProperty(image);
@@ -97,7 +105,7 @@
         this.addProperty(sprite);
         this.addProperty(collision);
 
-        this.addComponent(propCollisionHandler);
+        this.addComponent(rectangleBodyCollisionHandler);
         this.addComponent(standingRight);
         this.addComponent(standingLeft);
         this.addComponent(standingUp);

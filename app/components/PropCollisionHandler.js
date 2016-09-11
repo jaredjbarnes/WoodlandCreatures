@@ -4,7 +4,7 @@
     BASE.namespace("app.components");
 
     app.components.PropCollisionHandler = function () {
-        this["@class"] = "app.components.CameraCollisionHandler";
+        this["@class"] = "app.components.PropCollisionHandler";
         this.type = "collision-handler";
         this.name = "prop";
         this.entity = null;
@@ -21,7 +21,7 @@
         var propPosition = otherEntity.getProperty("position");
         var size = entity.getProperty("size");
         var position = entity.getProperty("position");
-        var movement = entity.properties["movement"][0];
+        var movement = entity.getProperty("movement");
 
         var propMiddleX = propPosition.x + (propSize.width / 2);
         var middleX = position.x + (size.width / 2);

@@ -17,7 +17,7 @@
 
         Transform.call(this);
         this.game = null;
-        this.rootEntity = null;
+        this.stage = null;
         this.width = canvas.width;
         this.height = canvas.height;
         this.isReady = false;
@@ -60,7 +60,7 @@
         var x = this.x;
         var y = this.y;
 
-        var viewTransform = this.rootEntity.getPropertyType(Transform);
+        var viewTransform = this.stage.getPropertyType(Transform);
 
         var right = Math.min(this.right, viewTransform.width);
         var bottom = Math.min(this.bottom, viewTransform.height);
@@ -73,12 +73,12 @@
     };
 
     app.systems.ColorSystem.prototype.cacheEntities = function (game) {
-        this.entities = this.rootEntity.filter(this.isRender);
+        this.entities = this.stage.filter(this.isRender);
     };
 
     app.systems.ColorSystem.prototype.activated = function (game) {
         this.game = game;
-        this.rootEntity = game.rootEntity;
+        this.stage = game.stage;
         this.loadImages();
         this.cacheEntities();
     };

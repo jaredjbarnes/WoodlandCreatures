@@ -23,13 +23,13 @@
         }
     };
 
-    app.Game = function (rootEntity, timer) {
+    app.Game = function (stage, timer) {
         this.timer = timer;
         this.systems = [];
-        this.rootEntity = rootEntity;
+        this.stage = stage;
         this.state = pausedState;
         this.frame = null;
-        this.rootEntity.delegate = this;
+        this.stage.delegate = this;
     };
 
     app.Game.prototype.entityAdded = function (entity) {

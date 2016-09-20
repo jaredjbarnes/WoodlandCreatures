@@ -150,8 +150,8 @@
                         collisionA = entityA.properties["collision"][0];
                         collisionB = entityB.properties["collision"][0];
 
-                        // We don't need to check static objects to other static objects.
-                        if (collisionA.isStatic && collisionB.isStatic) {
+                        // We don't need to check static or disabled objects to other static objects.
+                        if ((collisionA.isStatic && collisionB.isStatic) || !collisionA.enabled || !collisionB.enabled) {
                             continue;
                         }
 
@@ -182,7 +182,7 @@
     };
 
     app.systems.CollisionSystem.prototype.updateWorldSize = function () {
-        var entity = this.game.rootEntity;
+        var entity = this.game.stage;
         var position = entity.getProperty("position");
         var size = entity.getProperty("size");
 
@@ -330,7 +330,7 @@
 
     app.systems.CollisionSystem.prototype.activated = function (game) {
         this.game = game;
-        this.entities = game.rootEntity.filter(isCollision);
+        this.entities = game.stage.filter(isCollision);
         this.updateWorldSize();
     };
 

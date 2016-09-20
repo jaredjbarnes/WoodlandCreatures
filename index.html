@@ -2,26 +2,53 @@
 <html>
 <head>
     <title>Woodand Creatures</title>
+    <!-- This prevents zoom by mobile and forces GPU Rasterization for android browser-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
     <meta charset="utf-8" />
     <style>
         html, body {
             overflow: hidden;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            border: 0;
         }
     </style>
 </head>
 <body>
-    <canvas id="viewport" width="600" height="300" style="width:1800px;height:900px;background-color:#1ebd65"></canvas>
+    <canvas id="viewport" style="background-color:#1ebd65"></canvas>
     <script src="lib/weblib/lib/BASE/BASE.js"></script>
     <script>
         BASE.require.loader.setRoot("lib/weblib/lib/BASE/");
         BASE.require.loader.setNamespace("app", "app");
         BASE.require.loader.setNamespace("Matter", "Matter");
 
+        var getAspectRatioForWidth = function (width, height) {
+            var ratio;
+
+            if (width > height) {
+                ratio = width / height;
+                return {
+                    width: 600,
+                    height: 600 / ratio
+                };
+            } else {
+                ratio = height / width;
+                return {
+                    width: 600 / ratio,
+                    height: 600
+                }
+            }
+        };
+
         BASE.require([
             "app.Game",
             "app.Entity",
             "app.systems.CameraSystem",
             "app.systems.MovementSystem",
+            "app.systems.TouchInputSystem",
             "app.systems.CollisionSystem",
             "app.systems.PositionConstraintSystem",
             "app.systems.CameraControllerSystem",
@@ -31,9 +58,24 @@
             "app.entities.Map",
             "app.entities.Player",
             "app.entities.Tree",
-            "app.Timer",
+            "app.Timer"
         ], function () {
             var canvas = document.querySelector("#viewport");
+
+            var width = document.body.clientWidth;
+            var height = document.body.clientHeight;
+
+            var size = getAspectRatioForWidth(width, height);
+            var scale = {
+                x: width / size.width,
+                y: height / size.height
+            };
+
+            canvas.width = size.width;
+            canvas.height = size.height;
+
+            canvas.style.width = width + "px";
+            canvas.style.height = height + "px";
 
             var Timer = app.Timer;
             var Game = app.Game;
@@ -50,6 +92,7 @@
             var KeyboardInputSystem = app.systems.KeyboardInputSystem;
             var Player = app.entities.Player;
             var Tree = app.entities.Tree;
+            var TouchInputSystem = app.systems.TouchInputSystem;
 
             var cameraSystem = new CameraSystem(canvas);
             cameraSystem.cameraName = "character";
@@ -59,6 +102,9 @@
             var constraintSystem = new PositionConstraintSystem();
             var cameraControllerSystem = new CameraControllerSystem();
             var stateMachineSystem = new StateMachineSystem();
+
+            var touchInputSystem = new TouchInputSystem(document, scale);
+            touchInputSystem.cameraName = "character";
 
             var keyboardInputSystem = new KeyboardInputSystem(document, {
                 37: "left",
@@ -74,7 +120,7 @@
             var tree;
             var position;
 
-            for (var x = 0 ; x < 700; x++) {
+            for (var x = 0 ; x < 1000; x++) {
                 tree = new Tree();
                 position = tree.getProperty("position");
 
@@ -89,12 +135,13 @@
             var game = new Game(map, timer);
 
             game.appendSystem(keyboardInputSystem);
+            game.appendSystem(touchInputSystem);
             game.appendSystem(stateMachineSystem);
             game.appendSystem(movementSystem);
+            game.appendSystem(constraintSystem);
+            game.appendSystem(cameraControllerSystem);
             game.appendSystem(collisionSystem);
             game.appendSystem(spriteSystem);
-            game.appendSystem(cameraControllerSystem);
-            game.appendSystem(constraintSystem);
             game.appendSystem(cameraSystem);
 
             game.play();

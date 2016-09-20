@@ -28,3 +28,13 @@ Switchable
 Transportable
 
 Actionable have a list of Action types
+
+Completables.....
+
+
+Make the UI have the tabs of that says 
+=======================================================
+Ground
+Objects
+Enemies
+Player

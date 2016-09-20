@@ -26,9 +26,9 @@
         };
     };
 
-    app.systems.CameraControllerSystem.prototype.findCamera = function (rootEntity) {
+    app.systems.CameraControllerSystem.prototype.findCamera = function (stage) {
         var self = this;
-        var camera = rootEntity.filter(function (entity) {
+        var camera = stage.filter(function (entity) {
             self.entityAdded(entity);
         })[0];
     };
@@ -50,7 +50,7 @@
 
     app.systems.CameraControllerSystem.prototype.activated = function (game) {
         this.game = game;
-        this.findCamera(game.rootEntity);
+        this.findCamera(game.stage);
     };
 
     app.systems.CameraControllerSystem.prototype.update = function () {

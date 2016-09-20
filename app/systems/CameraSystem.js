@@ -20,6 +20,9 @@
         this.context = canvas.getContext("2d");
         this.imageMap = {};
         this.game = null;
+        this.offScreenCanvas = document.createElement("canvas");
+        this.offScreenContext = this.offScreenCanvas.getContext("2d");
+        this.staticCache = document.createElement("canvas");
 
         // This is how the camera system knows what to render.
         // It finds the entity with a camera on it named the 
@@ -38,7 +41,7 @@
 
     app.systems.CameraSystem.prototype.loadImage = function (path, callback) {
         callback = callback || emptyFn;
-        var image = new Image(path);
+        var image = new Image();
         var camera = this;
 
         if (camera.imageMap[path] != null) {
@@ -60,7 +63,7 @@
         var imageTexture = entity.getProperty("image-texture");
         var imageMap = this.imageMap;
         var image = imageMap[imageTexture.path];
-        var context = this.context;
+        var offScreenContext = this.offScreenContext;
 
         if (size == null || position == null || imageTexture == null) {
             return;
@@ -71,25 +74,28 @@
             return;
         }
 
-        context.drawImage(
+        offScreenContext.drawImage(
             image,
             imageTexture.x,
             imageTexture.y,
             imageTexture.width,
             imageTexture.height,
-            position.x - cameraPosition.x,
-            position.y - cameraPosition.y,
+            position.x - cameraPosition.x + imageTexture.offset.x,
+            position.y - cameraPosition.y + imageTexture.offset.y,
             imageTexture.width,
             imageTexture.height
             );
     };
 
-    app.systems.CameraSystem.prototype.findCamera = function (rootEntity) {
+    app.systems.CameraSystem.prototype.findCamera = function (stage) {
         var self = this;
-        var camera = rootEntity.filter(function (entity) {
+        var camera = stage.filter(function (entity) {
             self.entityAdded(entity);
         })[0];
     };
+
+
+
 
     // System specific methods.
     app.systems.CameraSystem.prototype.entityAdded = function (entity) {
@@ -100,8 +106,10 @@
             this.cameraCollisionHandler = entity.getComponent("collision-handler");
             this.cameraController = entity.getComponent("camera-controller");
 
-            this.canvas.width = this.cameraSize.width;
-            this.canvas.height = this.cameraSize.height;
+            this.cameraSize.width = this.canvas.width;
+            this.cameraSize.height = this.canvas.height;
+            this.offScreenCanvas.width = this.canvas.width;
+            this.offScreenCanvas.height = this.canvas.height;
 
             invokeMethod(this.cameraController, "activated", [entity, this.game]);
         }
@@ -121,7 +129,7 @@
 
     app.systems.CameraSystem.prototype.activated = function (game) {
         this.game = game;
-        this.findCamera(game.rootEntity);
+        this.findCamera(game.stage);
     };
 
     app.systems.CameraSystem.prototype.update = function () {
@@ -130,12 +138,13 @@
         var cameraSize = this.cameraSize;
         var cameraPosition = this.cameraPosition;
         var camera = this.camera;
+        var offScreenContext = this.offScreenContext;
         var context = this.context;
 
         if (cameraCollisionHandler != null) {
             invokeMethod(this.cameraController, "update", []);
 
-            context.clearRect(0, 0, cameraSize.width, cameraSize.height);
+            offScreenContext.clearRect(0, 0, cameraSize.width, cameraSize.height);
 
             var entitiesById = cameraCollisionHandler.intersectingEntitiesById;
             var keys = Object.keys(entitiesById);
@@ -156,6 +165,9 @@
             for (var x = 0 ; x < entities.length ; x++) {
                 this.drawEntity(entities[x]);
             }
+
+            context.clearRect(0,0, cameraSize.width, cameraSize.height );
+            context.drawImage(this.offScreenCanvas, 0, 0, this.offScreenCanvas.width, this.offScreenCanvas.height);
         }
     };
 

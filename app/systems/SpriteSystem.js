@@ -21,7 +21,7 @@
     };
 
     app.systems.SpriteSystem.prototype.cacheEntities = function () {
-        this.entities = this.game.rootEntity.filter(isSprite);
+        this.entities = this.game.stage.filter(isSprite);
     };
 
     app.systems.SpriteSystem.prototype.update = function () {

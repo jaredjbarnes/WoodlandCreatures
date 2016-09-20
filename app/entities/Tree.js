@@ -35,6 +35,7 @@
         var position = new Position();
         position.x = 0;
         position.y = 0;
+        position.isStatic = true;
 
         var collision = new Collision();
         collision.isStatic = true;

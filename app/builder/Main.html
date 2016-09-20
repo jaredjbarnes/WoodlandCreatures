@@ -1,0 +1,35 @@
+﻿<div>
+    <style component="css-material-icons"></style>
+    <style>
+        [main-sidebar] {
+            position: absolute !important;
+            top: 5px;
+            left: 5px;
+            width: 350px;
+            bottom: 5px;
+        }
+
+        [main-content] {
+            position: absolute !important;
+            top: 95px;
+            left: 365px;
+            bottom: 5px;
+            right: 5px;
+        }
+
+        [main-actions] {
+            position: absolute !important;
+            top: 0;
+            left: 365px;
+            height: 100px;
+            right: 0;
+            text-align: center;
+            line-height: 100px;
+        }
+    </style>
+    <div component="./Frame.html" main-content></div>
+    <div main-actions>
+        <div component="./Button.html" style="background-color: #4cff00; width: 100px;" class="icon"><i class="material-icons">&#xE037;</i></div>
+    </div>
+    <div component="./Frame.html" main-sidebar></div>
+</div>

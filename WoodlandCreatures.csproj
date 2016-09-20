@@ -94,6 +94,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\builder\Button.html" />
+    <Content Include="app\builder\Button.js" />
+    <Content Include="app\builder\Frame.html" />
+    <Content Include="app\builder\Frame.js" />
+    <Content Include="app\builder\Main.html" />
+    <Content Include="app\builder\Theme.html" />
     <Content Include="app\components\RectangleBodyCollisionHandler.js" />
     <Content Include="app\components\PropCollisionHandler.js" />
     <Content Include="app\components\FollowCameraController.js" />
@@ -110,6 +116,8 @@
     <Content Include="app\components\player\states\StandingRight.js" />
     <Content Include="app\entities\Camera.js" />
     <Content Include="app\entities\Tree.js" />
+    <Content Include="app\properties\Throwable.js" />
+    <Content Include="app\properties\TouchInput.js" />
     <Content Include="app\properties\RectangleBody.js" />
     <Content Include="app\properties\Size.js" />
     <Content Include="app\properties\PositionConstraint.js" />
@@ -121,6 +129,7 @@
     <Content Include="app\properties\Movement.js" />
     <Content Include="app\properties\Position.js" />
     <Content Include="app\systems\CameraControllerSystem.js" />
+    <Content Include="app\systems\TouchInputSystem.js" />
     <Content Include="app\systems\MovementSystem.js" />
     <Content Include="app\systems\PositionConstraintSystem.js" />
     <Content Include="app\systems\CameraSystem.js" />
@@ -1078,6 +1087,7 @@
     <Content Include="lib\weblib\plugins\select2\select2.js" />
     <Content Include="lib\weblib\plugins\select2\select2.min.js" />
     <Content Include="lib\weblib\plugins\select2\select2x2.png" />
+    <Content Include="mapBuilder.html" />
     <Content Include="Matter\Engine.js" />
     <Content Include="packages.config" />
     <Content Include="lib\weblib\components\components.json" />

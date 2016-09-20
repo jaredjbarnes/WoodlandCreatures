@@ -36,7 +36,7 @@
 
     app.systems.MovementSystem.prototype.activated = function (game) {
         this.game = game;
-        var entities = game.rootEntity.filter();
+        var entities = game.stage.filter();
 
         for (var x = 0 ; x < entities.length; x++) {
             this.entityAdded(entities[x]);
@@ -62,8 +62,8 @@
             movement.previousPosition.x = position.x;
             movement.previousPosition.y = position.y;
 
-            position.x = movement.position.x;
-            position.y = movement.position.y;
+            position.x = Math.floor(movement.position.x);
+            position.y = Math.floor(movement.position.y);
 
         }
     };

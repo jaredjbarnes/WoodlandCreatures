@@ -103,7 +103,7 @@
     };
 
     app.systems.StateMachineSystem.prototype.cacheEntities = function () {
-        this.entities = this.game.rootEntity.filter(isComponentState);
+        this.entities = this.game.stage.filter(isComponentState);
     };
 
     app.systems.StateMachineSystem.prototype.initializeEntities = function () {

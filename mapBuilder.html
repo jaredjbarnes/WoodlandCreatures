@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Zelda Game Builder</title>
+    <meta charset="utf-8" />
+    <style>
+        html, body {
+            overflow: hidden;
+            background-color: #e9e9e9;
+            color: rgba(255,255,255,0.8);
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            font-family: Arial;
+        }
+    </style>
+    <script type="components/config" root="lib/weblib/components/" src="lib/weblib/components/components.json">
+    </script>
+</head>
+<body>
+    <style component="css-helpers"></style>
+    <div component="./app/builder/Main.html" class="absolute-fill-parent"></div>
+    <script src="lib/weblib/lib/BASE/BASE.js"></script>
+    <script>
+        BASE.require.loader.setRoot("lib/weblib/lib/BASE/");
+        BASE.require.loader.setNamespace("app", "app");
+
+        BASE.require([
+            "BASE.web.ComponentsDocument",
+            "FastClick",
+            "jQuery"
+        ], function () {
+
+            BASE.namespace("BASE.web");
+
+            $(function () {
+                BASE.web.components = new BASE.web.ComponentsDocument(document);
+                FastClick.attach(document.body);
+            });
+        });
+    </script>
+</body>
+</html>

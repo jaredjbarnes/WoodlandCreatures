@@ -1,0 +1,53 @@
+﻿<div button controller="app.builder.Button" class="raise">
+    <style component="css-helpers"></style>
+    <style component="./Theme.html"></style>
+    <style>
+        [button] {
+            position: relative;
+            display: inline-block;
+            height: 70px;
+            line-height: 65px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+            [button].icon {
+                font-size: 30px;
+            }
+
+            [button]:active {
+                height: 66px;
+                position: relative;
+                top: 4px;
+                line-height: 65px;
+                border-radius: 15px;
+                border-top: 1px solid rgba(255,255,255,0.6);
+                border-bottom: 4px solid rgba(0,0,0,0.4);
+                box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            }
+
+            [button].disabled {
+                background-color: #c2c2c2 !important;
+                height: 66px;
+                position: relative;
+                top: 4px;
+                line-height: 65px;
+                border-radius: 15px;
+                border-top: 1px solid rgba(255,255,255,0.6);
+                border-bottom: 4px solid rgba(0,0,0,0.4);
+                box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+                cursor: default;
+            }
+
+        [button-outside] {
+            color: rgba(255,255,255,0.8);
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 0px 20px;
+            box-sizing: border-box;
+        }
+    </style>
+    <div tag="button" button-outside unselectable>
+        <embed />
+    </div>
+</div>

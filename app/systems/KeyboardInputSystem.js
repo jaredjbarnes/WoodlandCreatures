@@ -35,7 +35,7 @@
         var document = this.document;
         var pressedKeys = this.pressedKeys;
 
-        this.entities = game.rootEntity.filter(hasKeyboardProperty).forEach(function (entity) {
+        this.entities = game.stage.filter(hasKeyboardProperty).forEach(function (entity) {
             var keyboardProperty = entity.properties["keyboard-input"][0];
             keyboardProperty.pressedKeys = pressedKeys;
         });

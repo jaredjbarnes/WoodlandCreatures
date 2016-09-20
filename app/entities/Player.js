@@ -11,6 +11,7 @@
     "app.properties.RectangleBody",
     "app.components.RectangleBodyCollisionHandler",
     "app.properties.State",
+    "app.properties.TouchInput",
     "app.components.player.states.StandingRight",
     "app.components.player.states.StandingLeft",
     "app.components.player.states.StandingUp",
@@ -34,6 +35,7 @@
     var State = app.properties.State;
     var PositionConstraint = app.properties.PositionConstraint;
     var ImageTexture = app.properties.ImageTexture;
+    var TouchInput = app.properties.TouchInput;
     var StandingRight = app.components.player.states.StandingRight;
     var StandingLeft = app.components.player.states.StandingLeft;
     var StandingUp = app.components.player.states.StandingUp;
@@ -68,6 +70,7 @@
         var collision = new Collision();
         var movement = new Movement();
         var keyboardInput = new KeyboardInput();
+        var touchInput = new TouchInput();
 
         var sprite = new Sprite();
         sprite.timeScale = .35;
@@ -102,6 +105,7 @@
         this.addProperty(size);
         this.addProperty(position);
         this.addProperty(keyboardInput);
+        this.addProperty(touchInput);
         this.addProperty(sprite);
         this.addProperty(collision);
 

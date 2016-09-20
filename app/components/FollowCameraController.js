@@ -18,7 +18,7 @@
 
     app.components.FollowCameraController.prototype.findFollowEntity = function () {
         var followId = this.followId;
-        this.followEntity = this.game.rootEntity.filter(function (entity) {
+        this.followEntity = this.game.stage.filter(function (entity) {
             return entity.id === followId;
         })[0] || null;
 

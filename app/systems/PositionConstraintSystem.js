@@ -67,7 +67,7 @@
 
     app.systems.PositionConstraintSystem.prototype.activated = function (game) {
         this.game = game;
-        var entities = game.rootEntity.filter();
+        var entities = game.stage.filter();
 
         for (var x = 0 ; x < entities.length; x++) {
             this.entityAdded(entities[x]);
@@ -98,7 +98,7 @@
                 movement.position.x = positionConstraint.position.x + positionConstraint.size.width - size.width;
             }
 
-            if (movement.position.y + size.height > positionConstraint.position.y + positionConstraint.position.height) {
+            if (movement.position.y + size.height > positionConstraint.position.y + positionConstraint.size.height) {
                 movement.position.y = positionConstraint.position.y + positionConstraint.size.height - size.height;
             }
 

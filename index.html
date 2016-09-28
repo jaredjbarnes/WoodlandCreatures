@@ -55,6 +55,7 @@
             "app.systems.StateMachineSystem",
             "app.systems.PlayerStateMachineSystem",
             "app.systems.KeyboardInputSystem",
+            "app.systems.PlayerCollisionSystem",
             "app.entities.Map",
             "app.entities.Player",
             "app.entities.Camera",
@@ -90,6 +91,7 @@
             var PositionConstraintSystem = app.systems.PositionConstraintSystem;
             var FollowEntityCameraSystem = app.systems.FollowEntityCameraSystem;
             var PlayerStateMachineSystem = app.systems.PlayerStateMachineSystem;
+            var PlayerCollisionSystem = app.systems.PlayerCollisionSystem;
             var KeyboardInputSystem = app.systems.KeyboardInputSystem;
             var Player = app.entities.Player;
             var Tree = app.entities.Tree;
@@ -99,6 +101,7 @@
             var movementSystem = new MovementSystem();
             var constraintSystem = new PositionConstraintSystem();
             var playerStateMachineSystem = new PlayerStateMachineSystem();
+            var playerCollisionSystem = new PlayerCollisionSystem();
 
             var touchInputSystem = new TouchInputSystem(document, scale);
             touchInputSystem.cameraName = "character";
@@ -140,6 +143,7 @@
             game.appendSystem(constraintSystem);
             game.appendSystem(movementSystem);
             game.appendSystem(collisionSystem);
+            game.appendSystem(playerCollisionSystem);
             game.appendSystem(spriteSystem);
             game.appendSystem(cameraSystem);
 

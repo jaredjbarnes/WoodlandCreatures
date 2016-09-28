@@ -44,8 +44,8 @@
         var rectangleBody = new RectangleBody();
         rectangleBody.size.width = 45;
         rectangleBody.size.height = 45;
-        rectangleBody.position.y = 35;
-        rectangleBody.position.x = 10;
+        rectangleBody.offset.y = 35;
+        rectangleBody.offset.x = 10;
 
         this.addProperty(rectangleBody);
         this.addProperty(image);

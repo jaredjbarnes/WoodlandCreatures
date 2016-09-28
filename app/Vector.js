@@ -58,10 +58,11 @@
         var scale = this.dot(vector) / vector.dot(vector);
         var output;
         if (optionalVector) {
+            output = optionalVector;
             optionalVector.x = vector.x;
             optionalVector.y = vectory.y;
         } else {
-            vector.clone();
+            output = vector.clone();
         }
 
         return output.scale(scale);

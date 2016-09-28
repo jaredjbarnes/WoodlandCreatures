@@ -6,7 +6,7 @@
         this["@class"] = "app.properties.RectangleBody";
         this.type = "rectangle-body";
         
-        this.position = {
+        this.offset = {
             x: 0,
             y: 0
         };

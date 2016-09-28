@@ -63,8 +63,8 @@
         var rectangleBody = new RectangleBody();
         rectangleBody.size.width = 15;
         rectangleBody.size.height = 10;
-        rectangleBody.position.y = 15;
-        rectangleBody.position.x = 5;
+        rectangleBody.offset.y = 15;
+        rectangleBody.offset.x = 5;
 
         var positionConstraint = new PositionConstraint();
         positionConstraint.byEntityId = "root";

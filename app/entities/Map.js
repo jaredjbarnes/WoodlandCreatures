@@ -37,14 +37,10 @@
         position.x = 0;
         position.y = 0;
 
-        var camera = new Camera();
-
         this.appendChild(ground);
         this.appendChild(props);
         this.appendChild(characters);
         this.appendChild(environment);
-        this.appendChild(camera);
-
         this.addProperty(worldSize);
         this.addProperty(position);
     };

@@ -1,11 +1,11 @@
 ﻿BASE.require([
 ], function () {
 
-    BASE.namespace("app.components.player.states");
+    BASE.namespace("app.systems.player");
 
     var invokeMethod = function (obj, methodName, args) {
-        if (typeof obj[methodName] === "function") {
-            obj[methodName].apply(obj, args);
+        if (obj != null  && typeof obj[methodName] === "function") {
+           return  obj[methodName].apply(obj, args);
         }
     };
 
@@ -33,7 +33,7 @@
 
     var movementKeys = Object.keys(movements);
 
-    app.components.player.states.handleStateChangeByInput = function (entity, nothingState) {
+    app.systems.player.handleStateChangeByInput = function (entity, nothingState) {
         var keyboardInput = entity.getProperty("keyboard-input");
         var movement = entity.getProperty("movement");
         var state = entity.getProperty("state");

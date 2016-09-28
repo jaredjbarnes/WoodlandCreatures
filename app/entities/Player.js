@@ -9,17 +9,8 @@
     "app.properties.PositionConstraint",
     "app.properties.Sprite",
     "app.properties.RectangleBody",
-    "app.components.RectangleBodyCollisionHandler",
     "app.properties.State",
-    "app.properties.TouchInput",
-    "app.components.player.states.StandingRight",
-    "app.components.player.states.StandingLeft",
-    "app.components.player.states.StandingUp",
-    "app.components.player.states.StandingDown",
-    "app.components.player.states.RunningRight",
-    "app.components.player.states.RunningLeft",
-    "app.components.player.states.RunningUp",
-    "app.components.player.states.RunningDown"
+    "app.properties.TouchInput"
 ], function () {
 
     BASE.namespace("app.entities");
@@ -30,20 +21,11 @@
     var Movement = app.properties.Movement;
     var Collision = app.properties.Collision;
     var RectangleBody = app.properties.RectangleBody;
-    var RectangleBodyCollisionHandler = app.components.RectangleBodyCollisionHandler;
     var Sprite = app.properties.Sprite;
     var State = app.properties.State;
     var PositionConstraint = app.properties.PositionConstraint;
     var ImageTexture = app.properties.ImageTexture;
     var TouchInput = app.properties.TouchInput;
-    var StandingRight = app.components.player.states.StandingRight;
-    var StandingLeft = app.components.player.states.StandingLeft;
-    var StandingUp = app.components.player.states.StandingUp;
-    var StandingDown = app.components.player.states.StandingDown;
-    var RunningLeft = app.components.player.states.RunningLeft;
-    var RunningRight = app.components.player.states.RunningRight;
-    var RunningUp = app.components.player.states.RunningUp;
-    var RunningDown = app.components.player.states.RunningDown;
 
     app.entities.Player = function () {
         app.Entity.call(this);
@@ -78,21 +60,11 @@
         var state = new State();
         state.name = "standingRight";
 
-        var rectangleBodyCollisionHandler = new RectangleBodyCollisionHandler();
         var rectangleBody = new RectangleBody();
         rectangleBody.size.width = 15;
         rectangleBody.size.height = 10;
         rectangleBody.position.y = 15;
         rectangleBody.position.x = 5;
-
-        var standingRight = new StandingRight();
-        var standingLeft = new StandingLeft();
-        var standingUp = new StandingUp();
-        var standingDown = new StandingDown();
-        var runningRight = new RunningRight();
-        var runningLeft = new RunningLeft();
-        var runningUp = new RunningUp();
-        var runningDown = new RunningDown();
 
         var positionConstraint = new PositionConstraint();
         positionConstraint.byEntityId = "root";
@@ -108,16 +80,6 @@
         this.addProperty(touchInput);
         this.addProperty(sprite);
         this.addProperty(collision);
-
-        this.addComponent(rectangleBodyCollisionHandler);
-        this.addComponent(standingRight);
-        this.addComponent(standingLeft);
-        this.addComponent(standingUp);
-        this.addComponent(standingDown);
-        this.addComponent(runningRight);
-        this.addComponent(runningLeft);
-        this.addComponent(runningUp);
-        this.addComponent(runningDown);
     };
 
     BASE.extend(app.entities.Player, app.Entity);

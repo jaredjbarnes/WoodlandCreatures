@@ -17,51 +17,9 @@
         this.type = null;
         this.children = [];
         this.parent = null;
-        this.components = {};
         this.properties = {};
         this.delegate = null;
         this.id = Guid.create();
-    };
-
-    app.Entity.prototype.addComponent = function (component) {
-        var components = this.components[component.type];
-
-        if (!Array.isArray(components)) {
-            components = this.components[component.type] = [];
-        }
-
-        components.push(component);
-    };
-
-    app.Entity.prototype.getComponents = function (name) {
-        return this.components[name] || [];
-    };
-
-    app.Entity.prototype.getComponent = function (name) {
-        return (this.components[name] && this.components[name][0]) || null;
-    };
-
-    app.Entity.prototype.removeComponent = function (component) {
-        var components = this.components[component.type];
-
-        if (!Array.isArray(components)) {
-            components = this.components[component.type] = [];
-        }
-
-        var index = components.indexOf(component);
-
-        if (index > -1) {
-            components.splice(index, 1);
-        }
-    };
-
-    app.Entity.prototype.hasComponents = function (components) {
-        for (var x = 0 ; x < components.length; x++) {
-            if (this.components[components[x]] == null) {
-                return false;
-            }
-        }
-        return true;
     };
 
     app.Entity.prototype.addProperty = function (property) {

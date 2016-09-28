@@ -1,8 +1,6 @@
 ﻿BASE.require([
     "app.Entity",
     "app.properties.Camera",
-    "app.components.CameraCollisionHandler",
-    "app.components.FollowCameraController",
     "app.properties.Collision",
     "app.properties.PositionConstraint",
     "app.properties.Size",
@@ -18,8 +16,6 @@
     var Movement = app.properties.Movement;
     var PositionConstraint = app.properties.PositionConstraint;
     var Collision = app.properties.Collision;
-    var CameraCollisionHandler = app.components.CameraCollisionHandler;
-    var FollowCameraController = app.components.FollowCameraController;
 
     app.entities.Camera = function () {
         app.Entity.call(this);
@@ -37,14 +33,10 @@
 
         var movement = new Movement();
 
-        var cameraCollisionHandler = new CameraCollisionHandler();
         var collision = new Collision();
 
         var camera = new Camera();
         camera.name = "character";
-
-        var followCameraController = new FollowCameraController();
-        followCameraController.followId = "main-character";
 
         var positionConstraint = new PositionConstraint();
         positionConstraint.byEntityId = "root";
@@ -55,10 +47,6 @@
         this.addProperty(size);
         this.addProperty(collision);
         this.addProperty(camera);
-
-        this.addComponent(followCameraController);
-        this.addComponent(cameraCollisionHandler);
-
     };
 
     BASE.extend(app.entities.Camera, app.Entity);

@@ -46,17 +46,18 @@
         BASE.require([
             "app.Game",
             "app.Entity",
-            "app.systems.CameraSystem",
             "app.systems.MovementSystem",
             "app.systems.TouchInputSystem",
             "app.systems.CollisionSystem",
             "app.systems.PositionConstraintSystem",
-            "app.systems.CameraControllerSystem",
+            "app.systems.FollowEntityCameraSystem",
             "app.systems.SpriteSystem",
             "app.systems.StateMachineSystem",
+            "app.systems.PlayerStateMachineSystem",
             "app.systems.KeyboardInputSystem",
             "app.entities.Map",
             "app.entities.Player",
+            "app.entities.Camera",
             "app.entities.Tree",
             "app.Timer"
         ], function () {
@@ -82,26 +83,22 @@
             var Camera = app.systems.Camera;
             var Entity = app.Entity;
             var Map = app.entities.Map;
+            var Camera = app.entities.Camera;
             var MovementSystem = app.systems.MovementSystem;
             var SpriteSystem = app.systems.SpriteSystem;
             var CollisionSystem = app.systems.CollisionSystem;
             var PositionConstraintSystem = app.systems.PositionConstraintSystem;
-            var CameraControllerSystem = app.systems.CameraControllerSystem;
-            var CameraSystem = app.systems.CameraSystem;
-            var StateMachineSystem = app.systems.StateMachineSystem;
+            var FollowEntityCameraSystem = app.systems.FollowEntityCameraSystem;
+            var PlayerStateMachineSystem = app.systems.PlayerStateMachineSystem;
             var KeyboardInputSystem = app.systems.KeyboardInputSystem;
             var Player = app.entities.Player;
             var Tree = app.entities.Tree;
             var TouchInputSystem = app.systems.TouchInputSystem;
 
-            var cameraSystem = new CameraSystem(canvas);
-            cameraSystem.cameraName = "character";
-
             var collisionSystem = new CollisionSystem();
             var movementSystem = new MovementSystem();
             var constraintSystem = new PositionConstraintSystem();
-            var cameraControllerSystem = new CameraControllerSystem();
-            var stateMachineSystem = new StateMachineSystem();
+            var playerStateMachineSystem = new PlayerStateMachineSystem();
 
             var touchInputSystem = new TouchInputSystem(document, scale);
             touchInputSystem.cameraName = "character";
@@ -117,6 +114,7 @@
             var timer = new Timer();
             var map = new Map();
             var player = new Player();
+            var camera = new Camera();
             var tree;
             var position;
 
@@ -131,15 +129,16 @@
             }
 
             map.appendChild(player);
+            map.appendChild(camera);
 
+            var cameraSystem = new FollowEntityCameraSystem(canvas, camera, player);
             var game = new Game(map, timer);
 
             game.appendSystem(keyboardInputSystem);
             game.appendSystem(touchInputSystem);
-            game.appendSystem(stateMachineSystem);
-            game.appendSystem(movementSystem);
+            game.appendSystem(playerStateMachineSystem);
             game.appendSystem(constraintSystem);
-            game.appendSystem(cameraControllerSystem);
+            game.appendSystem(movementSystem);
             game.appendSystem(collisionSystem);
             game.appendSystem(spriteSystem);
             game.appendSystem(cameraSystem);

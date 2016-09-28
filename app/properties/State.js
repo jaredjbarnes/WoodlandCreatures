@@ -6,6 +6,7 @@
         this["@class"] = "app.properties.State";
         this.type = "state";
         this.name = null;
+        this.stateMachineName = null;
     };
 
 });

@@ -2,7 +2,9 @@
     "app.Entity",
     "app.properties.Size",
     "app.properties.Position",
-    "app.entities.Camera"
+    "app.entities.Camera",
+    "app.properties.ImageTexture",
+    "app.properties.Collision"
 ], function () {
 
     BASE.namespace("app.entities");
@@ -10,6 +12,8 @@
     var Position = app.properties.Position;
     var Size = app.properties.Size;
     var Camera = app.entities.Camera;
+    var ImageTexture = app.properties.ImageTexture;
+    var Collision = app.properties.Collision;
 
     app.entities.Map = function () {
         app.Entity.call(this);
@@ -36,6 +40,21 @@
         var position = new Position();
         position.x = 0;
         position.y = 0;
+
+        var collision = new Collision();
+        collision.isStatic = true;
+
+        //var image = new app.properties.ImageTexture();
+        //image.path = "/images/props.png";
+        //image.x = 0;
+        //image.y = 0;
+        //image.width = 720;
+        //image.height = 621;
+
+        //ground.addProperty(image);
+        //ground.addProperty(worldSize);
+        //ground.addProperty(position);
+        //ground.addProperty(collision);
 
         this.appendChild(ground);
         this.appendChild(props);

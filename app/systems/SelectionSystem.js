@@ -36,8 +36,8 @@
         var cameraPosition = this.cameraPosition = camera.getProperty("position");
 
         canvas.addEventListener("mousemove", function (event) {
-            self.cursorEntityPosition.x = ((event.pageX - canvas.getBoundingClientRect().left) + cameraPosition.x) * self.scale.x;
-            self.cursorEntityPosition.y = ((event.pageY - canvas.getBoundingClientRect().top) + cameraPosition.y) * self.scale.y;
+            self.cursorEntityPosition.x = ((event.pageX - canvas.getBoundingClientRect().left) / self.scale.x) + cameraPosition.x;
+            self.cursorEntityPosition.y = ((event.pageY - canvas.getBoundingClientRect().top) / self.scale.y) + cameraPosition.y;
         });
 
         canvas.addEventListener("mouseout", function () {
@@ -94,6 +94,9 @@
                     var position = entity.getProperty("position");
                     var size = entity.getProperty("size");
                     context.beginPath();
+                    context.lineWidth = 3;
+                    context.lineCap = "round";
+                    context.strokeStyle = '#0094ff';
                     context.rect(position.x - offset.x, position.y - offset.y, size.width, size.height);
                     context.stroke();
                 }

@@ -78,8 +78,8 @@
             canvas.width = size.width;
             canvas.height = size.height;
 
-            //canvas.style.width = width + "px";
-            //canvas.style.height = height + "px";
+            canvas.style.width = width + "px";
+            canvas.style.height = height + "px";
 
             var Timer = app.Timer;
             var Game = app.Game;
@@ -107,7 +107,7 @@
             var playerStateMachineSystem = new PlayerStateMachineSystem();
             var playerCollisionSystem = new PlayerCollisionSystem();
 
-            var touchInputSystem = new TouchInputSystem(document);
+            var touchInputSystem = new TouchInputSystem(document, scale);
             touchInputSystem.cameraName = "character";
 
             var keyboardInputSystem = new KeyboardInputSystem(document, {
@@ -125,7 +125,7 @@
             var tree;
             var position;
 
-            for (var x = 0 ; x < 10; x++) {
+            for (var x = 0 ; x < 1000; x++) {
                 tree = new Tree();
                 position = tree.getProperty("position");
 
@@ -139,8 +139,8 @@
             map.appendChild(camera);
 
             var cameraSystem = new FollowEntityCameraSystem(canvas, camera, player);
-            var freeCameraSystem = new FreeCameraSystem(canvas, camera);
-            var selectionSystem = new SelectionSystem(canvas, camera);
+            var freeCameraSystem = new FreeCameraSystem(canvas, camera, scale);
+            var selectionSystem = new SelectionSystem(canvas, camera, scale);
 
             var game = new Game(map, timer);
 

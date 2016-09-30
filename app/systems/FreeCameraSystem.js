@@ -6,8 +6,10 @@
 
     var emptyFn = function () { };
 
-    app.systems.FreeCameraSystem = function (canvas, camera) {
+    app.systems.FreeCameraSystem = function (canvas, camera, scale) {
         var self = this;
+
+        scale = scale || { x: 1, y: 1 };
 
         this.isReady = true;
         this.enabled = true;
@@ -42,8 +44,8 @@
 
         var mousemove = function (event) {
             if (self.enabled) {
-                self.position.x = self.canvasStartPosition.x + self.mouseStartPosition.x - event.pageX;
-                self.position.y = self.canvasStartPosition.y + self.mouseStartPosition.y - event.pageY;
+                self.position.x = self.canvasStartPosition.x + ((self.mouseStartPosition.x - event.pageX) / scale.x);
+                self.position.y = self.canvasStartPosition.y + ((self.mouseStartPosition.y - event.pageY) / scale.y);
             }
         };
 

@@ -39,7 +39,6 @@
 
         var collision = new Collision();
         collision.isStatic = true;
-        collision.name = "prop";
 
         var rectangleBody = new RectangleBody();
         rectangleBody.size.width = 45;

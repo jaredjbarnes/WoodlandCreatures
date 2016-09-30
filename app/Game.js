@@ -33,10 +33,10 @@
     };
 
     app.Game.prototype.entityAdded = function (entity) {
-        var systems = systems;
+        var systems = this.systems;
         var length = systems.length;
         for (var x = 0; x < length; x++) {
-            this.invokeMethodOnSystem(systems[x], "entityAdded", entity);
+            this.invokeMethodOnSystem(systems[x], "entityAdded", [entity]);
         }
     };
 
@@ -44,7 +44,7 @@
         var systems = systems;
         var length = systems.length;
         for (var x = 0; x < length; x++) {
-            this.invokeMethodOnSystem(systems[x], "entityRemoved", entity);
+            this.invokeMethodOnSystem(systems[x], "entityRemoved", [entity]);
         }
     };
 

@@ -100,6 +100,8 @@
     <Content Include="app\builder\Frame.js" />
     <Content Include="app\builder\Main.html" />
     <Content Include="app\builder\Theme.html" />
+    <Content Include="app\systems\SelectionSystem.js" />
+    <Content Include="app\systems\FreeCameraSystem.js" />
     <Content Include="app\systems\PlayerStateMachineSystem.js" />
     <Content Include="app\systems\player\handleStateChangeByInput.js" />
     <Content Include="app\systems\player\RunningRight.js" />

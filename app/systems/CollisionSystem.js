@@ -18,7 +18,7 @@
         this.height = 0;
         this.grid = [[]];
         this.entities = [];
-        this.cellSize = cellSize || 50;
+        this.cellSize = cellSize ||100;
         this.totalCells = 0;
         this.currentTimestamp = 0;
         this.isReady = true;
@@ -173,7 +173,7 @@
         var left = Math.max(positionA.x, positionB.x);
         var right = Math.min(positionA.x + sizeA.width, positionB.x + sizeB.width);
 
-        return top < bottom && left < right;
+        return top <= bottom && left <= right;
     };
 
     app.systems.CollisionSystem.prototype.updateWorldSize = function () {
@@ -264,6 +264,7 @@
                 };
             } else {
                 collisionDataA.timestamp = this.currentTimestamp;
+                collisionDataB.endTimestamp = null;
             }
 
             if (collisionDataB == null) {
@@ -275,6 +276,7 @@
                 };
             } else {
                 collisionDataB.timestamp = this.currentTimestamp;
+                collisionDataB.endTimestamp = null;
             }
 
         }
@@ -287,6 +289,21 @@
         var pairs = this.queryForCollisions();
         this.assignTimeStamp(pairs);
         this.handleCollisionEnds();
+    };
+
+
+    app.systems.CollisionSystem.prototype.entityAdded = function (entity) {
+        if (entity.hasProperties(["position","size","collision"])) {
+            this.entities.push(entity);
+        }
+    };
+
+    app.systems.CollisionSystem.prototype.entityRemoved = function (entity) {
+        var index = this.entities.indexOf(entity);
+
+        if (index > -1) {
+            this.entities.splice(index, 1);
+        }
     };
 
     app.systems.CollisionSystem.prototype.activated = function (game) {

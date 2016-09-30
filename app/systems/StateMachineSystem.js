@@ -92,8 +92,9 @@
     };
 
     app.systems.StateMachineSystem.prototype.entityAdded = function (entity) {
-        this.entities.push(entity);
-        this.initializeStates(entity);
+        if (entity.hasProperties(["state"])){
+            this.entities.push(entity);
+        }
     };
 
     app.systems.StateMachineSystem.prototype.entityRemoved = function (entity) {

@@ -9,18 +9,20 @@
         }
     };
 
+    var MOVE_BY = 2;
+
     var movements = {
         up: function (movement) {
-            movement.position.y -= 2;
+            movement.position.y -= MOVE_BY;
         },
         left: function (movement) {
-            movement.position.x -= 2;
+            movement.position.x -= MOVE_BY;
         },
         right: function (movement) {
-            movement.position.x += 2;
+            movement.position.x += MOVE_BY;
         },
         down: function (movement) {
-            movement.position.y += 2;
+            movement.position.y += MOVE_BY;
         }
     };
 
@@ -59,8 +61,8 @@
                 x = touchInput.x / hypotenuse;
                 y = touchInput.y / hypotenuse;
 
-                movement.position.x += (x*2);
-                movement.position.y += (y*2);
+                movement.position.x += (x * MOVE_BY);
+                movement.position.y += (y * MOVE_BY);
 
                 if (Math.abs(x) > Math.abs(y)) {
                     if (x > 0) {

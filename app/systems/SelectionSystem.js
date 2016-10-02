@@ -32,6 +32,8 @@
         this.canvas = canvas;
         this.camera = camera;
         this.context = canvas.getContext("2d");
+        this.selectedCollision = null;
+        this.activeCollisionSelections = [];
 
         var cameraPosition = this.cameraPosition = camera.getProperty("position");
 
@@ -43,6 +45,10 @@
         canvas.addEventListener("mouseout", function () {
             self.cursorEntityPosition.x = -10;
             self.cursorEntityPosition.y = -10;
+        });
+
+        canvas.addEventListener("mousedown", function () {
+            self.selectedCollision = self.activeCollisionSelections[0];
         });
     };
 
@@ -77,30 +83,60 @@
         this.addCursorEntity();
     };
 
+    app.systems.SelectionSystem.prototype.drawBorderAroundCollision = function (collision) {
+        var entity = collision.entity;
+        var context = this.context;
+        var offset = this.cameraPosition;
+
+        var position = entity.getProperty("position");
+        var size = entity.getProperty("size");
+        context.beginPath();
+        context.lineWidth = 1;
+        context.lineCap = "round";
+        context.strokeStyle = '#0094ff';
+        context.rect(position.x - offset.x, position.y - offset.y, size.width, size.height);
+        context.stroke();
+    };
+
+    app.systems.SelectionSystem.prototype.drawFillAroundCollision = function (collision) {
+        var entity = collision.entity;
+        var context = this.context;
+        var offset = this.cameraPosition;
+
+        var position = entity.getProperty("position");
+        var size = entity.getProperty("size");
+        context.beginPath();
+        context.fillStyle = "rgba(0,148,255,0.3)";
+        context.rect(position.x - offset.x, position.y - offset.y, size.width, size.height);
+        context.fill();
+        context.lineWidth = 1;
+        context.lineCap = "round";
+        context.strokeStyle = '#0094ff';
+        context.stroke();
+    };
+
     app.systems.SelectionSystem.prototype.update = function () {
+        var self = this;
         var activeCollisions = this.cursorCollisionProperty.activeCollisions;
         var collisions = Object.keys(activeCollisions).map(function (key) {
             return activeCollisions[key];
+        }).filter(function (collision) {
+            return collision.entity.type !== "camera" && collision.endTimestamp == null;
         });
-        var context = this.context;
-        var cameraPosition = this.cameraPosition;
-        var offset = cameraPosition;
+
+        this.activeCollisionSelections = collisions;
 
         if (collisions.length > 0) {
-            collisions.forEach(function (collision) {
-                var entity = collision.entity;
+            //collisions.forEach(function (collision) {
+            //    self.drawSelectionAroundCollision(collision);
+            //});
 
-                if (entity.type !== "camera" && collision.endTimestamp == null) {
-                    var position = entity.getProperty("position");
-                    var size = entity.getProperty("size");
-                    context.beginPath();
-                    context.lineWidth = 3;
-                    context.lineCap = "round";
-                    context.strokeStyle = '#0094ff';
-                    context.rect(position.x - offset.x, position.y - offset.y, size.width, size.height);
-                    context.stroke();
-                }
-            });
+            self.drawBorderAroundCollision(collisions[0]);
+
+        }
+
+        if (this.selectedCollision != null) {
+            this.drawFillAroundCollision(this.selectedCollision);
         }
     };
 

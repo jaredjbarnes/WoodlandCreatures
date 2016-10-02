@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-    <canvas id="viewport" style="background-color:#1ebd65"></canvas>
+    <canvas id="viewport" style="background-color:#489848"></canvas>
     <script src="lib/weblib/lib/BASE/BASE.js"></script>
     <script>
         BASE.require.loader.setRoot("lib/weblib/lib/BASE/");
@@ -58,6 +58,7 @@
             "app.systems.KeyboardInputSystem",
             "app.systems.PlayerCollisionSystem",
             "app.systems.SelectionSystem",
+            "app.systems.GridSystem",
             "app.entities.Map",
             "app.entities.Player",
             "app.entities.Camera",
@@ -97,6 +98,7 @@
             var PlayerCollisionSystem = app.systems.PlayerCollisionSystem;
             var KeyboardInputSystem = app.systems.KeyboardInputSystem;
             var SelectionSystem = app.systems.SelectionSystem;
+            var GridSystem = app.systems.GridSystem;
             var Player = app.entities.Player;
             var Tree = app.entities.Tree;
             var TouchInputSystem = app.systems.TouchInputSystem;
@@ -117,7 +119,7 @@
                 40: "down"
             });
 
-            var spriteSystem = new SpriteSystem();
+          
             var timer = new Timer();
             var map = new Map();
             var player = new Player();
@@ -141,6 +143,8 @@
             var cameraSystem = new FollowEntityCameraSystem(canvas, camera, player);
             var freeCameraSystem = new FreeCameraSystem(canvas, camera, scale);
             var selectionSystem = new SelectionSystem(canvas, camera, scale);
+            var spriteSystem = new SpriteSystem();
+            var gridSystem = new GridSystem(canvas, camera);
 
             var game = new Game(map, timer);
 
@@ -155,6 +159,7 @@
             game.appendSystem(cameraSystem);
             //game.appendSystem(freeCameraSystem);
             game.appendSystem(selectionSystem);
+            game.appendSystem(gridSystem);
 
             game.play();
 

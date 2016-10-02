@@ -100,7 +100,11 @@
     <Content Include="app\builder\Frame.js" />
     <Content Include="app\builder\Main.html" />
     <Content Include="app\builder\Theme.html" />
+    <Content Include="app\properties\RigidBody.js" />
+    <Content Include="app\properties\Selection.js" />
     <Content Include="app\systems\CameraSystem.js" />
+    <Content Include="app\systems\RigidBodyCollisionSystem.js" />
+    <Content Include="app\systems\GridSystem.js" />
     <Content Include="app\systems\SelectionSystem.js" />
     <Content Include="app\systems\FreeCameraSystem.js" />
     <Content Include="app\systems\PlayerStateMachineSystem.js" />

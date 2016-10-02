@@ -41,12 +41,16 @@
         };
     };
 
+    app.systems.RigidBodyCollisionSystem.prototype.addCollisionToRigidBody = function (rigidBody, collision) {
+
+    };
+
     app.systems.RigidBodyCollisionSystem.prototype.prepareRigidBody = function (entity) {
         var rigidBody = entity.getProperty("rigid-body");
         var points = rigidBody.points;
         var length = points.length;
 
-        if (points.length === vertices.length) {
+        if (points.length === rigidBody.vertices.length && points.length === rigidBody.normals.length) {
             return;
         }
 

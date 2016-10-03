@@ -43,7 +43,17 @@
     };
 
     Vector.project = function (vectorA, vectorB, optionalVector) {
-        var scale = Vector.dot(vectorA, vectorB) / Vector.dot(vectorB, vectorB);
+        var scale; 
+        
+        var firstDot = Vector.dot(vectorA, vectorB);
+        var secondDot = Vector.dot(vectorB, vectorB);
+
+        if (!firstDot || !secondDot){
+            scale = 0;
+        } else {
+            scale = firstDot / secondDot;
+        }
+        
         return Vector.scale(vectorB, scale, optionalVector);
     };
 
@@ -52,6 +62,8 @@
 
         optionalVector.x = -vector.y;
         optionalVector.y = vector.x;
+
+        return optionalVector;
     };
 
     Vector.getRightNormal = function (vector) {
@@ -59,6 +71,8 @@
 
         optionalVector.x = vector.y;
         optionalVector.y = -vector.x;
+
+        return optionalVector;
     };
 
     Vector.magnitude = function (vector) {

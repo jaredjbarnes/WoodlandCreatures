@@ -13,8 +13,23 @@
         };
 
         this.points = [];
+
         this.vertices = [];
+
+        this.projectionVertices = [];
+
         this.normals = [];
+
+        this.size = {
+            width: 0,
+            height: 0
+        };
+
+        this.origin = {
+            x: 0,
+            y: 0
+        };
+
         this.activeCollisionsByNames = {};
     };
 

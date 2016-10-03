@@ -8,7 +8,7 @@
     "app.properties.ImageTexture",
     "app.properties.PositionConstraint",
     "app.properties.Sprite",
-    "app.properties.RectangleBody",
+    "app.properties.RigidBody",
     "app.properties.State",
     "app.properties.TouchInput"
 ], function () {
@@ -20,7 +20,7 @@
     var Size = app.properties.Size;
     var Movement = app.properties.Movement;
     var Collision = app.properties.Collision;
-    var RectangleBody = app.properties.RectangleBody;
+    var RigidBody = app.properties.RigidBody;
     var Sprite = app.properties.Sprite;
     var State = app.properties.State;
     var PositionConstraint = app.properties.PositionConstraint;
@@ -60,17 +60,28 @@
         var state = new State();
         state.name = "standingRight";
 
-        var rectangleBody = new RectangleBody();
-        rectangleBody.size.width = 15;
-        rectangleBody.size.height = 10;
-        rectangleBody.offset.y = 15;
-        rectangleBody.offset.x = 5;
+        var rigidBody = new RigidBody();
+        rigidBody.offset.x = 0;
+        rigidBody.offset.y = 0;
+        rigidBody.points.push({
+            x: 0,
+            y: 0
+        }, {
+            x: 25,
+            y: 0
+        }, {
+            x: 25,
+            y: 25
+        }, {
+            x: 0,
+            y: 25
+        });
 
         var positionConstraint = new PositionConstraint();
         positionConstraint.byEntityId = "root";
 
         this.addProperty(movement);
-        this.addProperty(rectangleBody);
+        this.addProperty(rigidBody);
         this.addProperty(positionConstraint);
         this.addProperty(state);
         this.addProperty(image);

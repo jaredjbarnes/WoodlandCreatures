@@ -4,7 +4,7 @@
     "app.properties.Size",
     "app.properties.Collision",
     "app.properties.ImageTexture",
-    "app.properties.RectangleBody"
+    "app.properties.RigidBody"
 ], function () {
 
     BASE.namespace("app.entities");
@@ -13,7 +13,7 @@
     var Position = app.properties.Position;
     var Collision = app.properties.Collision;
     var ImageTexture = app.properties.ImageTexture;
-    var RectangleBody = app.properties.RectangleBody;
+    var RigidBody = app.properties.RigidBody;
 
     app.entities.Tree = function () {
         app.Entity.call(this);
@@ -40,13 +40,24 @@
         var collision = new Collision();
         collision.isStatic = true;
 
-        var rectangleBody = new RectangleBody();
-        rectangleBody.size.width = 45;
-        rectangleBody.size.height = 45;
-        rectangleBody.offset.y = 35;
-        rectangleBody.offset.x = 10;
+        var rigidBody = new RigidBody();
+        rigidBody.offset.x = 0;
+        rigidBody.offset.y = 40;
+        rigidBody.points.push({
+            x: 0,
+            y: 0
+        }, {
+            x: 65,
+            y: 0
+        }, {
+            x: 65,
+            y: 40
+        }, {
+            x: 0,
+            y: 40
+        });
 
-        this.addProperty(rectangleBody);
+        this.addProperty(rigidBody);
         this.addProperty(image);
         this.addProperty(position);
         this.addProperty(size);

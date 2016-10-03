@@ -12,14 +12,14 @@
     var MOVE_BY = 2;
 
     var movements = {
-        up: function (movement) {
-            movement.position.y -= MOVE_BY;
-        },
         left: function (movement) {
             movement.position.x -= MOVE_BY;
         },
         right: function (movement) {
             movement.position.x += MOVE_BY;
+        },
+        up: function (movement) {
+            movement.position.y -= MOVE_BY;
         },
         down: function (movement) {
             movement.position.y += MOVE_BY;

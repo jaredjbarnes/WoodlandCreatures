@@ -48,7 +48,7 @@
             "app.Entity",
             "app.systems.MovementSystem",
             "app.systems.TouchInputSystem",
-            "app.systems.CollisionSystem",
+            "app.systems.BroadPhaseCollisionSystem",
             "app.systems.PositionConstraintSystem",
             "app.systems.FollowEntityCameraSystem",
             "app.systems.FreeCameraSystem",
@@ -57,7 +57,7 @@
             "app.systems.StateMachineSystem",
             "app.systems.PlayerStateMachineSystem",
             "app.systems.KeyboardInputSystem",
-            "app.systems.RigidBodyCollisionSystem",
+            "app.systems.NarrowPhaseCollisionSystem",
             "app.systems.SelectionSystem",
             "app.systems.GridSystem",
             "app.entities.Map",
@@ -91,13 +91,13 @@
             var Camera = app.entities.Camera;
             var MovementSystem = app.systems.MovementSystem;
             var SpriteSystem = app.systems.SpriteSystem;
-            var CollisionSystem = app.systems.CollisionSystem;
+            var CollisionSystem = app.systems.BroadPhaseCollisionSystem;
             var PositionConstraintSystem = app.systems.PositionConstraintSystem;
             var FollowEntityCameraSystem = app.systems.FollowEntityCameraSystem;
             var RigidBodyDrawerSystem = app.systems.RigidBodyDrawerSystem;
             var FreeCameraSystem = app.systems.FreeCameraSystem;
             var PlayerStateMachineSystem = app.systems.PlayerStateMachineSystem;
-            var RigidBodyCollisionSystem = app.systems.RigidBodyCollisionSystem;
+            var RigidBodyCollisionSystem = app.systems.NarrowPhaseCollisionSystem;
             var KeyboardInputSystem = app.systems.KeyboardInputSystem;
             var SelectionSystem = app.systems.SelectionSystem;
             var GridSystem = app.systems.GridSystem;

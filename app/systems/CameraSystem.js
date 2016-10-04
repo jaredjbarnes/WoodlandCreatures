@@ -30,7 +30,7 @@
     app.systems.CameraSystem.prototype.setCamera = function (camera) {
         this.camera = camera;
 
-        if (!camera.hasProperties(["position", "size", "collision"])) {
+        if (!camera.hasProperties(["position", "size", "collidable"])) {
             throw new Error("A camera needs to have a position, size and collision property.");
         }
 
@@ -111,7 +111,7 @@
 
         this.offScreenContext.clearRect(0, 0, cameraSize.width, cameraSize.height);
 
-        var activeCollisions = camera.getProperty("collision").activeCollisions;
+        var activeCollisions = camera.getProperty("collidable").activeCollisions;
         var keys = Object.keys(activeCollisions);
         var length = keys.length;
         var entities = [];

@@ -106,7 +106,7 @@
     <Content Include="app\properties\RigidBody.js" />
     <Content Include="app\properties\Selection.js" />
     <Content Include="app\systems\CameraSystem.js" />
-    <Content Include="app\systems\RigidBodyCollisionSystem.js" />
+    <Content Include="app\systems\NarrowPhaseCollisionSystem.js" />
     <Content Include="app\systems\GridSystem.js" />
     <Content Include="app\systems\RigidBodyDrawerSystem.js" />
     <Content Include="app\systems\SelectionSystem.js" />
@@ -128,7 +128,7 @@
     <Content Include="app\properties\RectangleBody.js" />
     <Content Include="app\properties\Size.js" />
     <Content Include="app\properties\PositionConstraint.js" />
-    <Content Include="app\properties\Collision.js" />
+    <Content Include="app\properties\Collidable.js" />
     <Content Include="app\properties\Camera.js" />
     <Content Include="app\properties\KeyboardInput.js" />
     <Content Include="app\properties\Color.js" />
@@ -149,7 +149,7 @@
     <Content Include="app\Game.js" />
     <Content Include="app\Polygon.js" />
     <Content Include="app\systems\KeyboardInputSystem.js" />
-    <Content Include="app\systems\CollisionSystem.js" />
+    <Content Include="app\systems\BroadphaseCollisionSystem.js" />
     <Content Include="app\systems\SpriteSystem.js" />
     <Content Include="app\Timer.js" />
     <Content Include="app\Vector.js" />

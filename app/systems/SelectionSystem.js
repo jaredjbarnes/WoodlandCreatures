@@ -2,7 +2,7 @@
     "app.Entity",
     "app.properties.Position",
     "app.properties.Size",
-    "app.properties.Collision",
+    "app.properties.Collidable",
     "app.properties.Movement"
 ], function () {
 
@@ -11,7 +11,7 @@
     var Entity = app.Entity;
     var Position = app.properties.Position;
     var Size = app.properties.Size;
-    var Collision = app.properties.Collision;
+    var Collision = app.properties.Collidable;
     var Movement = app.properties.Movement;
 
     var emptyFn = function () { };

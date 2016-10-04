@@ -4,7 +4,7 @@
     "app.properties.Position",
     "app.entities.Camera",
     "app.properties.ImageTexture",
-    "app.properties.Collision"
+    "app.properties.Collidable"
 ], function () {
 
     BASE.namespace("app.entities");
@@ -13,7 +13,7 @@
     var Size = app.properties.Size;
     var Camera = app.entities.Camera;
     var ImageTexture = app.properties.ImageTexture;
-    var Collision = app.properties.Collision;
+    var Collision = app.properties.Collidable;
 
     app.entities.Map = function () {
         app.Entity.call(this);

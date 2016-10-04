@@ -51,7 +51,7 @@
         var otherSize;
         var otherPosition;
         var otherRectangleBody;
-        var activeCollisions =entity.getProperty("collision").activeCollisions;
+        var activeCollisions =entity.getProperty("collidable").activeCollisions;
         var activeEntities = Object.keys(activeCollisions).map(function (key) {
             return activeCollisions[key].entity;
         });

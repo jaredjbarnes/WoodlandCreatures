@@ -2,7 +2,7 @@
     "app.Entity",
     "app.properties.Position",
     "app.properties.Size",
-    "app.properties.Collision",
+    "app.properties.Collidable",
     "app.properties.ImageTexture",
     "app.properties.RigidBody"
 ], function () {
@@ -11,7 +11,7 @@
 
     var Size = app.properties.Size;
     var Position = app.properties.Position;
-    var Collision = app.properties.Collision;
+    var Collision = app.properties.Collidable;
     var ImageTexture = app.properties.ImageTexture;
     var RigidBody = app.properties.RigidBody;
 
@@ -41,23 +41,21 @@
         collision.isStatic = true;
 
         var rigidBody = new RigidBody();
-        rigidBody.offset.x = 2;
-        rigidBody.offset.y = 35;
         rigidBody.points.push({
-            x: 0,
-            y: 0
+            x: 2,
+            y: 35
         }, {
-            x: 62,
-            y: 0
+            x: 64,
+            y: 35
         }, {
-            x: 52,
-            y: 34
+            x: 54,
+            y: 69
         }, {
-            x: 32,
-            y: 45
+            x: 34,
+            y: 80
         }, {
-            x: 10,
-            y: 34
+            x: 12,
+            y: 69
         });
 
         this.addProperty(rigidBody);

@@ -7,11 +7,6 @@
         this.type = "rigid-body";
         this.name = "default";
 
-        this.offset = {
-            x: 0,
-            y: 0
-        };
-
         this.points = [];
 
         this.vertices = [];
@@ -30,7 +25,7 @@
             y: 0
         };
 
-        this.activeCollisionsByNames = {};
+        this.activeCollisions = {};
     };
 
 });

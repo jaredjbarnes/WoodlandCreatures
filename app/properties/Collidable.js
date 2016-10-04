@@ -2,9 +2,9 @@
 
     BASE.namespace("app.properties");
 
-    app.properties.Collision = function () {
-        this["@class"] = "app.properties.Collision";
-        this.type = "collision";
+    app.properties.Collidable = function () {
+        this["@class"] = "app.properties.Collidable";
+        this.type = "collidable";
         this.isStatic = false;
         this.enabled = true;
         this.activeCollisions = {};

@@ -8,7 +8,7 @@
     var Entity = app.Entity;
     var Vector = app.Vector;
 
-    app.systems.RigidBodyCollisionSystem = function () {
+    app.systems.NarrowPhaseCollisionSystem = function () {
         this.isReady = true;
         this.entities = [];
 
@@ -22,10 +22,11 @@
             max: 0
         };
 
+        this.timestamp;
 
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.prepareRigidBody = function (rigidBody) {
+    app.systems.NarrowPhaseCollisionSystem.prototype.prepareRigidBody = function (rigidBody) {
         var points = rigidBody.points;
         var length = points.length;
 
@@ -76,11 +77,10 @@
         }
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.setSize = function (rigidBody) {
+    app.systems.NarrowPhaseCollisionSystem.prototype.setSize = function (rigidBody) {
         var width;
         var height;
         var points = rigidBody.points;
-        var offset = rigidBody.offset;
         var length = points.length;
 
         var top = points[0].y;
@@ -101,28 +101,11 @@
         rigidBody.size.width = width;
         rigidBody.size.height = height;
 
-        rigidBody.origin.x = width / 2;
-        rigidBody.origin.y = height / 2;
+        rigidBody.origin.x = (width / 2) + left;
+        rigidBody.origin.y = (height / 2) + top;
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.setJoiningVector = function (entityA, entityB) {
-        var positionA = entityA.getProperty("position");
-        var positionB = entityB.getProperty("position");
-
-        var rigidBodyA = entityA.getProperty("rigid-body");
-        var rigidBodyB = entityB.getProperty("rigid-body");
-
-        var entityAOriginY = positionA.y + rigidBodyA.offset.y + rigidBodyA.origin.y;
-        var entityBOriginY = positionB.y + rigidBodyB.offset.y + rigidBodyB.origin.y;
-
-        var entityAOriginX = positionA.x + rigidBodyA.offset.x + rigidBodyA.origin.x;
-        var entityBOriginX = positionB.x + rigidBodyB.offset.x + rigidBodyB.origin.x;
-
-        this.joiningVector.x = entityAOriginX - entityBOriginX;
-        this.joiningVector.y = entityAOriginY - entityBOriginY;
-    };
-
-    app.systems.RigidBodyCollisionSystem.prototype.projectToAxis = function (vertices, axis, projection) {
+    app.systems.NarrowPhaseCollisionSystem.prototype.projectToAxis = function (vertices, axis, projection) {
         var min = Vector.dot(vertices[0], axis);
         var max = min;
         var dot;
@@ -141,7 +124,7 @@
         projection.max = max;
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.overlapAxes = function (verticesA, verticesB, axes) {
+    app.systems.NarrowPhaseCollisionSystem.prototype.overlapAxes = function (verticesA, verticesB, axes) {
         var projectionA = this.projectionA;
         var projectionB = this.projectionB;
         var result = { overlap: Number.MAX_VALUE };
@@ -176,7 +159,7 @@
         return result;
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.updateWorldPoints = function (entity) {
+    app.systems.NarrowPhaseCollisionSystem.prototype.updateWorldPoints = function (entity) {
         var rigidBody = entity.getProperty("rigid-body");
         var position = entity.getProperty("position");
         var worldPoints = rigidBody.worldPoints;
@@ -184,13 +167,13 @@
         rigidBody.points.forEach(function (point, index) {
             var worldPoint = worldPoints[index];
 
-            worldPoint.x = point.x + position.x + rigidBody.offset.x;
-            worldPoint.y = point.y + position.y + rigidBody.offset.y;
+            worldPoint.x = point.x + position.x;
+            worldPoint.y = point.y + position.y;
         });
 
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.intersects = function (entityA, entityB) {
+    app.systems.NarrowPhaseCollisionSystem.prototype.intersects = function (entityA, entityB) {
         var x;
         var vx;
         var normal;
@@ -200,6 +183,8 @@
 
         var rigidBodyA = entityA.getProperty("rigid-body");
         var rigidBodyB = entityB.getProperty("rigid-body");
+        var collisionA = entityA.getProperty("collidable");
+        var collisionB = entityA.getProperty("collidable");
         var normalsA = rigidBodyA.normals;
         var normalsB = rigidBodyB.normals;
         var projectionA = this.projectionA;
@@ -210,6 +195,10 @@
         var overlapA = this.overlapAxes(verticesA, verticesB, normalsA);
 
         if (overlapA.overlap <= 0) {
+            rigidBodyA.activeCollisions[entityB.id] = {
+                startTime: collisionA
+            };
+
             return false;
         }
 
@@ -222,10 +211,10 @@
         return true;
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.handleCollisions = function (entity) {
+    app.systems.NarrowPhaseCollisionSystem.prototype.handleCollisions = function (entity) {
         var collision;
         var otherEntity;
-        var activeCollisions = entity.getProperty("collision").activeCollisions;
+        var activeCollisions = entity.getProperty("collidable").activeCollisions;
         var collisions = Object.keys(activeCollisions).map(function (key) {
             return activeCollisions[key];
         }).filter(function (collision) {
@@ -247,7 +236,7 @@
         }
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.activated = function (game) {
+    app.systems.NarrowPhaseCollisionSystem.prototype.activated = function (game) {
         var self = this;
 
         this.game = game;
@@ -256,10 +245,12 @@
         });
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.update = function () {
+    app.systems.NarrowPhaseCollisionSystem.prototype.update = function () {
         var entity;
         var entities = this.entities;
         var length = entities.length;
+
+        this.timestamp = this.game.timer.now();
 
         for (var x = 0 ; x < length ; x++) {
             entity = this.entities[x];
@@ -267,19 +258,19 @@
         }
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.deactivated = function () {
+    app.systems.NarrowPhaseCollisionSystem.prototype.deactivated = function () {
 
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.entityAdded = function (entity) {
-        if (entity.hasProperties(["collision", "rigid-body", "position"])) {
+    app.systems.NarrowPhaseCollisionSystem.prototype.entityAdded = function (entity) {
+        if (entity.hasProperties(["collidable", "rigid-body", "position"])) {
             this.prepareRigidBody(entity.getProperty("rigid-body"));
             this.entities.push(entity);
         }
     };
 
-    app.systems.RigidBodyCollisionSystem.prototype.entityRemoved = function () {
-        if (entity.hasProperties(["collision", "rigid-body", "position"])) {
+    app.systems.NarrowPhaseCollisionSystem.prototype.entityRemoved = function () {
+        if (entity.hasProperties(["collidable", "rigid-body", "position"])) {
             var index = this.entities.indexOf(entity);
 
             if (index > -1) {

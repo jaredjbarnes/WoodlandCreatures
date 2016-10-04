@@ -2,7 +2,7 @@
     "app.Entity",
     "app.properties.Position",
     "app.properties.Size",
-    "app.properties.Collision",
+    "app.properties.Collidable",
     "app.properties.Movement"
 ], function () {
 
@@ -11,7 +11,7 @@
     var Entity = app.Entity;
     var Position = app.properties.Position;
     var Size = app.properties.Size;
-    var Collision = app.properties.Collision;
+    var Collision = app.properties.Collidable;
     var Movement = app.properties.Movement;
 
     var emptyFn = function () { };
@@ -53,8 +53,8 @@
         context.lineCap = "round";
         context.strokeStyle = '#000000';
 
-        context.moveTo(positionA.x + rigidBodyA.offset.x - offset.x + rigidBodyA.origin.x, positionA.y + rigidBodyA.offset.y + rigidBodyA.origin.y - offset.y);
-        context.lineTo(positionB.x + rigidBodyB.offset.x - offset.x + rigidBodyB.origin.x, positionB.y + rigidBodyB.offset.y + rigidBodyB.origin.y - offset.y);
+        context.moveTo(positionA.x - offset.x + rigidBodyA.origin.x, positionA.y + rigidBodyA.origin.y - offset.y);
+        context.lineTo(positionB.x - offset.x + rigidBodyB.origin.x, positionB.y + rigidBodyB.origin.y - offset.y);
 
         context.stroke();
     };
@@ -69,20 +69,13 @@
         context.beginPath();
         context.lineWidth = 1;
         context.lineCap = "round";
-
         context.strokeStyle = '#99ff00';
-        rigidBody.normals.forEach(function (point) {
-            context.moveTo(position.x + rigidBody.offset.x - offset.x + rigidBody.origin.x, position.y + rigidBody.offset.y + rigidBody.origin.y - offset.y);
-            context.lineTo(position.x + rigidBody.offset.x - offset.x + point.x + rigidBody.origin.x, position.y + rigidBody.offset.y + point.y + rigidBody.origin.y - offset.y);
-        });
 
-        context.stroke();
-        context.beginPath();
-
-        context.strokeStyle = '#0094ff';
         rigidBody.points.forEach(function (point) {
-            context.lineTo(position.x + rigidBody.offset.x - offset.x + point.x, position.y + rigidBody.offset.y + point.y - offset.y);
+            context.lineTo(position.x - offset.x + point.x, position.y + point.y - offset.y);
         });
+
+        context.lineTo(position.x - offset.x + rigidBody.points[0].x, position.y + rigidBody.points[0].y - offset.y);
 
         context.stroke();
 
@@ -91,7 +84,7 @@
     app.systems.RigidBodyDrawerSystem.prototype.update = function () {
         var self = this;
         this.entities.forEach(function (entity) {
-            var collision = entity.getProperty("collision");
+            var collision = entity.getProperty("collidable");
             var rigidBody = entity.getProperty("rigid-body");
             var activeCollisions = collision.activeCollisions;
 
@@ -114,13 +107,13 @@
     };
 
     app.systems.RigidBodyDrawerSystem.prototype.entityAdded = function (entity) {
-        if (entity.hasProperties(["collision", "rigid-body"])) {
+        if (entity.hasProperties(["collidable", "rigid-body"])) {
             this.entities.push(entity);
         }
     };
 
     app.systems.RigidBodyDrawerSystem.prototype.entityRemoved = function () {
-        if (entity.hasProperties(["collision", "rigid-body"])) {
+        if (entity.hasProperties(["collidable", "rigid-body"])) {
             var index = this.entities.indexOf(entity);
 
             if (index > -1) {

@@ -1,7 +1,7 @@
 ﻿BASE.require([
     "app.Entity",
     "app.properties.Camera",
-    "app.properties.Collision",
+    "app.properties.Collidable",
     "app.properties.PositionConstraint",
     "app.properties.Size",
     "app.properties.Position",
@@ -15,7 +15,7 @@
     var Position = app.properties.Position;
     var Movement = app.properties.Movement;
     var PositionConstraint = app.properties.PositionConstraint;
-    var Collision = app.properties.Collision;
+    var Collision = app.properties.Collidable;
 
     app.entities.Camera = function () {
         app.Entity.call(this);

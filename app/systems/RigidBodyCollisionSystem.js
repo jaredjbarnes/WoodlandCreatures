@@ -12,41 +12,16 @@
         this.isReady = true;
         this.entities = [];
 
-        // We reuse these objects to prevent heavy garbage collection.
-        this.joiningVector = {
-            x: 0,
-            y: 0
+        this.projectionA = {
+            min: 0,
+            max: 0
         };
 
-        this.joiningProjection = {
-            x: 0,
-            y: 0
+        this.projectionB = {
+            min: 0,
+            max: 0
         };
 
-        this.projection = {
-            x: 0,
-            y: 0
-        };
-
-        this.maxA = {
-            x: 0,
-            y: 0
-        };
-
-        this.maxB = {
-            x: 0,
-            y: 0
-        };
-
-        this.minA = {
-            x: 0,
-            y: 0
-        };
-
-        this.minB = {
-            x: 0,
-            y: 0
-        };
 
     };
 
@@ -70,10 +45,10 @@
             };
         });
 
-        rigidBody.projectionVertices = points.map(function (point) {
+        rigidBody.worldPoints = points.map(function (point) {
             return {
-                x: point.x - rigidBody.origin.x,
-                y: point.y - rigidBody.origin.y
+                x: point.x,
+                y: point.y
             };
         });
 
@@ -90,10 +65,7 @@
 
         // If the final vector isn't (0,0) then make it so, to finish the polygon.
         if (finalVector.x !== 0 || finalVector.y !== 0) {
-            rigidBody.points.push({
-                x: 0,
-                y: 0
-            });
+            rigidBody.points.push(rigidBody.points[0]);
 
             rigidBody.vertices.push({
                 x: -finalVector.x,
@@ -150,120 +122,101 @@
         this.joiningVector.y = entityAOriginY - entityBOriginY;
     };
 
+    app.systems.RigidBodyCollisionSystem.prototype.projectToAxis = function (vertices, axis, projection) {
+        var min = Vector.dot(vertices[0], axis);
+        var max = min;
+        var dot;
+
+        for (var i = 1; i < vertices.length; i += 1) {
+            dot = Vector.dot(vertices[i], axis);
+
+            if (dot > max) {
+                max = dot;
+            } else if (dot < min) {
+                min = dot;
+            }
+        }
+
+        projection.min = min;
+        projection.max = max;
+    };
+
+    app.systems.RigidBodyCollisionSystem.prototype.overlapAxes = function (verticesA, verticesB, axes) {
+        var projectionA = this.projectionA;
+        var projectionB = this.projectionB;
+        var result = { overlap: Number.MAX_VALUE };
+        var overlap;
+        var axis;
+
+        projectionA.min = 0;
+        projectionA.max = 0;
+        projectionB.min = 0;
+        projectionB.max = 0;
+
+        for (var i = 0; i < axes.length; i++) {
+            axis = axes[i];
+
+            this.projectToAxis(verticesA, axis, projectionA);
+            this.projectToAxis(verticesB, axis, projectionB);
+
+            overlap = Math.min(projectionA.max - projectionB.min, projectionB.max - projectionA.min);
+
+            if (overlap <= 0) {
+                result.overlap = overlap;
+                return result;
+            }
+
+            if (overlap < result.overlap) {
+                result.overlap = overlap;
+                result.axis = axis;
+                result.axisNumber = i;
+            }
+        }
+
+        return result;
+    };
+
+    app.systems.RigidBodyCollisionSystem.prototype.updateWorldPoints = function (entity) {
+        var rigidBody = entity.getProperty("rigid-body");
+        var position = entity.getProperty("position");
+        var worldPoints = rigidBody.worldPoints;
+
+        rigidBody.points.forEach(function (point, index) {
+            var worldPoint = worldPoints[index];
+
+            worldPoint.x = point.x + position.x + rigidBody.offset.x;
+            worldPoint.y = point.y + position.y + rigidBody.offset.y;
+        });
+
+    };
+
     app.systems.RigidBodyCollisionSystem.prototype.intersects = function (entityA, entityB) {
         var x;
         var vx;
         var normal;
 
+        this.updateWorldPoints(entityA);
+        this.updateWorldPoints(entityB);
+
         var rigidBodyA = entityA.getProperty("rigid-body");
         var rigidBodyB = entityB.getProperty("rigid-body");
-
-        var projectionVerticesA = rigidBodyA.projectionVertices;
-        var projectionVerticesB = rigidBodyB.projectionVertices;
         var normalsA = rigidBodyA.normals;
         var normalsB = rigidBodyB.normals;
-        var lengthA = projectionVerticesA.length;
-        var lengthB = projectionVerticesB.length;
-        var minA = this.minA;
-        var minB = this.minB;
-        var maxA = this.maxA;
-        var maxB = this.maxB;
-        var projection = this.projection;
-        var joiningProjection = this.joiningProjection;
-        var joiningVector = this.joiningVector;
-        var joiningMagnitude;
+        var projectionA = this.projectionA;
+        var projectionB = this.projectionB;
+        var verticesA = rigidBodyA.worldPoints;
+        var verticesB = rigidBodyB.worldPoints;
 
+        var overlapA = this.overlapAxes(verticesA, verticesB, normalsA);
 
-        this.setJoiningVector(entityA, entityB);
-
-        // Loop through all the normals of the first polygon.
-        for (x = 0 ; x < lengthA; x++) {
-            normal = normalsA[x];
-
-            minA.x = 0;
-            minB.y = 0;
-            maxA.x = 0;
-            maxB.y = 0;
-
-            Vector.project(joiningVector, normal, joiningProjection);
-            joiningMagnitude = Vector.magnitude(joiningProjection);
-
-            for (vx = 0 ; vx < lengthA; vx++) {
-                Vector.project(rigidBodyA.projectionVertices[vx], normal, projection);
-
-                minA.x = Math.min(minA.x, projection.x);
-                minA.y = Math.min(minA.y, projection.y);
-
-                maxA.x = Math.max(maxA.x, projection.x);
-                maxA.y = Math.max(maxA.y, projection.y);
-            }
-
-            for (vx = 0 ; vx < lengthB; vx++) {
-                Vector.project(rigidBodyB.projectionVertices[vx], normal, projection);
-
-                minB.x = Math.min(minB.x, projection.x);
-                minB.y = Math.min(minB.y, projection.y);
-
-                maxB.x = Math.max(maxB.y, projection.x);
-                maxB.y = Math.max(maxB.y, projection.y);
-            }
-
-            var maxAMagnitude = Vector.magnitude(maxA);
-            var minAMagnitude = Vector.magnitude(minA);
-
-            var maxBMagnitude = Vector.magnitude(maxB);
-            var minBMagnitude = Vector.magnitude(minB);
-
-            if (maxAMagnitude + minBMagnitude < joiningMagnitude || minAMagnitude + maxBMagnitude < joiningMagnitude) {
-                return false;
-            }
-
+        if (overlapA.overlap <= 0) {
+            return false;
         }
 
+        var overlapB = this.overlapAxes(verticesA, verticesB, normalsB);
 
-        // Loop through all the normals of the second polygon.
-        for (x = 0 ; x < lengthA; x++) {
-            normal = normalsB[x];
-
-            minA.x = 0;
-            minB.y = 0;
-            maxA.x = 0;
-            maxB.y = 0;
-
-            Vector.project(joiningVector, normal, joiningProjection);
-            joiningMagnitude = Vector.magnitude(joiningProjection);
-
-            for (vx = 0 ; vx < lengthA; vx++) {
-                Vector.project(rigidBodyA.projectionVertices[vx], normal, projection);
-
-                minA.x = Math.min(minA.x, projection.x);
-                minA.y = Math.min(minA.y, projection.y);
-
-                maxA.x = Math.max(maxA.x, projection.x);
-                maxA.y = Math.max(maxA.y, projection.y);
-            }
-
-            for (vx = 0 ; vx < lengthB; vx++) {
-                Vector.project(rigidBodyB.projectionVertices[vx], normal, projection);
-
-                minB.x = Math.min(minB.x, projection.x);
-                minB.y = Math.min(minB.y, projection.y);
-
-                maxB.x = Math.max(maxB.y, projection.x);
-                maxB.y = Math.max(maxB.y, projection.y);
-            }
-
-            var maxAMagnitude = Vector.magnitude(maxA);
-            var minAMagnitude = Vector.magnitude(minA);
-
-            var maxBMagnitude = Vector.magnitude(maxB);
-            var minBMagnitude = Vector.magnitude(minB);
-
-            if (maxAMagnitude + minBMagnitude < joiningMagnitude ||
-                minAMagnitude + maxBMagnitude < joiningMagnitude) {
-                return false;
-            }
-
+        if (overlapB.overlap <= 0) {
+            return false;
         }
 
         return true;
@@ -273,9 +226,12 @@
         var collision;
         var otherEntity;
         var activeCollisions = entity.getProperty("collision").activeCollisions;
-        var collisions = Object.keys(activeCollisions).map(function (key) { return activeCollisions[key]; });
+        var collisions = Object.keys(activeCollisions).map(function (key) {
+            return activeCollisions[key];
+        }).filter(function (collision) {
+            return collision.endTimestamp == null;
+        });
         var length = collisions.length;
-        var position = entity.getProperty("position");
 
         for (var x = 0 ; x < length; x++) {
             collision = collisions[x];

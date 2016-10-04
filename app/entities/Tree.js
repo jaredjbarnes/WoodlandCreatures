@@ -41,20 +41,23 @@
         collision.isStatic = true;
 
         var rigidBody = new RigidBody();
-        rigidBody.offset.x = 0;
-        rigidBody.offset.y = 40;
+        rigidBody.offset.x = 2;
+        rigidBody.offset.y = 35;
         rigidBody.points.push({
             x: 0,
             y: 0
         }, {
-            x: 65,
+            x: 62,
             y: 0
         }, {
-            x: 65,
-            y: 40
+            x: 52,
+            y: 34
         }, {
-            x: 0,
-            y: 40
+            x: 32,
+            y: 45
+        }, {
+            x: 10,
+            y: 34
         });
 
         this.addProperty(rigidBody);

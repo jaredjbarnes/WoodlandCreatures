@@ -61,20 +61,20 @@
         state.name = "standingRight";
 
         var rigidBody = new RigidBody();
-        rigidBody.offset.x = 0;
-        rigidBody.offset.y = 0;
+        rigidBody.offset.x = 5;
+        rigidBody.offset.y = 19;
         rigidBody.points.push({
             x: 0,
             y: 0
         }, {
-            x: 25,
+            x: 12,
             y: 0
         }, {
-            x: 25,
-            y: 25
+            x: 12,
+            y: 6
         }, {
             x: 0,
-            y: 25
+            y: 6
         });
 
         var positionConstraint = new PositionConstraint();

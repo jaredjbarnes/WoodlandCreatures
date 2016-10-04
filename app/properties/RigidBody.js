@@ -16,9 +16,9 @@
 
         this.vertices = [];
 
-        this.projectionVertices = [];
-
         this.normals = [];
+
+        this.worldPoints = [];
 
         this.size = {
             width: 0,

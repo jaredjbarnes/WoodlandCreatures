@@ -52,6 +52,7 @@
             "app.systems.PositionConstraintSystem",
             "app.systems.FollowEntityCameraSystem",
             "app.systems.FreeCameraSystem",
+            "app.systems.RigidBodyDrawerSystem",
             "app.systems.SpriteSystem",
             "app.systems.StateMachineSystem",
             "app.systems.PlayerStateMachineSystem",
@@ -93,6 +94,7 @@
             var CollisionSystem = app.systems.CollisionSystem;
             var PositionConstraintSystem = app.systems.PositionConstraintSystem;
             var FollowEntityCameraSystem = app.systems.FollowEntityCameraSystem;
+            var RigidBodyDrawerSystem = app.systems.RigidBodyDrawerSystem;
             var FreeCameraSystem = app.systems.FreeCameraSystem;
             var PlayerStateMachineSystem = app.systems.PlayerStateMachineSystem;
             var RigidBodyCollisionSystem = app.systems.RigidBodyCollisionSystem;
@@ -144,6 +146,7 @@
             var selectionSystem = new SelectionSystem(canvas, camera, scale);
             var spriteSystem = new SpriteSystem();
             var gridSystem = new GridSystem(canvas, camera);
+            var rigidBodyDrawerSystem = new RigidBodyDrawerSystem(canvas, camera);
 
             var game = new Game(map, timer);
 
@@ -159,6 +162,7 @@
             //game.appendSystem(freeCameraSystem);
             game.appendSystem(selectionSystem);
             game.appendSystem(gridSystem);
+            game.appendSystem(rigidBodyDrawerSystem);
 
             game.play();
 

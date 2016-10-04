@@ -105,6 +105,7 @@
     <Content Include="app\systems\CameraSystem.js" />
     <Content Include="app\systems\RigidBodyCollisionSystem.js" />
     <Content Include="app\systems\GridSystem.js" />
+    <Content Include="app\systems\RigidBodyDrawerSystem.js" />
     <Content Include="app\systems\SelectionSystem.js" />
     <Content Include="app\systems\FreeCameraSystem.js" />
     <Content Include="app\systems\PlayerStateMachineSystem.js" />

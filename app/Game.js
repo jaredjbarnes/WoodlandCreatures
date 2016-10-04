@@ -32,6 +32,22 @@
         this.stage.delegate = this;
     };
 
+    app.Game.prototype.propertyAdded = function (entity) {
+        var systems = this.systems;
+        var length = systems.length;
+        for (var x = 0; x < length; x++) {
+            this.invokeMethodOnSystem(systems[x], "propertyAdded", [entity, property]);
+        }
+    };
+
+    app.Game.prototype.propertyRemoved = function (entity) {
+        var systems = this.systems;
+        var length = systems.length;
+        for (var x = 0; x < length; x++) {
+            this.invokeMethodOnSystem(systems[x], "propertyRemoved", [entity, property]);
+        }
+    };
+
     app.Game.prototype.entityAdded = function (entity) {
         var systems = this.systems;
         var length = systems.length;

@@ -22,20 +22,48 @@
         this.id = Guid.create();
     };
 
-    app.Entity.prototype.addProperty = function (property) {
-        var properties = this.properties[property.type];
-        if (!Array.isArray(properties)) {
-            properties = this.properties[property.type] = [];
-        }
-        properties.push(property);
-    };
-
     app.Entity.prototype.getProperties = function (name) {
         return this.properties[name] || [];
     };
 
     app.Entity.prototype.getProperty = function (name) {
         return (this.properties[name] && this.properties[name][0]) || null;
+    };
+
+    app.Entity.prototype.getPropertyById = function (id) {
+        var propertiesByName = this.properties;
+        var keys = Object.keys(propertiesByName);
+        var length = keys.length;
+        var properties;
+        var property;
+        var x;
+        var px;
+
+        for (x = 0 ; x < length; x++) {
+            properties = propertiesByName[keys[x]];
+
+            for (px = 0 ; px < properties.length; px++) {
+                property = properties[px];
+
+                if (property.id === id) {
+                    return property;
+                }
+            }
+
+        }
+
+        return null;
+    };
+
+    app.Entity.prototype.addProperty = function (property) {
+        var properties = this.properties[property.type];
+        if (!Array.isArray(properties)) {
+            properties = this.properties[property.type] = [];
+        }
+        property.id = Guid.create();
+        properties.push(property);
+
+        this.notify("propertyAdded", [this, property]);
     };
 
     app.Entity.prototype.removeProperty = function (property) {
@@ -49,6 +77,8 @@
 
         if (index > -1) {
             properties.splice(index, 1);
+
+            this.notify("propertyRemoved", [this, property]);
         }
     };
 

@@ -9,6 +9,7 @@
         this.enabled = true;
         this.activeCollisions = {};
         this.name = null;
+        this.collidableNames = [];
     };
 
 });

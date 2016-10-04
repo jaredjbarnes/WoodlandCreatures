@@ -94,12 +94,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\builder\EntityBuilder.js" />
     <Content Include="app\builder\Button.html" />
     <Content Include="app\builder\Button.js" />
+    <Content Include="app\builder\EntityBuilder.html" />
     <Content Include="app\builder\Frame.html" />
     <Content Include="app\builder\Frame.js" />
     <Content Include="app\builder\Main.html" />
     <Content Include="app\builder\Theme.html" />
+    <Content Include="app\properties\Animation.js" />
     <Content Include="app\properties\RigidBody.js" />
     <Content Include="app\properties\Selection.js" />
     <Content Include="app\systems\CameraSystem.js" />

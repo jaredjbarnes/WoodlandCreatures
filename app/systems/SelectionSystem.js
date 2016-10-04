@@ -38,17 +38,23 @@
         var cameraPosition = this.cameraPosition = camera.getProperty("position");
 
         canvas.addEventListener("mousemove", function (event) {
-            self.cursorEntityPosition.x = ((event.pageX - canvas.getBoundingClientRect().left) / self.scale.x) + cameraPosition.x;
-            self.cursorEntityPosition.y = ((event.pageY - canvas.getBoundingClientRect().top) / self.scale.y) + cameraPosition.y;
+            if (self.game != null) {
+                self.cursorEntityPosition.x = ((event.pageX - canvas.getBoundingClientRect().left) / self.scale.x) + cameraPosition.x;
+                self.cursorEntityPosition.y = ((event.pageY - canvas.getBoundingClientRect().top) / self.scale.y) + cameraPosition.y;
+            }
         });
 
         canvas.addEventListener("mouseout", function () {
-            self.cursorEntityPosition.x = -10;
-            self.cursorEntityPosition.y = -10;
+            if (self.game != null) {
+                self.cursorEntityPosition.x = -10;
+                self.cursorEntityPosition.y = -10;
+            }
         });
 
         canvas.addEventListener("mousedown", function () {
-            self.selectedCollision = self.activeCollisionSelections[0];
+            if (self.game != null) {
+                self.selectedCollision = self.activeCollisionSelections[0];
+            }
         });
     };
 

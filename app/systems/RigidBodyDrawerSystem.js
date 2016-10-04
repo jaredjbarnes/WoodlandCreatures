@@ -51,7 +51,7 @@
         context.beginPath();
         context.lineWidth = 1;
         context.lineCap = "round";
-        context.strokeStyle = '#000000';
+        context.strokeStyle = '#0094ff';
 
         context.moveTo(positionA.x - offset.x + rigidBodyA.origin.x, positionA.y + rigidBodyA.origin.y - offset.y);
         context.lineTo(positionB.x - offset.x + rigidBodyB.origin.x, positionB.y + rigidBodyB.origin.y - offset.y);

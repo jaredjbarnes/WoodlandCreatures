@@ -183,21 +183,30 @@
 
         var rigidBodyA = entityA.getProperty("rigid-body");
         var rigidBodyB = entityB.getProperty("rigid-body");
-        var collisionA = entityA.getProperty("collidable");
-        var collisionB = entityA.getProperty("collidable");
+        var collidableA = entityA.getProperty("collidable");
+        var collidableB = entityA.getProperty("collidable");
         var normalsA = rigidBodyA.normals;
         var normalsB = rigidBodyB.normals;
         var projectionA = this.projectionA;
         var projectionB = this.projectionB;
         var verticesA = rigidBodyA.worldPoints;
         var verticesB = rigidBodyB.worldPoints;
+        var collisionA = rigidBodyA.activeCollisions[entityB.id];
+        var collisionB = rigidBodyB.activeCollisions[entityA.id];
+
+        // If the collision was already handled from the other side then stop detection.
+        if (collisionA != null && collisionA.timestamp === this.timestamp) {
+            return collisionA.endTimestamp === this.timestamp;
+        }
 
         var overlapA = this.overlapAxes(verticesA, verticesB, normalsA);
 
         if (overlapA.overlap <= 0) {
-            rigidBodyA.activeCollisions[entityB.id] = {
-                startTime: collisionA
-            };
+
+            if (collisionA != null) {
+                collisionA.endTimestamp = this.game.timer.now();
+                collisionA.timestamp = this.endTimestamp;
+            }
 
             return false;
         }
@@ -205,10 +214,52 @@
         var overlapB = this.overlapAxes(verticesA, verticesB, normalsB);
 
         if (overlapB.overlap <= 0) {
+            collisionB = rigidBodyB.activeCollisions[entityA.id];
+
+            if (collisionB != null) {
+                collisionB.endTimestamp = this.game.timer.now();
+                collisionB.timestamp = this.endTimestamp;
+            }
+
             return false;
         }
 
+        if (collisionA == null) {
+            collisionA = {};
+        }
+
+        if (collisionB == null) {
+            collisionB = {};
+        }
+
+        collisionA.startTimestamp = this.timestamp;
+        collisionA.timestamp = this.timestamp;
+        collisionA.endTimestamp = null;
+        collisionA.entity = entityB;
+
+        collisionB.startTimestamp = this.timestamp;
+        collisionB.timestamp = this.timestamp;
+        collisionB.endTimestamp = null;
+        collisionB.entity = entityA;
+
+        rigidBodyA.activeCollisions[entityB.id] = collisionA;
+        rigidBodyB.activeCollisions[entityA.id] = collisionB;
+
         return true;
+    };
+
+    app.systems.NarrowPhaseCollisionSystem.prototype.cleanCollisions = function (entity) {
+        var rigidBody = entity.getProperty("rigid-body");
+        var activeCollisions = rigidBody.activeCollisions;
+        var keys = Object.keys(activeCollisions);
+        var timestamp = this.timestamp;
+
+        keys.forEach(function (key) {
+            var collision = activeCollisions[key];
+            if (collision.endTimestamp != null && timestamp - collision.endTimestamp > 3000) {
+                delete activeCollisions[key];
+            }
+        });
     };
 
     app.systems.NarrowPhaseCollisionSystem.prototype.handleCollisions = function (entity) {
@@ -234,6 +285,8 @@
                 break;
             }
         }
+
+        this.cleanCollisions(entity);
     };
 
     app.systems.NarrowPhaseCollisionSystem.prototype.activated = function (game) {

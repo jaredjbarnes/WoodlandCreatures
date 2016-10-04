@@ -51,37 +51,24 @@
         var otherSize;
         var otherPosition;
         var otherRectangleBody;
-        var activeCollisions =entity.getProperty("collidable").activeCollisions;
-        var activeEntities = Object.keys(activeCollisions).map(function (key) {
-            return activeCollisions[key].entity;
+        var activeCollisions = entity.getProperty("rigid-body").activeCollisions;
+        var collisions = Object.keys(activeCollisions).map(function (key) {
+            return activeCollisions[key];
         });
-        var length = activeEntities.length;
+        var length = collisions.length;
 
-        var size = entity.getProperty("size");;
-        var position = entity.getProperty("position");;
-        var rectangleBody = entity.getProperty("rectangle-body");;
-        var movement = entity.getProperty("movement");;
+        var size = entity.getProperty("size");
+        var position = entity.getProperty("position");
+        var movement = entity.getProperty("movement");
 
         for (x = 0 ; x < length ; x++) {
-            otherEntity = activeEntities[x];
-            otherSize = otherEntity.getProperty("size");
-            otherPosition = otherEntity.getProperty("position");
-            otherRectangleBody = otherEntity.getProperty("rectangle-body");
+            collision = collisions[x];
 
-            if (otherRectangleBody == null) {
-                continue;
-            }
-
-            var top = Math.max(position.y + rectangleBody.offset.y, otherPosition.y + otherRectangleBody.offset.y);
-            var left = Math.max(position.x + rectangleBody.offset.x, otherPosition.x + otherRectangleBody.offset.x);
-            var right = Math.min(position.x + rectangleBody.offset.x + rectangleBody.size.width, otherPosition.x + otherRectangleBody.offset.x + otherRectangleBody.size.width);
-            var bottom = Math.min(position.y + rectangleBody.offset.y + rectangleBody.size.height, otherPosition.y + otherRectangleBody.offset.y + otherRectangleBody.size.height);
-
-            if (top < bottom && left < right) {
+            if (collision.endTimestamp == null) {
                 position.y = movement.previousPosition.y;
                 position.x = movement.previousPosition.x;
-                movement.position.y = position.y;
-                movement.position.x = position.x;
+                movement.position.y = movement.previousPosition.y;
+                movement.position.x = movement.previousPosition.x;
             }
         }
 

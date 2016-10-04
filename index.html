@@ -56,6 +56,7 @@
             "app.systems.SpriteSystem",
             "app.systems.StateMachineSystem",
             "app.systems.PlayerStateMachineSystem",
+            "app.systems.PlayerCollisionSystem",
             "app.systems.KeyboardInputSystem",
             "app.systems.NarrowPhaseCollisionSystem",
             "app.systems.SelectionSystem",
@@ -97,6 +98,7 @@
             var RigidBodyDrawerSystem = app.systems.RigidBodyDrawerSystem;
             var FreeCameraSystem = app.systems.FreeCameraSystem;
             var PlayerStateMachineSystem = app.systems.PlayerStateMachineSystem;
+            var PlayerCollisionSystem = app.systems.PlayerCollisionSystem;
             var RigidBodyCollisionSystem = app.systems.NarrowPhaseCollisionSystem;
             var KeyboardInputSystem = app.systems.KeyboardInputSystem;
             var SelectionSystem = app.systems.SelectionSystem;
@@ -109,6 +111,7 @@
             var movementSystem = new MovementSystem();
             var constraintSystem = new PositionConstraintSystem();
             var playerStateMachineSystem = new PlayerStateMachineSystem();
+            var playerCollisionSystem = new PlayerCollisionSystem();
             var rigidBodyCollisionSystem = new RigidBodyCollisionSystem();
 
             var touchInputSystem = new TouchInputSystem(document, scale);
@@ -150,19 +153,27 @@
 
             var game = new Game(map, timer);
 
+            // Input Systems
             game.appendSystem(keyboardInputSystem);
             game.appendSystem(touchInputSystem);
+
+            // Logic Systems
+            game.appendSystem(playerCollisionSystem);
             game.appendSystem(playerStateMachineSystem);
             game.appendSystem(constraintSystem);
-            game.appendSystem(movementSystem);
+
+            // Collision systems
             game.appendSystem(collisionSystem);
             game.appendSystem(rigidBodyCollisionSystem);
+
+            // Render systems
             game.appendSystem(spriteSystem);
             game.appendSystem(cameraSystem);
             //game.appendSystem(freeCameraSystem);
             game.appendSystem(selectionSystem);
             game.appendSystem(gridSystem);
             game.appendSystem(rigidBodyDrawerSystem);
+            game.appendSystem(movementSystem);
 
             game.play();
 

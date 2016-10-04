@@ -205,7 +205,6 @@
 
             if (collisionA != null) {
                 collisionA.endTimestamp = this.game.timer.now();
-                collisionA.timestamp = this.endTimestamp;
             }
 
             return false;
@@ -218,7 +217,6 @@
 
             if (collisionB != null) {
                 collisionB.endTimestamp = this.game.timer.now();
-                collisionB.timestamp = this.endTimestamp;
             }
 
             return false;

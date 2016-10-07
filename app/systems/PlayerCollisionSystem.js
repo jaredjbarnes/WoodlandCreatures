@@ -64,7 +64,6 @@
             collision = collisions[x];
 
             if (collision.endTimestamp == null) {
-                console.log(collision);
                 position.x = position.x + collision.penetration.x;
                 position.y = position.y + collision.penetration.y;
             }

@@ -227,6 +227,11 @@
                 collisionA.timestamp = this.timestamp;
             }
 
+            if (collisionB != null) {
+                collisionB.endTimestamp = this.timestamp;
+                collisionB.timestamp = this.timestamp;
+            }
+
             return false;
         }
 
@@ -234,6 +239,11 @@
 
         if (overlapB.overlap <= 0) {
             collisionB = rigidBodyB.activeCollisions[entityA.id];
+
+            if (collisionA != null) {
+                collisionA.endTimestamp = this.timestamp;
+                collisionA.timestamp = this.timestamp;
+            }
 
             if (collisionB != null) {
                 collisionB.endTimestamp = this.timestamp;

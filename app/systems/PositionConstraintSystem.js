@@ -5,7 +5,7 @@
     var emptyFn = function () { };
 
     var isRestrainable = function (entity) {
-        return entity.hasProperties(["size", "position", "movement", "position-constraint"]);
+        return entity.hasProperties(["size", "position", "position-constraint"]);
     };
 
     app.systems.PositionConstraintSystem = function (canvas) {
@@ -88,26 +88,25 @@
             positionConstraint = entity.getProperty("position-constraint");
             size = entity.getProperty("size");
             position = entity.getProperty("position");
-            movement = entity.getProperty("movement");
 
             if (size == null || position == null) {
                 return;
             }
 
-            if (movement.position.x + size.width > positionConstraint.position.x + positionConstraint.size.width) {
-                movement.position.x = positionConstraint.position.x + positionConstraint.size.width - size.width;
+            if (position.x + size.width > positionConstraint.position.x + positionConstraint.size.width) {
+                position.x = positionConstraint.position.x + positionConstraint.size.width - size.width;
             }
 
-            if (movement.position.y + size.height > positionConstraint.position.y + positionConstraint.size.height) {
-                movement.position.y = positionConstraint.position.y + positionConstraint.size.height - size.height;
+            if (position.y + size.height > positionConstraint.position.y + positionConstraint.size.height) {
+                position.y = positionConstraint.position.y + positionConstraint.size.height - size.height;
             }
 
-            if (movement.position.x < positionConstraint.position.x) {
-                movement.position.x = positionConstraint.position.x;
+            if (position.x < positionConstraint.position.x) {
+                position.x = positionConstraint.position.x;
             }
 
-            if (movement.position.y < positionConstraint.position.y) {
-                movement.position.y = positionConstraint.position.y
+            if (position.y < positionConstraint.position.y) {
+                position.y = positionConstraint.position.y
             }
 
         }

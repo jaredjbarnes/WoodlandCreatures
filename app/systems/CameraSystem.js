@@ -35,7 +35,6 @@
         }
 
         this.cameraPosition = camera.getProperty("position");
-        this.cameraMovement = camera.getProperty("movement");
         this.cameraSize = camera.getProperty("size");
 
     };

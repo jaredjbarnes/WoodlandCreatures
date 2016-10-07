@@ -58,26 +58,26 @@
 
     app.systems.FreeCameraSystem.prototype.positionCamera = function () {
         var cameraSize = this.cameraSize;
-        var cameraMovement = this.cameraMovement;
+        var cameraPosition = this.cameraPosition;
         var positionConstraint = this.positionConstraint;
 
-        cameraMovement.position.x = this.position.x;
-        cameraMovement.position.y = this.position.y;
+        cameraPosition.x = this.position.x;
+        cameraPosition.y = this.position.y;
 
-        if (cameraMovement.position.x + cameraSize.width > positionConstraint.position.x + positionConstraint.size.width) {
-            cameraMovement.position.x = positionConstraint.position.x + positionConstraint.size.width - cameraSize.width;
+        if (cameraPosition.x + cameraSize.width > positionConstraint.position.x + positionConstraint.size.width) {
+            cameraPosition.x = positionConstraint.position.x + positionConstraint.size.width - cameraSize.width;
         }
 
-        if (cameraMovement.position.y + cameraSize.height > positionConstraint.position.y + positionConstraint.size.height) {
-            cameraMovement.position.y = positionConstraint.position.y + positionConstraint.size.height - cameraSize.height;
+        if (cameraPosition.y + cameraSize.height > positionConstraint.position.y + positionConstraint.size.height) {
+            cameraPosition.y = positionConstraint.position.y + positionConstraint.size.height - cameraSize.height;
         }
 
-        if (cameraMovement.position.x < positionConstraint.position.x) {
-            cameraMovement.position.x = positionConstraint.position.x;
+        if (cameraPosition.x < positionConstraint.position.x) {
+            cameraPosition.x = positionConstraint.position.x;
         }
 
-        if (cameraMovement.position.y < positionConstraint.position.y) {
-            cameraMovement.position.y = positionConstraint.position.y
+        if (cameraPosition.y < positionConstraint.position.y) {
+            cameraPosition.y = positionConstraint.position.y
         }
     };
 

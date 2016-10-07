@@ -59,16 +59,14 @@
 
         var size = entity.getProperty("size");
         var position = entity.getProperty("position");
-        var movement = entity.getProperty("movement");
 
         for (x = 0 ; x < length ; x++) {
             collision = collisions[x];
 
             if (collision.endTimestamp == null) {
-                position.y = movement.previousPosition.y;
-                position.x = movement.previousPosition.x;
-                movement.position.y = movement.previousPosition.y;
-                movement.position.x = movement.previousPosition.x;
+                console.log(collision);
+                position.x = position.x + collision.penetration.x;
+                position.y = position.y + collision.penetration.y;
             }
         }
 

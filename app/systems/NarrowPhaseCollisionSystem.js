@@ -53,8 +53,15 @@
             };
         });
 
+        rigidBody.minWorldPoint = rigidBody.worldPoints.reduce(function (minPoint, point) {
+            return {
+                x: Math.min(minPoint.x, point.x),
+                y: Math.min(minPoint.y, point.y)
+            };
+        }, { x: Infinity, y: Infinity });
+
         rigidBody.normals = rigidBody.vertices.map(function (vertex, index) {
-            return Vector.getLeftNormal(vertex);
+            return Vector.normalize(Vector.getLeftNormal(vertex));
         });
 
         var finalVector = rigidBody.vertices.reduce(function (accumulator, vertex) {
@@ -171,6 +178,13 @@
             worldPoint.y = point.y + position.y;
         });
 
+        rigidBody.minWorldPoint = worldPoints.reduce(function (minPoint, point) {
+            return {
+                x: Math.min(minPoint.x, point.x),
+                y: Math.min(minPoint.y, point.y)
+            };
+        }, { x: Infinity, y: Infinity });
+
     };
 
     app.systems.NarrowPhaseCollisionSystem.prototype.intersects = function (entityA, entityB) {
@@ -183,6 +197,8 @@
 
         var rigidBodyA = entityA.getProperty("rigid-body");
         var rigidBodyB = entityB.getProperty("rigid-body");
+        var positionA = entityA.getProperty("position");
+        var positionB = entityB.getProperty("position");
         var collidableA = entityA.getProperty("collidable");
         var collidableB = entityA.getProperty("collidable");
         var normalsA = rigidBodyA.normals;
@@ -193,10 +209,13 @@
         var verticesB = rigidBodyB.worldPoints;
         var collisionA = rigidBodyA.activeCollisions[entityB.id];
         var collisionB = rigidBodyB.activeCollisions[entityA.id];
+        var penetration;
+        var minOverlap;
+        var normal;
 
         // If the collision was already handled from the other side then stop detection.
         if (collisionA != null && collisionA.timestamp === this.timestamp) {
-            return collisionA.endTimestamp === this.timestamp;
+            return collisionA.endTimestamp != null;
         }
 
         var overlapA = this.overlapAxes(verticesA, verticesB, normalsA);
@@ -204,7 +223,8 @@
         if (overlapA.overlap <= 0) {
 
             if (collisionA != null) {
-                collisionA.endTimestamp = this.game.timer.now();
+                collisionA.endTimestamp = this.timestamp;
+                collisionA.timestamp = this.timestamp;
             }
 
             return false;
@@ -216,7 +236,8 @@
             collisionB = rigidBodyB.activeCollisions[entityA.id];
 
             if (collisionB != null) {
-                collisionB.endTimestamp = this.game.timer.now();
+                collisionB.endTimestamp = this.timestamp;
+                collisionB.timestamp = this.timestamp;
             }
 
             return false;
@@ -240,6 +261,50 @@
         collisionB.endTimestamp = null;
         collisionB.entity = entityA;
 
+
+        if (overlapA.overlap < overlapB.overlap) {
+
+            minOverlap = overlapA.overlap;
+            normal = overlapA.axis;
+
+            if (Vector.dot(normal, Vector.subtract(rigidBodyA.minWorldPoint, rigidBodyB.minWorldPoint)) > 0) {
+                normal = Vector.negate(normal);
+            }
+
+            penetration = {
+                x: minOverlap * normal.x,
+                y: minOverlap * normal.y
+            };
+
+            collisionA.penetration = Vector.negate(penetration);
+            collisionA.normal = normal;
+
+            collisionB.penetration = penetration;
+            collisionB.normal = normal;
+
+
+        } else {
+
+            minOverlap = overlapB.overlap;
+            normal = overlapB.axis;
+
+            if (Vector.dot(normal, Vector.subtract(rigidBodyB.minWorldPoint, rigidBodyA.minWorldPoint)) > 0) {
+                normal = Vector.negate(normal);
+            }
+
+            penetration = {
+                x: minOverlap * normal.x,
+                y: minOverlap * normal.y
+            };
+
+            collisionA.penetration = penetration;
+            collisionA.normal = normal;
+
+            collisionB.penetration = Vector.negate(penetration);
+            collisionB.normal = normal;
+
+        }
+
         rigidBodyA.activeCollisions[entityB.id] = collisionA;
         rigidBodyB.activeCollisions[entityA.id] = collisionB;
 
@@ -248,12 +313,19 @@
 
     app.systems.NarrowPhaseCollisionSystem.prototype.cleanCollisions = function (entity) {
         var rigidBody = entity.getProperty("rigid-body");
+        var collidable = entity.getProperty("collidable");
         var activeCollisions = rigidBody.activeCollisions;
         var keys = Object.keys(activeCollisions);
         var timestamp = this.timestamp;
 
         keys.forEach(function (key) {
             var collision = activeCollisions[key];
+
+            if (collidable.activeCollisions[key] && collidable.activeCollisions[key].endTimestamp != null) {
+                collision.endTimestamp = collidable.activeCollisions[key].endTimestamp;
+                collision.timestamp = collision.endTimestamp;
+            }
+
             if (collision.endTimestamp != null && timestamp - collision.endTimestamp > 3000) {
                 delete activeCollisions[key];
             }
@@ -266,9 +338,8 @@
         var activeCollisions = entity.getProperty("collidable").activeCollisions;
         var collisions = Object.keys(activeCollisions).map(function (key) {
             return activeCollisions[key];
-        }).filter(function (collision) {
-            return collision.endTimestamp == null;
         });
+
         var length = collisions.length;
 
         for (var x = 0 ; x < length; x++) {
@@ -279,9 +350,7 @@
                 continue;
             }
 
-            if (this.intersects(entity, otherEntity)) {
-                break;
-            }
+            this.intersects(entity, otherEntity);
         }
 
         this.cleanCollisions(entity);

@@ -83,6 +83,10 @@
         return (vectorA.x * vectorB.x) + (vectorA.y * vectorB.y);
     };
 
+    Vector.negate = function (vector) {
+        return { x: -vector.x, y: -vector.y };
+    };
+
     Vector.normalize = function (vector, optionalVector) {
         optionalVector = optionalVector || {};
         var magnitude = Vector.magnitude(vector);
@@ -92,8 +96,8 @@
             optionalVector.y = 0;
         }
 
-        optionalVector.x = this.x / magnitude;
-        optionalVector.y = this.y / magnitude;
+        optionalVector.x = vector.x / magnitude;
+        optionalVector.y = vector.y / magnitude;
 
         return optionalVector;
     };

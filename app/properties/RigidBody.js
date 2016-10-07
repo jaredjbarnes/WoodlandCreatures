@@ -15,6 +15,11 @@
 
         this.worldPoints = [];
 
+        this.minWorldPoint = {
+            x: 0,
+            y: 0
+        };
+
         this.size = {
             width: 0,
             height: 0

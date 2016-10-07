@@ -131,12 +131,12 @@
             var tree;
             var position;
 
-            for (var x = 0 ; x < 1000; x++) {
+            for (var x = 0 ; x < 1; x++) {
                 tree = new Tree();
                 position = tree.getProperty("position");
 
-                position.x = Math.random() * 2000;
-                position.y = Math.random() * 2000;
+                position.x = Math.random() * 200;
+                position.y = Math.random() * 200;
 
                 map.appendChild(tree);
             }
@@ -158,20 +158,20 @@
             game.appendSystem(touchInputSystem);
 
             // Logic Systems
-            game.appendSystem(playerCollisionSystem);
             game.appendSystem(playerStateMachineSystem);
             game.appendSystem(constraintSystem);
 
             // Collision systems
             game.appendSystem(collisionSystem);
             game.appendSystem(rigidBodyCollisionSystem);
+            game.appendSystem(playerCollisionSystem);
 
             // Render systems
             game.appendSystem(spriteSystem);
             game.appendSystem(cameraSystem);
             //game.appendSystem(freeCameraSystem);
             game.appendSystem(selectionSystem);
-            game.appendSystem(gridSystem);
+            //game.appendSystem(gridSystem);
             game.appendSystem(rigidBodyDrawerSystem);
             game.appendSystem(movementSystem);
 

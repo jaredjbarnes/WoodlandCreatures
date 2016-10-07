@@ -12,17 +12,17 @@
     var MOVE_BY = 2;
 
     var movements = {
-        left: function (movement) {
-            movement.position.x -= MOVE_BY;
+        left: function (position) {
+            position.x -= MOVE_BY;
         },
-        right: function (movement) {
-            movement.position.x += MOVE_BY;
+        right: function (position) {
+            position.x += MOVE_BY;
         },
-        up: function (movement) {
-            movement.position.y -= MOVE_BY;
+        up: function (position) {
+            position.y -= MOVE_BY;
         },
-        down: function (movement) {
-            movement.position.y += MOVE_BY;
+        down: function (position) {
+            position.y += MOVE_BY;
         }
     };
 
@@ -37,7 +37,7 @@
 
     app.systems.player.handleStateChangeByInput = function (entity, nothingState) {
         var keyboardInput = entity.getProperty("keyboard-input");
-        var movement = entity.getProperty("movement");
+        var position = entity.getProperty("position");
         var state = entity.getProperty("state");
         var touchInput = entity.getProperty("touch-input");
         var isNothing = true;
@@ -47,7 +47,7 @@
 
         movementKeys.forEach(function (key) {
             if (keyboardInput.pressedKeys[key]) {
-                invokeMethod(movements, key, [movement]);
+                invokeMethod(movements, key, [position]);
                 isNothing = false;
             }
         });
@@ -61,8 +61,8 @@
                 x = touchInput.x / hypotenuse;
                 y = touchInput.y / hypotenuse;
 
-                movement.position.x += (x * MOVE_BY);
-                movement.position.y += (y * MOVE_BY);
+               position.x += (x * MOVE_BY);
+                position.y += (y * MOVE_BY);
 
                 if (Math.abs(x) > Math.abs(y)) {
                     if (x > 0) {

@@ -5,7 +5,7 @@
     var emptyFn = function () { };
 
     var isMovable = function (entity) {
-        return entity.hasProperties(["movement", "position"]);
+        return entity.hasProperties(["position"]);
     };
 
     app.systems.MovementSystem = function (canvas) {

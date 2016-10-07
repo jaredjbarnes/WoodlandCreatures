@@ -123,7 +123,7 @@
             var size = entity.getProperty("size");
             var position = entity.getProperty("position");
 
-            return position.y + size.height;
+            return position.y + (size.height/2);
         });
 
         for (var x = 0 ; x < entities.length ; x++) {

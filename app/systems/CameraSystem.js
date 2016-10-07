@@ -76,14 +76,14 @@
 
         offScreenContext.drawImage(
             image,
-            imageTexture.x,
-            imageTexture.y,
-            imageTexture.width,
-            imageTexture.height,
+            imageTexture.position.x,
+            imageTexture.position.y,
+            imageTexture.size.width,
+            imageTexture.size.height,
             Math.floor(position.x - cameraPosition.x + imageTexture.offset.x),
             Math.floor(position.y - cameraPosition.y + imageTexture.offset.y),
-            imageTexture.width,
-            imageTexture.height
+            imageTexture.size.width,
+            imageTexture.size.height
             );
     };
 

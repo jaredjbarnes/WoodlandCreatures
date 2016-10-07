@@ -6,7 +6,7 @@
         this.type = "sprite";
         this.timeScale = 1;
         this.index = 0;
-        this.positions = [];
+        this.images = [];
     };
 
 });

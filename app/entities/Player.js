@@ -36,10 +36,10 @@
 
         var image = new app.properties.ImageTexture();
         image.path = "/images/link.gif";
-        image.x = 0;
-        image.y = 0;
-        image.width = 25;
-        image.height = 25;
+        image.position.x = 0;
+        image.position.y = 0;
+        image.size.width = 25;
+        image.size.height = 25;
 
         var size = new Size();
         size.width = 25;

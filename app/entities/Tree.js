@@ -23,10 +23,10 @@
 
         var image = new app.properties.ImageTexture();
         image.path = "/images/props.png";
-        image.x = 50;
-        image.y = 539;
-        image.width = 65;
-        image.height = 80;
+        image.position.x = 50;
+        image.position.y = 539;
+        image.size.width = 65;
+        image.size.height = 80;
 
         var size = new Size();
         size.width = 65;

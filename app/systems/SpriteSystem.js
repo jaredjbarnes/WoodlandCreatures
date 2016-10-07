@@ -28,26 +28,29 @@
         var entity = null;
         var sprite = null;
         var index = 0;
-        var position = null;
+        var newImageTexture = null;
 
         for (var x = 0 ; x < this.entities.length; x++) {
             entity = this.entities[x];
             sprite = entity.properties["sprite"][0];
-            image = entity.properties["image-texture"][0];
+            imageTexture = entity.properties["image-texture"][0];
 
             index = Math.floor(sprite.index);
-            position = sprite.positions[index];
+            newImageTexture = sprite.images[index];
 
-            if (position == null) {
+            if (newImageTexture == null) {
                 continue;
             }
 
-            image.x = position.x;
-            image.y = position.y;
-            image.offset = position.offest || image.offset;
+            Object.keys(newImageTexture).forEach(function (key) {
+                if (key === "type") {
+                    return;
+                }
+                imageTexture[key] = newImageTexture[key];
+            });
 
             sprite.index += (sprite.timeScale * 1);
-            sprite.index = sprite.index >= sprite.positions.length ? 0 : sprite.index;
+            sprite.index = sprite.index >= sprite.images.length ? 0 : sprite.index;
         }
     };
 

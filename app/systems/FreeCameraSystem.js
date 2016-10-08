@@ -32,8 +32,8 @@
 
         var mousemove = function (event) {
             if (self.enabled) {
-                self.position.x = self.canvasStartPosition.x + ((self.mouseStartPosition.x - event.pageX) / scale.x);
-                self.position.y = self.canvasStartPosition.y + ((self.mouseStartPosition.y - event.pageY) / scale.y);
+                self.position.x = Math.floor(self.canvasStartPosition.x + ((self.mouseStartPosition.x - event.pageX) / scale.x));
+                self.position.y = Math.floor(self.canvasStartPosition.y + ((self.mouseStartPosition.y - event.pageY) / scale.y));
             }
         };
 

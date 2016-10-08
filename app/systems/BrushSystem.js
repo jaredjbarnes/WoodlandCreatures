@@ -39,8 +39,10 @@
         canvas.addEventListener("mousemove", function (event) {
 
             if (self.game != null && self.brushEntity != null) {
-                self.lastCursorPosition.x = ((event.pageX - canvas.getBoundingClientRect().left) / self.scale.x) + self.cameraPosition.x;
-                self.lastCursorPosition.y = ((event.pageY - canvas.getBoundingClientRect().top) / self.scale.y) + self.cameraPosition.y;
+                var size = self.brushEntity.getProperty("size");
+
+                self.lastCursorPosition.x = Math.floor(((event.pageX - canvas.getBoundingClientRect().left) / self.scale.x) + self.cameraPosition.x - (size.width/2));
+                self.lastCursorPosition.y = Math.floor(((event.pageY - canvas.getBoundingClientRect().top) / self.scale.y) + self.cameraPosition.y - (size.height/2));
 
 
                 var position = self.brushEntity.getProperty("position");

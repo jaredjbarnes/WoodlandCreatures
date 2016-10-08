@@ -43,6 +43,7 @@
 
     app.systems.GridSystem.prototype.drawHorizontalLineAt = function (number) {
         var context = this.context;
+        number = Math.floor(number);
         number += 0.5;
 
         context.beginPath();

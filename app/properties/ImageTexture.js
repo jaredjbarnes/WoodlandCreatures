@@ -5,6 +5,7 @@
     app.properties.ImageTexture = function () {
         this.type = "image-texture";
         this.path = null;
+        this.opacity = 1;
         this.position = {
             x: 0,
             y: 0

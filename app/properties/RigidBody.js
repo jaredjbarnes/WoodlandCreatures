@@ -6,13 +6,9 @@
         this["@class"] = "app.properties.RigidBody";
         this.type = "rigid-body";
         this.name = "default";
-
         this.points = [];
-
         this.vertices = [];
-
         this.normals = [];
-
         this.worldPoints = [];
 
         this.minWorldPoint = {
@@ -31,6 +27,7 @@
         };
 
         this.activeCollisions = {};
+
     };
 
 });

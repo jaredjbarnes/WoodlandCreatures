@@ -57,7 +57,7 @@
     };
 
     app.Game.prototype.entityRemoved = function (entity) {
-        var systems = systems;
+        var systems = this.systems;
         var length = systems.length;
         for (var x = 0; x < length; x++) {
             this.invokeMethodOnSystem(systems[x], "entityRemoved", [entity]);

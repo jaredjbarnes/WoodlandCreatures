@@ -1,7 +1,6 @@
 ﻿BASE.require([
     "app.Entity",
     "app.properties.KeyboardInput",
-    "app.properties.Movement",
     "app.properties.Size",
     "app.properties.Position",
     "app.properties.Collidable",
@@ -18,7 +17,6 @@
     var KeyboardInput = app.properties.KeyboardInput;
     var Position = app.properties.Position;
     var Size = app.properties.Size;
-    var Movement = app.properties.Movement;
     var Collision = app.properties.Collidable;
     var RigidBody = app.properties.RigidBody;
     var Sprite = app.properties.Sprite;
@@ -50,7 +48,6 @@
         position.y = 10;
 
         var collision = new Collision();
-        var movement = new Movement();
         var keyboardInput = new KeyboardInput();
         var touchInput = new TouchInput();
 
@@ -78,7 +75,6 @@
         var positionConstraint = new PositionConstraint();
         positionConstraint.byEntityId = "root";
 
-        this.addProperty(movement);
         this.addProperty(rigidBody);
         this.addProperty(positionConstraint);
         this.addProperty(state);

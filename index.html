@@ -46,9 +46,9 @@
         BASE.require([
             "app.Game",
             "app.Entity",
-            "app.systems.MovementSystem",
             "app.systems.TouchInputSystem",
             "app.systems.BroadPhaseCollisionSystem",
+            "app.systems.BroadphaseCollisionDrawerSystem",
             "app.systems.PositionConstraintSystem",
             "app.systems.FollowEntityCameraSystem",
             "app.systems.FreeCameraSystem",
@@ -60,6 +60,7 @@
             "app.systems.KeyboardInputSystem",
             "app.systems.NarrowPhaseCollisionSystem",
             "app.systems.SelectionSystem",
+            "app.systems.BrushSystem",
             "app.systems.GridSystem",
             "app.entities.Map",
             "app.entities.Player",
@@ -90,9 +91,9 @@
             var Entity = app.Entity;
             var Map = app.entities.Map;
             var Camera = app.entities.Camera;
-            var MovementSystem = app.systems.MovementSystem;
             var SpriteSystem = app.systems.SpriteSystem;
             var CollisionSystem = app.systems.BroadPhaseCollisionSystem;
+            var BroadphaseCollisionDrawerSystem = app.systems.BroadphaseCollisionDrawerSystem;
             var PositionConstraintSystem = app.systems.PositionConstraintSystem;
             var FollowEntityCameraSystem = app.systems.FollowEntityCameraSystem;
             var RigidBodyDrawerSystem = app.systems.RigidBodyDrawerSystem;
@@ -102,13 +103,13 @@
             var RigidBodyCollisionSystem = app.systems.NarrowPhaseCollisionSystem;
             var KeyboardInputSystem = app.systems.KeyboardInputSystem;
             var SelectionSystem = app.systems.SelectionSystem;
+            var BrushSystem = app.systems.BrushSystem;
             var GridSystem = app.systems.GridSystem;
             var Player = app.entities.Player;
             var Tree = app.entities.Tree;
             var TouchInputSystem = app.systems.TouchInputSystem;
 
             var collisionSystem = new CollisionSystem();
-            var movementSystem = new MovementSystem();
             var constraintSystem = new PositionConstraintSystem();
             var playerStateMachineSystem = new PlayerStateMachineSystem();
             var playerCollisionSystem = new PlayerCollisionSystem();
@@ -131,15 +132,15 @@
             var tree;
             var position;
 
-            for (var x = 0 ; x < 1000; x++) {
-                tree = new Tree();
-                position = tree.getProperty("position");
+            //for (var x = 0 ; x < 1000; x++) {
+            //    tree = new Tree();
+            //    position = tree.getProperty("position");
 
-                position.x = Math.random() * 2000;
-                position.y = Math.random() * 2000;
+            //    position.x = Math.random() * 2000;
+            //    position.y = Math.random() * 2000;
 
-                map.appendChild(tree);
-            }
+            //    map.appendChild(tree);
+            //}
 
             map.appendChild(player);
             map.appendChild(camera);
@@ -149,7 +150,9 @@
             var selectionSystem = new SelectionSystem(canvas, camera, scale);
             var spriteSystem = new SpriteSystem();
             var gridSystem = new GridSystem(canvas, camera);
+            var brushSystem = new BrushSystem(canvas, camera, scale);
             var rigidBodyDrawerSystem = new RigidBodyDrawerSystem(canvas, camera);
+            var broadphaseCollisionDrawerSystem = new BroadphaseCollisionDrawerSystem(canvas, camera);
 
             var game = new Game(map, timer);
 
@@ -168,16 +171,19 @@
 
             // Render systems
             game.appendSystem(spriteSystem);
-            game.appendSystem(cameraSystem);
-            //game.appendSystem(freeCameraSystem);
-            game.appendSystem(selectionSystem);
+            //game.appendSystem(cameraSystem);
+
+            game.appendSystem(freeCameraSystem);
             game.appendSystem(gridSystem);
-            game.appendSystem(rigidBodyDrawerSystem);
-            game.appendSystem(movementSystem);
+            game.appendSystem(brushSystem);
+            //game.appendSystem(rigidBodyDrawerSystem);
+            //game.appendSystem(broadphaseCollisionDrawerSystem);
+            game.appendSystem(selectionSystem);
 
             game.play();
 
             window.game = game;
+            window.brushSystem = brushSystem;
         });
     </script>
 </body>

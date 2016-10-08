@@ -331,11 +331,6 @@
         keys.forEach(function (key) {
             var collision = activeCollisions[key];
 
-            if (collidable.activeCollisions[key] && collidable.activeCollisions[key].endTimestamp != null) {
-                collision.endTimestamp = collidable.activeCollisions[key].endTimestamp;
-                collision.timestamp = collision.endTimestamp;
-            }
-
             if (collision.endTimestamp != null && timestamp - collision.endTimestamp > 3000) {
                 delete activeCollisions[key];
             }
@@ -399,7 +394,7 @@
         }
     };
 
-    app.systems.NarrowPhaseCollisionSystem.prototype.entityRemoved = function () {
+    app.systems.NarrowPhaseCollisionSystem.prototype.entityRemoved = function (entity) {
         if (entity.hasProperties(["collidable", "rigid-body", "position"])) {
             var index = this.entities.indexOf(entity);
 

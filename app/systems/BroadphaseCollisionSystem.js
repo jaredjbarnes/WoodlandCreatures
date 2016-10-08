@@ -222,7 +222,7 @@
                     collision.endTimestamp = this.currentTimestamp;
 
                     // Allow for some time to pass, before removing, because its likely they'll hit again.
-                    if (this.currentTimestamp - collision.timestamp > 3000) {
+                    if (this.currentTimestamp - collision.timestamp > 1000) {
                         delete collisions[key];
                     }
                 }
@@ -263,7 +263,7 @@
                 };
             } else {
                 collisionDataA.timestamp = this.currentTimestamp;
-                collisionDataB.endTimestamp = null;
+                collisionDataA.endTimestamp = null;
             }
 
             if (collisionDataB == null) {
@@ -306,8 +306,13 @@
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.activated = function (game) {
+        var self = this;
         this.game = game;
-        this.entities = game.stage.filter(isCollision);
+
+        game.stage.filter().forEach(function (entity) {
+            self.entityAdded(entity);
+        });
+
         this.updateWorldSize();
     };
 

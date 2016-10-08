@@ -1,17 +1,9 @@
 ﻿BASE.require([
-    "app.properties.Sprite",
-    "app.properties.ImageTexture"
 ], function () {
     BASE.namespace("app.systems");
 
-    var Sprite = app.properties.Sprite;
-    var ImageTexture = app.properties.ImageTexture;
-
     var isSprite = function (entity) {
-        var sprites = entity.properties["sprite"];
-        var imageTextures = entity.properties["image-texture"];
-
-        return sprites && sprites.length > 0 && imageTextures && imageTextures.length > 0;
+        return entity.hasProperties(["sprite", "image-texture"]);
     };
 
     app.systems.SpriteSystem = function () {
@@ -51,6 +43,20 @@
 
             sprite.index += (sprite.timeScale * 1);
             sprite.index = sprite.index >= sprite.images.length ? 0 : sprite.index;
+        }
+    };
+
+    app.systems.SpriteSystem.prototype.entityAdded = function (entity) {
+        if (entity.hasProperties(["sprite", "image-texture"])) {
+            this.entities.push(entity);
+        }
+    };
+
+    app.systems.SpriteSystem.prototype.entityRemoved = function (entity) {
+        var index = this.entities.indexOf(entity);
+
+        if (index > -1) {
+            this.entities.splice(index, 1);
         }
     };
 

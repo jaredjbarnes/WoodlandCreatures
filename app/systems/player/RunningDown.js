@@ -55,7 +55,7 @@
                 y: 25,
                 x: 275
             }
-        }, , {
+        }, {
             path: path,
             size: size,
             offset: offset,

@@ -74,6 +74,8 @@
             return;
         }
 
+        offScreenContext.globalAlpha = imageTexture.opacity;
+
         offScreenContext.drawImage(
             image,
             imageTexture.position.x,

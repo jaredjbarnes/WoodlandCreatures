@@ -2,8 +2,7 @@
     "app.Entity",
     "app.properties.Position",
     "app.properties.Size",
-    "app.properties.Collidable",
-    "app.properties.Movement"
+    "app.properties.Collidable"
 ], function () {
 
     BASE.namespace("app.systems");
@@ -12,7 +11,6 @@
     var Position = app.properties.Position;
     var Size = app.properties.Size;
     var Collision = app.properties.Collidable;
-    var Movement = app.properties.Movement;
 
     app.systems.GridSystem = function (canvas, camera) {
         var self = this;

@@ -1,6 +1,8 @@
 ﻿BASE.require([
     "app.entities.Player",
-    "app.entities.Tree"
+    "app.entities.Tree",
+    "app.entities.BlueHouse",
+    "app.entities.WitchHut",
 ], function () {
     BASE.namespace("app.systems");
 
@@ -26,14 +28,18 @@
         };
 
         this.entities = {
-            player: {
-                displayName: "Player",
-                Type: app.entities.Player
-            },
             tree: {
                 displayName: "Tree",
                 Type: app.entities.Tree
-            }
+            },
+            "blue-house": {
+                displayName: "Blue House",
+                Type: app.entities.BlueHouse
+            },
+            "witch-hut": {
+                displayName: "Witch Hut",
+                Type: app.entities.WitchHut
+            },
         };
 
         canvas.addEventListener("mousemove", function (event) {
@@ -41,8 +47,8 @@
             if (self.game != null && self.brushEntity != null) {
                 var size = self.brushEntity.getProperty("size");
 
-                self.lastCursorPosition.x = Math.floor(((event.pageX - canvas.getBoundingClientRect().left) / self.scale.x) + self.cameraPosition.x - (size.width/2));
-                self.lastCursorPosition.y = Math.floor(((event.pageY - canvas.getBoundingClientRect().top) / self.scale.y) + self.cameraPosition.y - (size.height/2));
+                self.lastCursorPosition.x = Math.floor(((event.pageX - canvas.getBoundingClientRect().left) / self.scale.x) + self.cameraPosition.x - (size.width / 2));
+                self.lastCursorPosition.y = Math.floor(((event.pageY - canvas.getBoundingClientRect().top) / self.scale.y) + self.cameraPosition.y - (size.height / 2));
 
 
                 var position = self.brushEntity.getProperty("position");
@@ -88,6 +94,7 @@
     };
 
     app.systems.BrushSystem.prototype.selectBrushByName = function (name) {
+        this.clearBrush();
 
         if (this.entities[name]) {
             this.currentBrushName = name;
@@ -103,10 +110,16 @@
 
     };
 
+    app.systems.BrushSystem.prototype.clearBrush = function () {
+        if (this.brushEntity != null) {
+            this.brushEntity.parent.removeChild(this.brushEntity);
+            this.brushEntity = null;
+            this.currentBrushName = null;
+        }
+    };
+
     app.systems.BrushSystem.prototype.selectEraser = function (name) {
-        this.currentBrushName = null;
-        this.brushEntity.parent.removeChild(this.brushEntity);
-        this.brushEntity = null;
+        this.clearBrush();
     };
 
     app.systems.BrushSystem.prototype.selectSelector = function (name) {

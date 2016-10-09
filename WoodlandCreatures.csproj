@@ -102,6 +102,8 @@
     <Content Include="app\builder\Frame.js" />
     <Content Include="app\builder\Main.html" />
     <Content Include="app\builder\Theme.html" />
+    <Content Include="app\entities\WitchHut.js" />
+    <Content Include="app\entities\BlueHouse.js" />
     <Content Include="app\properties\Animation.js" />
     <Content Include="app\properties\RigidBody.js" />
     <Content Include="app\properties\Selection.js" />

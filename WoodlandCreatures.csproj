@@ -101,7 +101,13 @@
     <Content Include="app\builder\Frame.html" />
     <Content Include="app\builder\Frame.js" />
     <Content Include="app\builder\Main.html" />
+    <Content Include="app\components\HorizontalScrollbar.html" />
+    <Content Include="app\components\HorizontalScrollbar.js" />
+    <Content Include="app\components\VerticalScrollbar.js" />
+    <Content Include="app\components\MapBuilder.html" />
     <Content Include="app\builder\Theme.html" />
+    <Content Include="app\components\MapBuilder.js" />
+    <Content Include="app\components\VerticalScrollbar.html" />
     <Content Include="app\entities\WitchHut.js" />
     <Content Include="app\entities\BlueHouse.js" />
     <Content Include="app\properties\Animation.js" />

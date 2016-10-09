@@ -1,0 +1,68 @@
+﻿<div vertical-scroll-bar unselectable controller="app.components.VerticalScrollbar">
+    <style component="css-helpers"></style>
+    <style>
+        [vertical-scroll-bar] {
+            position: relative;
+        }
+
+        [vertical-scroll-bar-handle] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            background-color: #f2f2f2;
+            border-radius: 25px;
+            height: 100px;
+            width: 50px;
+        }
+        
+        [vertical-scroll-bar-limit-bar] {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            width: 10px;
+            background-color: #a7a7a7;
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        [vertical-scroll-bar-max-bar] {
+            position: absolute;
+            top: 0;
+            left: 21px;
+            width: 8px;
+            background-color: #bebebe;
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        [vertical-scroll-bar-limit-handle] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            background-color: #f2f2f2;
+            border-radius: 25px;
+            height: 25px;
+            width: 50px;
+        }
+
+       
+    </style>
+
+    <div vertical-scroll-bar-max-bar>
+
+    </div>
+
+    <div tag="limit-bar" vertical-scroll-bar-limit-bar>
+
+    </div>
+
+    <div tag="handle" vertical-scroll-bar-handle>
+
+    </div>
+
+    <div tag="limit-handle" vertical-scroll-bar-limit-handle>
+    </div>
+
+</div>

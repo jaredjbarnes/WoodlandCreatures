@@ -55,6 +55,7 @@
         context.lineTo(positionB.x - offset.x + (sizeB.width / 2), positionB.y - offset.y + (sizeB.height / 2));
 
         context.stroke();
+        context.closePath();
     };
 
     app.systems.BroadphaseCollisionDrawerSystem.prototype.drawEntity = function (entity) {

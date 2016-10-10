@@ -1,1 +1,76 @@
-﻿<div controller="app.components.MapBuilder"></div>
+﻿<div map-builder controller="app.components.MapBuilder">
+    <style component="css-helpers"></style>
+    <style>
+        [map-builder-canvas-container] {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            right: 100px;
+            bottom: 100px;
+            background-color: #000;
+        }
+
+        [map-builder-header] {
+            position: absolute;
+            top: 0;
+            left: 100px;
+            width: 100%;
+            height: 100px;
+            background-color: #f2f2f2;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+        }
+
+        [map-builder-footer] {
+            position: absolute;
+            left: 100px;
+            right: 0;
+            bottom: 0;
+            height: 100px;
+            background-color: #f2f2f2;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+            padding: 25px;
+        }
+
+        [map-builder-left] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100%;
+            background-color: #f2f2f2;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+        }
+
+        [map-builder-right] {
+            position: absolute;
+            top: 100px;
+            width: 100px;
+            right: 0;
+            bottom: 100px;
+            background-color: #f2f2f2;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+            padding: 25px;
+            box-sizing: border-box;
+        }
+
+        [map-builder-canvas] {
+            width: 960px;
+            height: 640px;
+            background-color: #489848;
+        }
+    </style>
+    <div tag="canvas-container" map-builder-canvas-container>
+        <canvas tag="canvas" map-builder-canvas class="fill-parent"></canvas>
+    </div>
+    <div map-builder-right>
+        <div tag="vertical-scrollbar" component="./VerticalScrollbar.html" style="height: 100%;"></div>
+    </div>
+    <div map-builder-footer>
+        <div tag="horizontal-scrollbar" component="./HorizontalScrollbar.html"></div>
+    </div>
+    <div map-builder-header></div>
+    <div map-builder-left></div>
+</div>

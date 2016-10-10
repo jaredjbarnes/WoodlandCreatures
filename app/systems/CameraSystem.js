@@ -25,6 +25,7 @@
             y: 0
         };
 
+        this.setCamera(camera);
     };
 
     app.systems.CameraSystem.prototype.setCamera = function (camera) {

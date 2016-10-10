@@ -5,8 +5,8 @@
     BASE.namespace("app.components");
 
     var defaultDelegate = {
-        onScroll: function () { },
-        onLimitScroll: function () { }
+        positionChange: function () { },
+        limitPositionChange: function () { }
     };
 
     app.components.VerticalScrollbar = function (elem, tags, services) {
@@ -17,12 +17,12 @@
         var $limitBar = $(tags["limit-bar"]);
         var $handle = $(tags["handle"]);
 
-        var maxSize = 4000;
-        var barSize = 0;
+        var maxValue = 4000;
+        var barHeight = 0;
         var limit = 2000;
-        var viewportSize = 0;
-        var limitHandleSize = $limitHandle.height();
-        var handleSize = $handle.height();
+        var viewportHeight = 0;
+        var limitHandleHeight = $limitHandle.height();
+        var handleHeight = $handle.height();
         var delegate = defaultDelegate;
 
         var currentValue = 0;
@@ -38,9 +38,9 @@
 
 
         var calculateSizes = function () {
-            barSize = $elem.height();
-            maxSpan = (barSize - handleSize - limitHandleSize);
-            ratio = maxSize / maxSpan;
+            barHeight = $elem.height();
+            maxSpan = (barHeight - handleHeight - limitHandleHeight);
+            ratio = maxValue / maxSpan;
 
             availableSpan = (limit / ratio);
             limitPosition = availableSpan;
@@ -70,11 +70,11 @@
             }
 
             currentValue = position * ratio;
-            delegate.onScroll(currentValue);
-
             drawHandles();
 
-            console.log(currentValue);
+            delegate.positionChange(currentValue);
+
+            return false;
         };
 
         var handleMouseUp = function () {
@@ -111,10 +111,16 @@
 
             if (position > availableSpan) {
                 position = availableSpan;
+                currentValue = position * ratio;
             }
 
             drawHandles();
             drawBars();
+
+            delegate.limitPositionChange(limit);
+
+            return false;
+
         };
 
         var limitHandleMouseUp = function () {
@@ -125,7 +131,7 @@
 
         var drawBars = function () {
             $limitBar.css({
-                height: availableSpan + handleSize + "px"
+                height: availableSpan + handleHeight + "px"
             });
         };
 
@@ -135,11 +141,11 @@
             });
 
             $limitHandle.css({
-                top: availableSpan + handleSize + "px"
+                top: availableSpan + handleHeight + "px"
             });
         };
 
-        self.setLimitSize = function (value) {
+        self.setLimitValue = function (value) {
             limit = value;
 
             calculateSizes();
@@ -147,17 +153,21 @@
             drawHandles();
         };
 
-        self.setMaxSize = function (value) {
+        self.setMaxValue = function (value) {
             size = value;
         };
 
-        self.setViewportSize = function (value) {
-            viewportSize = value;
+        self.setViewportHeight = function (value) {
+            viewportHeight = value;
             calculateSizes();
         };
 
         self.getValue = function () {
             return currentValue;
+        };
+
+        self.setDelegate = function (value) {
+            delegate = value;
         };
 
         $handle.on("mousedown", handleMousedown);

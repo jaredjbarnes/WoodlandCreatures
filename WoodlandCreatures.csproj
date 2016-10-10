@@ -108,6 +108,7 @@
     <Content Include="app\builder\Theme.html" />
     <Content Include="app\components\MapBuilder.js" />
     <Content Include="app\components\VerticalScrollbar.html" />
+    <Content Include="app\entities\Stage.js" />
     <Content Include="app\entities\WitchHut.js" />
     <Content Include="app\entities\BlueHouse.js" />
     <Content Include="app\properties\Animation.js" />

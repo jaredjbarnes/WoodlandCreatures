@@ -40,11 +40,8 @@
                 position = constrainToEntity.getProperty("position");
                 size = constrainToEntity.getProperty("size");
 
-                positionConstraint.position.x = position.x;
-                positionConstraint.position.y = position.y
-
-                positionConstraint.size.width = size.width;
-                positionConstraint.size.height = size.height;
+                positionConstraint.position = position;
+                positionConstraint.size = size;
             }
         }
     };

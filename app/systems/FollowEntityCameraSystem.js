@@ -11,7 +11,7 @@
     app.systems.FollowEntityCameraSystem = function (canvas, camera, entityToFollow) {
         var self = this;
 
-        CameraSystem.call(this, canvas);
+        CameraSystem.call(this, canvas, camera);
         this.setCamera(camera);
 
         this.entityToFollow = entityToFollow;

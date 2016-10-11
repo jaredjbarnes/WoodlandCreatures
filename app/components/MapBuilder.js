@@ -78,8 +78,10 @@
         var scale;
         var size;
         var game;
+        var player;
+        var camera;
 
-        var scaleCanvas = function () {
+        var calculateCanvasSize = function () {
             var width = $canvasContainer.width();
             var height = $canvasContainer.height();
             size = getSize(width, height);
@@ -99,17 +101,17 @@
 
             verticalScrollbar.setViewportHeight(size.height);
             horizontalScrollbar.setViewportWidth(size.width);
-
         };
 
-        var createGame = function (canvas, scale) {
+        var initialize = function (canvas, scale) {
+            calculateCanvasSize()
+
             // Entities
             var stage = new Stage();
             var timer = new Timer();
-            var camera = new Camera();
-            var player = new Player();
 
-            var stageSize = stage.getProperty("size");
+            camera = new Camera();
+            player = new Player();
 
             stage.appendChild(player);
             stage.appendChild(camera);
@@ -152,14 +154,24 @@
             game.appendSystem(gridSystem);
             game.appendSystem(brushSystem);
 
+            hookupScrollbars();
+
+            game.play();
+
+            window.game = game;
+        };
+
+        var hookupScrollbars = function () {
+            var stage = game.stage;
+            var stageSize = stage.getProperty("size");
+
             verticalScrollbar.setDelegate({
                 positionChange: function (y) {
                     var position = camera.getProperty("position");
-                    position.y = y;
+                    position.y = Math.floor(y);
                 },
                 limitPositionChange: function (y) {
-                    var size = stage.getProperty("size");
-                    size.height = y;
+                    stageSize.height = Math.floor(y + size.height);
                 }
             });
 
@@ -167,27 +179,22 @@
             horizontalScrollbar.setDelegate({
                 positionChange: function (x) {
                     var position = camera.getProperty("position");
-                    position.x = x;
+                    position.x = Math.floor(x);
                 },
                 limitPositionChange: function (x) {
-                    var size = stage.getProperty("size");
-                    size.width = x;
+                    stageSize.width = Math.floor(x + size.width);
                 }
             });
 
-            verticalScrollbar.setMaxValue(stageSize.height);
-            horizontalScrollbar.setMaxValue(stageSize.width);
-
-            game.play();
-
-            window.game = game;
+            verticalScrollbar.setMaxValue(stageSize.height - size.height);
+            horizontalScrollbar.setMaxValue(stageSize.width - size.width);
         };
 
-        scaleCanvas();
-        createGame(canvas, scale);
+        initialize(canvas, scale);
 
         $elem.on("windowResize", function () {
-            scaleCanvas();
+            calculateCanvasSize();
+            hookupScrollbars();
         });
 
     };

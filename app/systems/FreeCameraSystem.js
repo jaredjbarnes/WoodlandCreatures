@@ -11,7 +11,7 @@
     app.systems.FreeCameraSystem = function (canvas, camera, scale) {
         var self = this;
 
-        CameraSystem.call(self, canvas);
+        CameraSystem.call(self, canvas, camera);
         this.setCamera(camera);
         this.positionConstraint = camera.getProperty("position-constraint");
 

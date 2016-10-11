@@ -16,7 +16,7 @@
     "app.systems.KeyboardInputSystem",
     "app.systems.NarrowPhaseCollisionSystem",
     "app.systems.SelectionSystem",
-    "app.systems.BrushSystem",
+    "app.systems.CursorSystem",
     "app.systems.GridSystem",
     "app.entities.Map",
     "app.entities.Player",
@@ -41,7 +41,7 @@
     var KeyboardInputSystem = app.systems.KeyboardInputSystem;
     var NarrowPhaseCollisionSystem = app.systems.NarrowPhaseCollisionSystem;
     var SelectionSystem = app.systems.SelectionSystem;
-    var BrushSystem = app.systems.BrushSystem;
+    var CursorSystem = app.systems.CursorSystem;
     var GridSystem = app.systems.GridSystem;
     var Stage = app.entities.Stage;
     var Player = app.entities.Player;
@@ -95,7 +95,7 @@
         var spriteSystem = new SpriteSystem();
 
         var gridSystem = new GridSystem(canvas, camera);
-        var brushSystem = new BrushSystem(canvas, camera);
+        var cursorSystem = new CursorSystem(canvas, camera);
         var cameraSystem = new CameraSystem(canvas, camera);
 
         var keyboardInputSystem = new KeyboardInputSystem(document, {
@@ -123,7 +123,7 @@
         game.appendSystem(spriteSystem);
         game.appendSystem(cameraSystem);
         game.appendSystem(gridSystem);
-        game.appendSystem(brushSystem);
+        game.appendSystem(cursorSystem);
 
         var stage = game.stage;
         var stageSize = stage.getProperty("size");
@@ -154,17 +154,17 @@
 
         game.play();
 
-        window.brushSystem = brushSystem;
+        window.cursorSystem = cursorSystem;
         window.cameraSystem = cameraSystem;
 
         $elem.on("windowResize", function () {
-            brushSystem.canvasScaler.scaleCanvas();
+            cursorSystem.canvasScaler.scaleCanvas();
         });
 
         var interval = setInterval(function () {
             if ($elem.parents("body").length > 0) {
                 clearInterval(interval);
-                brushSystem.canvasScaler.scaleCanvas();
+                cursorSystem.canvasScaler.scaleCanvas();
             }
         }, 100);
     };

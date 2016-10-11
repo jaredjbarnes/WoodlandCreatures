@@ -17,7 +17,7 @@
         this.height = 0;
         this.grid = [[]];
         this.entities = [];
-        this.cellSize = cellSize || 100;
+        this.cellSize = cellSize || 50;
         this.totalCells = 0;
         this.currentTimestamp = 0;
         this.isReady = true;

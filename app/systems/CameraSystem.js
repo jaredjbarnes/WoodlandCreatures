@@ -125,11 +125,40 @@
             entities.push(activeCollisions[keys[x]].entity);
         }
 
-        entities.orderBy(function (entity) {
-            var size = entity.getProperty("size");
-            var position = entity.getProperty("position");
+        entities.sort(function (entityA, entityB) {
+            var sizeA = entityA.getProperty("size");
+            var positionA = entityA.getProperty("position");
 
-            return position.y + (size.height/2);
+            var adjustedA = {
+                x: positionA.x + (sizeA.width / 2),
+                y: positionA.y + (sizeA.height / 2)
+            };
+
+            var sizeB = entityB.getProperty("size");
+            var positionB = entityB.getProperty("position");
+
+            var adjustedB = {
+                x: positionB.x + (sizeB.width / 2),
+                y: positionB.y + (sizeB.height / 2)
+            };
+
+            if (adjustedA.y === adjustedB.y) {
+
+                if (adjustedA.x === adjustedB.x) {
+                    return 0;
+                } else if (adjustedA.x > adjustedB.x) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+
+            } else if (adjustedA.y > adjustedB.y) {
+                return 1;
+            } else {
+                return -1
+            }
+
+
         });
 
         for (var x = 0 ; x < entities.length ; x++) {

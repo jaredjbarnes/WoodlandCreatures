@@ -130,12 +130,7 @@
         this.activeCollisionSelections = collisions;
 
         if (collisions.length > 0) {
-            //collisions.forEach(function (collision) {
-            //    self.drawSelectionAroundCollision(collision);
-            //});
-
             self.drawBorderAroundCollision(collisions[0]);
-
         }
 
         if (this.selectedCollision != null) {

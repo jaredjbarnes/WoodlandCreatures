@@ -115,6 +115,8 @@
     <Content Include="app\properties\Animation.js" />
     <Content Include="app\properties\RigidBody.js" />
     <Content Include="app\properties\Selection.js" />
+    <Content Include="app\systems\cursorModes\Brush.js" />
+    <Content Include="app\systems\cursorModes\Selection.js" />
     <Content Include="app\systems\CameraSystem.js" />
     <Content Include="app\systems\NarrowPhaseCollisionSystem.js" />
     <Content Include="app\systems\GridSystem.js" />
@@ -146,7 +148,7 @@
     <Content Include="app\properties\Position.js" />
     <Content Include="app\systems\FollowEntityCameraSystem.js" />
     <Content Include="app\systems\PlayerCollisionSystem.js" />
-    <Content Include="app\systems\BrushSystem.js" />
+    <Content Include="app\systems\CursorSystem.js" />
     <Content Include="app\systems\TouchInputSystem.js" />
     <Content Include="app\systems\PositionConstraintSystem.js" />
     <Content Include="app\systems\StateMachineSystem.js" />

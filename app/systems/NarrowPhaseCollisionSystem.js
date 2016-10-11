@@ -334,6 +334,10 @@
             if (collision.endTimestamp != null && timestamp - collision.endTimestamp > 3000) {
                 delete activeCollisions[key];
             }
+
+            if (collision.endTimestamp == null && collidable.activeCollisions[key] && collidable.activeCollisions[key].endTimestamp != null) {
+                collision.endTimestamp = collidable.activeCollisions[key].endTimestamp;
+            }
         });
     };
 

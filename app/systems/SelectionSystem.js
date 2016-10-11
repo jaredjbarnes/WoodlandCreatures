@@ -2,7 +2,8 @@
     "app.Entity",
     "app.properties.Position",
     "app.properties.Size",
-    "app.properties.Collidable"
+    "app.properties.Collidable",
+    "app.CanvasScaler"
 ], function () {
 
     BASE.namespace("app.systems");
@@ -14,13 +15,12 @@
 
     var emptyFn = function () { };
 
-    app.systems.SelectionSystem = function (canvas, camera, scale) {
+    app.systems.SelectionSystem = function (canvas, camera) {
         var self = this;
 
-        this.scale = scale || {
-            x: 1,
-            y: 1
-        };
+        this.canvasScaler = new app.CanvasScaler(canvas);
+
+        this.scale = canvasScaler.scale;
 
         this.isReady = true;
         this.game = null;
@@ -51,6 +51,7 @@
 
         canvas.addEventListener("mousedown", function () {
             if (self.game != null) {
+                self.canvasScaler.scaleCanvas();
                 self.selectedCollision = self.activeCollisionSelections[0];
             }
         });

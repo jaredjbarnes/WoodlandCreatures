@@ -75,128 +75,98 @@
         var $canvasContainer = $(tags["canvas-container"]);
         var verticalScrollbar = $(tags["vertical-scrollbar"]).controller();
         var horizontalScrollbar = $(tags["horizontal-scrollbar"]).controller();
-        var scale;
-        var size;
-        var game;
-        var player;
-        var camera;
 
-        var calculateCanvasSize = function () {
-            var width = $canvasContainer.width();
-            var height = $canvasContainer.height();
-            size = getSize(width, height);
+        // Entities
+        var stage = new Stage();
+        var timer = new Timer();
 
-            scale = {
-                x: width / size.width,
-                y: height / size.height
-            };
+        var camera = new Camera();
+        var player = new Player();
 
-            canvas.width = size.width;
-            canvas.height = size.height;
+        stage.appendChild(player);
+        stage.appendChild(camera);
 
-            $canvas.css({
-                width: width + "px",
-                height: height + "px"
-            });
+        // Systems 
+        var broadPhaseCollisionSystem = new BroadPhaseCollisionSystem();
+        var narrowPhaseCollisionSystem = new NarrowPhaseCollisionSystem();
+        var positionConstraintSystem = new PositionConstraintSystem();
+        var playerStateMachineSystem = new PlayerStateMachineSystem();
+        var playerCollisionSystem = new PlayerCollisionSystem();
+        var spriteSystem = new SpriteSystem();
 
-            verticalScrollbar.setViewportHeight(size.height);
-            horizontalScrollbar.setViewportWidth(size.width);
-        };
+        var gridSystem = new GridSystem(canvas, camera);
+        var brushSystem = new BrushSystem(canvas, camera);
+        var cameraSystem = new CameraSystem(canvas, camera);
 
-        var initialize = function (canvas, scale) {
-            calculateCanvasSize()
-
-            // Entities
-            var stage = new Stage();
-            var timer = new Timer();
-
-            camera = new Camera();
-            player = new Player();
-
-            stage.appendChild(player);
-            stage.appendChild(camera);
-
-            // Systems 
-            var broadPhaseCollisionSystem = new BroadPhaseCollisionSystem();
-            var narrowPhaseCollisionSystem = new NarrowPhaseCollisionSystem();
-            var positionConstraintSystem = new PositionConstraintSystem();
-            var playerStateMachineSystem = new PlayerStateMachineSystem();
-            var playerCollisionSystem = new PlayerCollisionSystem();
-            var spriteSystem = new SpriteSystem();
-
-            var gridSystem = new GridSystem(canvas, camera);
-            var brushSystem = new BrushSystem(canvas, camera, scale);
-            var cameraSystem = new CameraSystem(canvas, camera, scale);
-
-            var keyboardInputSystem = new KeyboardInputSystem(document, {
-                37: "left",
-                38: "up",
-                39: "right",
-                40: "down"
-            });
-
-            game = new Game(stage, timer);
-
-            // Input Systems
-            game.appendSystem(keyboardInputSystem);
-
-            // Logic Systems
-            game.appendSystem(playerStateMachineSystem);
-
-            // Collision Systems
-            game.appendSystem(positionConstraintSystem);
-            game.appendSystem(broadPhaseCollisionSystem);
-            game.appendSystem(narrowPhaseCollisionSystem);
-
-            //Render Systems
-            game.appendSystem(cameraSystem);
-            game.appendSystem(spriteSystem);
-            game.appendSystem(gridSystem);
-            game.appendSystem(brushSystem);
-
-            hookupScrollbars();
-
-            game.play();
-
-            window.game = game;
-        };
-
-        var hookupScrollbars = function () {
-            var stage = game.stage;
-            var stageSize = stage.getProperty("size");
-
-            verticalScrollbar.setDelegate({
-                positionChange: function (y) {
-                    var position = camera.getProperty("position");
-                    position.y = Math.floor(y);
-                },
-                limitPositionChange: function (y) {
-                    stageSize.height = Math.floor(y + size.height);
-                }
-            });
-
-
-            horizontalScrollbar.setDelegate({
-                positionChange: function (x) {
-                    var position = camera.getProperty("position");
-                    position.x = Math.floor(x);
-                },
-                limitPositionChange: function (x) {
-                    stageSize.width = Math.floor(x + size.width);
-                }
-            });
-
-            verticalScrollbar.setMaxValue(stageSize.height - size.height);
-            horizontalScrollbar.setMaxValue(stageSize.width - size.width);
-        };
-
-        initialize(canvas, scale);
-
-        $elem.on("windowResize", function () {
-            calculateCanvasSize();
-            hookupScrollbars();
+        var keyboardInputSystem = new KeyboardInputSystem(document, {
+            37: "left",
+            38: "up",
+            39: "right",
+            40: "down"
         });
 
+        var game = new Game(stage, timer);
+
+        // Input Systems
+        game.appendSystem(keyboardInputSystem);
+
+        // Logic Systems
+        game.appendSystem(playerStateMachineSystem);
+
+        // Collision Systems
+        game.appendSystem(positionConstraintSystem);
+        game.appendSystem(broadPhaseCollisionSystem);
+        game.appendSystem(narrowPhaseCollisionSystem);
+        game.appendSystem(playerCollisionSystem);
+
+        //Render Systems
+        game.appendSystem(spriteSystem);
+        game.appendSystem(cameraSystem);
+        game.appendSystem(gridSystem);
+        game.appendSystem(brushSystem);
+
+        var stage = game.stage;
+        var stageSize = stage.getProperty("size");
+
+        verticalScrollbar.setDelegate({
+            positionChange: function (y) {
+                var position = camera.getProperty("position");
+                position.y = Math.floor(y);
+            },
+            limitPositionChange: function (y) {
+                stageSize.height = Math.floor(y + canvas.height);
+            }
+        });
+
+
+        horizontalScrollbar.setDelegate({
+            positionChange: function (x) {
+                var position = camera.getProperty("position");
+                position.x = Math.floor(x);
+            },
+            limitPositionChange: function (x) {
+                stageSize.width = Math.floor(x + canvas.width);
+            }
+        });
+
+        verticalScrollbar.setMaxValue(stageSize.height - canvas.height);
+        horizontalScrollbar.setMaxValue(stageSize.width - canvas.width);
+
+        game.play();
+
+        window.brushSystem = brushSystem;
+        window.cameraSystem = cameraSystem;
+
+        $elem.on("windowResize", function () {
+            brushSystem.canvasScaler.scaleCanvas();
+        });
+
+        var interval = setInterval(function () {
+            if ($elem.parents("body").length > 0) {
+                clearInterval(interval);
+                brushSystem.canvasScaler.scaleCanvas();
+            }
+        }, 100);
     };
 
 });

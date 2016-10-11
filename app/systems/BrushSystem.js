@@ -3,10 +3,11 @@
     "app.entities.Tree",
     "app.entities.BlueHouse",
     "app.entities.WitchHut",
+    "app.CanvasScaler"
 ], function () {
     BASE.namespace("app.systems");
 
-    app.systems.BrushSystem = function (canvas, camera, scale) {
+    app.systems.BrushSystem = function (canvas, camera) {
         var self = this;
 
         this.game = null;
@@ -17,15 +18,14 @@
         this.cameraPosition = camera.getProperty("position");
         this.currentBrushName = null;
         this.brushEntity = null;
+        this.canvasScaler = new app.CanvasScaler(canvas);
+
         this.lastCursorPosition = {
             x: 0,
             y: 0
         };
 
-        this.scale = scale || {
-            x: 1,
-            y: 1
-        };
+        this.scale = this.canvasScaler.scale;
 
         this.entities = {
             tree: {
@@ -39,7 +39,7 @@
             "witch-hut": {
                 displayName: "Witch Hut",
                 Type: app.entities.WitchHut
-            },
+            }
         };
 
         canvas.addEventListener("mousemove", function (event) {
@@ -69,6 +69,8 @@
 
         canvas.addEventListener("mousedown", function () {
             if (self.game != null && self.brushEntity != null) {
+                self.canvasScaler.scaleCanvas();
+
                 var oldEntity = self.brushEntity;
                 var oldEntityImageTexture = oldEntity.getProperty("image-texture");
                 oldEntityImageTexture.opacity = 1;
@@ -136,6 +138,18 @@
 
     app.systems.BrushSystem.prototype.entityRemoved = function (game) {
 
+    };
+
+    app.systems.BrushSystem.prototype.addEntityType = function (entityType) {
+        if (typeof entityType.Type !== "function" || entity.name !== "string" || entity.displayName !== "string") {
+            throw new Error("entityType needs to have a Type, name and display name.");
+        }
+
+        this.entities[entityType.name] = entityType;
+    };
+
+    app.systems.BrushSystem.prototype.removeEntityTypeByName = function (name) {
+        delete this.entities[name];
     };
 
     app.systems.BrushSystem.prototype.activated = function (game) {

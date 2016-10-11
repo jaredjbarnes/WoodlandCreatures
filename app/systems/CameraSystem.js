@@ -107,11 +107,14 @@
         this.cameraSize.width = this.canvas.width;
         this.cameraSize.height = this.canvas.height;
 
+        this.offScreenCanvas.width = this.canvas.width;
+        this.offScreenCanvas.height = this.canvas.height;
+
         if (typeof this.positionCamera === "function") {
             this.positionCamera();
         }
 
-        this.offScreenContext.clearRect(0, 0, cameraSize.width, cameraSize.height);
+        //this.offScreenContext.clearRect(0, 0, cameraSize.width, cameraSize.height);
 
         var activeCollisions = camera.getProperty("collidable").activeCollisions;
         var keys = Object.keys(activeCollisions);

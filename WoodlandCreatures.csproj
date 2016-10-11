@@ -101,6 +101,7 @@
     <Content Include="app\builder\Frame.html" />
     <Content Include="app\builder\Frame.js" />
     <Content Include="app\builder\Main.html" />
+    <Content Include="app\CanvasScaler.js" />
     <Content Include="app\components\HorizontalScrollbar.html" />
     <Content Include="app\components\HorizontalScrollbar.js" />
     <Content Include="app\components\VerticalScrollbar.js" />

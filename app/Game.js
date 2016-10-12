@@ -91,16 +91,24 @@
     app.Game.prototype.update = function () {
         var game = this;
 
+        var systems = this.systems.filter(function (system) {
+            if (typeof system.enabled === "boolean") {
+                return system.enabled;
+            }
+
+            return true;
+        });
+
         if (this.isReady()) {
-            this.systems.forEach(function (system) {
+            systems.forEach(function (system) {
                 game.invokeMethodOnSystem(system, "beforeUpdate", []);
             });
 
-            this.systems.forEach(function (system) {
+            systems.forEach(function (system) {
                 game.invokeMethodOnSystem(system, "update", []);
             });
 
-            this.systems.forEach(function (system) {
+            systems.forEach(function (system) {
                 game.invokeMethodOnSystem(system, "afterUpdate", []);
             });
         }

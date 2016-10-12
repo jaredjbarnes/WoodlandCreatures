@@ -99,7 +99,6 @@
 
     app.systems.cursorModes.Brush.prototype.drawBrush = function () {
         if (this.game != null && this.brushEntity != null && !this.brushEntityHasCollision()) {
-            this.canvasScaler.scaleCanvas();
 
             var entity = this.createEntityByName(this.currentBrushName);
             var position = entity.getProperty("position");

@@ -102,8 +102,11 @@
     <Content Include="app\builder\Frame.js" />
     <Content Include="app\builder\Main.html" />
     <Content Include="app\CanvasScaler.js" />
+    <Content Include="app\components\GroundColorSelector.html" />
+    <Content Include="app\components\GroundColorSelector.js" />
     <Content Include="app\components\HorizontalScrollbar.html" />
     <Content Include="app\components\HorizontalScrollbar.js" />
+    <Content Include="app\components\Theme.html" />
     <Content Include="app\components\VerticalScrollbar.js" />
     <Content Include="app\components\MapBuilder.html" />
     <Content Include="app\builder\Theme.html" />
@@ -116,13 +119,13 @@
     <Content Include="app\properties\RigidBody.js" />
     <Content Include="app\properties\Selection.js" />
     <Content Include="app\systems\cursorModes\Brush.js" />
+    <Content Include="app\systems\cursorModes\Eraser.js" />
     <Content Include="app\systems\cursorModes\Selection.js" />
     <Content Include="app\systems\CameraSystem.js" />
     <Content Include="app\systems\NarrowPhaseCollisionSystem.js" />
     <Content Include="app\systems\GridSystem.js" />
     <Content Include="app\systems\BroadphaseCollisionDrawerSystem.js" />
     <Content Include="app\systems\RigidBodyDrawerSystem.js" />
-    <Content Include="app\systems\SelectionSystem.js" />
     <Content Include="app\systems\FreeCameraSystem.js" />
     <Content Include="app\systems\PlayerStateMachineSystem.js" />
     <Content Include="app\systems\player\handleStateChangeByInput.js" />

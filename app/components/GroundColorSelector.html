@@ -1,0 +1,63 @@
+﻿<div ground-color-selector controller="app.components.GroundColorSelector">
+    <style component="./Theme.html"></style>
+    <style component="css-helpers"></style>
+    <style component="css-material-icons"></style>
+    <style>
+        [ground-color-selector] {
+            position: relative;
+            display:inline-block;
+        }
+
+        [ground-color-selector-button] {
+            position: relative;
+            height: 50px;
+            width: 75px;
+            cursor: default;
+            outline: none;
+        }
+
+        [ground-color-selector-color] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 35px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        [ground-color-selector-select-icon] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 35px;
+            color: #0094ff;
+            font-size: 35px;
+        }
+
+        [ground-color-selector-drop-down] {
+            position: absolute;
+            display: none;
+        }
+
+
+        .color-boxes {
+            border-radius: 4px;
+        }
+    </style>
+
+    <div tag="button" tabindex="0" ground-color-selector-button unselectable class="lifted">
+        <div ground-color-selector-color>
+            <div tag="color" class="fill-parent"></div>
+        </div>
+        <div ground-color-selector-select-icon>
+            <i class="bullseye material-icons">&#xE313;</i>
+        </div>
+    </div>
+
+    <div tag="drop-down" ground-color-selector-drop-down class="lifted">
+
+    </div>
+
+</div>

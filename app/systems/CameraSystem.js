@@ -56,6 +56,10 @@
     };
 
     app.systems.CameraSystem.prototype.drawEntity = function (entity) {
+        if (entity.parent == null) {
+            return;
+        }
+
         var cameraSize = this.cameraSize;
         var cameraPosition = this.cameraPosition;
         var camera = this.camera;

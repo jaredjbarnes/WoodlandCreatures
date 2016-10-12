@@ -26,8 +26,8 @@
         size.height = 300;
 
         var position = new Position();
-        position.x = 10;
-        position.y = 10;
+        position.x = 0;
+        position.y = 0;
 
         var collision = new Collision();
 

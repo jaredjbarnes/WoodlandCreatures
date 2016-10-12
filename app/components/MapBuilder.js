@@ -15,7 +15,6 @@
     "app.systems.PlayerCollisionSystem",
     "app.systems.KeyboardInputSystem",
     "app.systems.NarrowPhaseCollisionSystem",
-    "app.systems.SelectionSystem",
     "app.systems.CursorSystem",
     "app.systems.GridSystem",
     "app.entities.Map",
@@ -40,7 +39,6 @@
     var PlayerCollisionSystem = app.systems.PlayerCollisionSystem;
     var KeyboardInputSystem = app.systems.KeyboardInputSystem;
     var NarrowPhaseCollisionSystem = app.systems.NarrowPhaseCollisionSystem;
-    var SelectionSystem = app.systems.SelectionSystem;
     var CursorSystem = app.systems.CursorSystem;
     var GridSystem = app.systems.GridSystem;
     var Stage = app.entities.Stage;
@@ -72,9 +70,15 @@
         var $elem = $(elem);
         var canvas = tags["canvas"];
         var $canvas = $(tags["canvas"]);
+        var $header= $(tags["header"]);
         var $canvasContainer = $(tags["canvas-container"]);
-        var verticalScrollbar = $(tags["vertical-scrollbar"]).controller();
-        var horizontalScrollbar = $(tags["horizontal-scrollbar"]).controller();
+
+        var $selectionButton = $(tags["selection-button"]);
+        var $eraser = $(tags["eraser-button"]);
+        var $terrain = $(tags["terrain-button"]);
+        var $groundColor = $(tags["ground-color"]);
+
+        var stateManager = $(tags["state-manager"]).controller();
 
         // Entities
         var stage = new Stage();
@@ -125,37 +129,20 @@
         game.appendSystem(gridSystem);
         game.appendSystem(cursorSystem);
 
-        var stage = game.stage;
-        var stageSize = stage.getProperty("size");
-
-        verticalScrollbar.setDelegate({
-            positionChange: function (y) {
-                var position = camera.getProperty("position");
-                position.y = Math.floor(y);
-            },
-            limitPositionChange: function (y) {
-                stageSize.height = Math.floor(y + canvas.height);
-            }
-        });
-
-
-        horizontalScrollbar.setDelegate({
-            positionChange: function (x) {
-                var position = camera.getProperty("position");
-                position.x = Math.floor(x);
-            },
-            limitPositionChange: function (x) {
-                stageSize.width = Math.floor(x + canvas.width);
-            }
-        });
-
-        verticalScrollbar.setMaxValue(stageSize.height - canvas.height);
-        horizontalScrollbar.setMaxValue(stageSize.width - canvas.width);
-
         game.play();
 
         window.cursorSystem = cursorSystem;
         window.cameraSystem = cameraSystem;
+
+        var deselectButtons = function () {
+            $header.children().removeClass("selected");
+        };
+
+        self.changeMode = function (mode) {
+            cursorSystem.changeMode(mode);
+            deselectButtons();
+            $header.children("[tag='"+mode+"-button']").addClass("selected");
+        };
 
         $elem.on("windowResize", function () {
             cursorSystem.canvasScaler.scaleCanvas();
@@ -167,6 +154,21 @@
                 cursorSystem.canvasScaler.scaleCanvas();
             }
         }, 100);
+
+        $selectionButton.on("click", function () {
+            self.changeMode("selection");
+        });
+
+        $terrain.on("click", function () {
+            self.changeMode("terrain");
+        });
+
+        $eraser.on("click", function () {
+            self.changeMode("eraser");
+        });
+
+        stateManager.pushAsync("default").try();
+
     };
 
 });

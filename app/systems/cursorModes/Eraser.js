@@ -12,7 +12,8 @@
     var Size = app.properties.Size;
     var Collidable = app.properties.Collidable;
 
-    app.systems.cursorModes.Selection = function (cursorSystem) {
+    app.systems.cursorModes.Eraser = function (cursorSystem) {
+        this.isMouseDown = false;
         this.cursorSystem = cursorSystem;
         this.game = cursorSystem.game;
         this.scale = cursorSystem.scale;
@@ -24,11 +25,10 @@
         this.cursorPosition = new Position();
         this.cursorSize = new Size();
         this.cursorCollidable = new Collidable();
-        this.selectedCollision = null;
         this.activeCollisionSelections = [];
         this.canvasScaler = cursorSystem.canvasScaler;
 
-        this.cursorEntity.type = "selection-cursor";
+        this.cursorEntity.type = "eraser-cursor";
         this.cursorEntity.addProperty(this.cursorPosition);
         this.cursorEntity.addProperty(this.cursorSize);
         this.cursorEntity.addProperty(this.cursorCollidable);
@@ -42,7 +42,7 @@
         this.cursorSystem.game.stage.appendChild(this.cursorEntity);
     };
 
-    app.systems.cursorModes.Selection.prototype.drawBorderAroundCollision = function (collision) {
+    app.systems.cursorModes.Eraser.prototype.drawBorderAroundCollision = function (collision) {
         var entity = collision.entity;
         var context = this.context;
         var offset = this.cameraPosition;
@@ -57,7 +57,7 @@
         context.stroke();
     };
 
-    app.systems.cursorModes.Selection.prototype.drawFillAroundCollision = function (collision) {
+    app.systems.cursorModes.Eraser.prototype.drawFillAroundCollision = function (collision) {
         var entity = collision.entity;
         var context = this.context;
         var offset = this.cameraPosition;
@@ -74,15 +74,16 @@
         context.stroke();
     };
 
-    app.systems.cursorModes.Selection.prototype.activated = function () {
+    app.systems.cursorModes.Eraser.prototype.activated = function () {
 
     };
 
-    app.systems.cursorModes.Selection.prototype.deactivated = function () {
+    app.systems.cursorModes.Eraser.prototype.deactivated = function () {
 
     };
 
-    app.systems.cursorModes.Selection.prototype.update = function () {
+    app.systems.cursorModes.Eraser.prototype.update = function () {
+        var self = this;
         var activeCollisions = this.cursorCollidable.activeCollisions;
         var collisions = Object.keys(activeCollisions).map(function (key) {
             return activeCollisions[key];
@@ -92,22 +93,30 @@
 
         this.activeCollisionSelections = collisions;
 
-        if (collisions.length > 0) {
-            this.drawBorderAroundCollision(collisions[0]);
-        }
-
-        if (this.selectedCollision != null) {
-            this.drawFillAroundCollision(this.selectedCollision);
-        }
+        collisions.forEach(function (collision) {
+            self.drawBorderAroundCollision(collision);
+        });
     };
 
-    app.systems.cursorModes.Selection.prototype.mousedown = function (event) {
+    app.systems.cursorModes.Eraser.prototype.erase = function () {
+        this.activeCollisionSelections.forEach(function (collision) {
+            var entity = collision.entity;
+            var parent = entity.parent;
+
+            if (parent != null) {
+                collision.entity.parent.removeChild(entity);
+            }
+        });
+    };
+
+    app.systems.cursorModes.Eraser.prototype.mousedown = function (event) {
         if (this.game != null) {
-            this.selectedCollision = this.activeCollisionSelections[0] || null;
+            this.isMouseDown = true;
+            this.erase();
         }
     };
 
-    app.systems.cursorModes.Selection.prototype.mousemove = function (event) {
+    app.systems.cursorModes.Eraser.prototype.mousemove = function (event) {
         var canvas = this.canvas;
         var cameraPosition = this.cameraPosition;
         var cursorPosition = this.cursorPosition;
@@ -117,14 +126,19 @@
             cursorPosition.x = ((event.pageX - canvas.getBoundingClientRect().left) / scale.x) + cameraPosition.x;
             cursorPosition.y = ((event.pageY - canvas.getBoundingClientRect().top) / scale.y) + cameraPosition.y;
         }
+
+        if (this.isMouseDown) {
+            this.erase();
+        }
     };
 
-    app.systems.cursorModes.Selection.prototype.mouseup = function (event) {
-
+    app.systems.cursorModes.Eraser.prototype.mouseup = function (event) {
+        this.isMouseDown = false;
     };
 
-    app.systems.cursorModes.Selection.prototype.mouseout = function (event) {
+    app.systems.cursorModes.Eraser.prototype.mouseout = function (event) {
         var cursorPosition = this.cursorPosition;
+        this.isMouseDown = false;
 
         if (this.game != null) {
             cursorPosition.x = -10;

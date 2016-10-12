@@ -52,7 +52,7 @@
         context.beginPath();
         context.lineWidth = 1;
         context.lineCap = "round";
-        context.strokeStyle = '#0094ff';
+        context.strokeStyle = 'rgb(180,0,0)';
         context.rect(position.x - offset.x, position.y - offset.y, size.width, size.height);
         context.stroke();
     };
@@ -65,7 +65,7 @@
         var position = entity.getProperty("position");
         var size = entity.getProperty("size");
         context.beginPath();
-        context.fillStyle = "rgba(0,148,255,0.3)";
+        context.fillStyle = "rgba(180,0,0,0.3)";
         context.rect(position.x - offset.x, position.y - offset.y, size.width, size.height);
         context.fill();
         context.lineWidth = 1;

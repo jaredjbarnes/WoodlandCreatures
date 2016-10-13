@@ -2,7 +2,8 @@
     "app.Entity",
     "app.properties.Collidable",
     "app.properties.Size",
-    "app.properties.Position"
+    "app.properties.Position",
+    "app.properties.KeyboardInput"
 ], function () {
 
     BASE.namespace("app.systems.cursorModes");
@@ -11,6 +12,7 @@
     var Position = app.properties.Position;
     var Size = app.properties.Size;
     var Collidable = app.properties.Collidable;
+    var KeyboardInput = app.properties.KeyboardInput;
 
     app.systems.cursorModes.Selection = function (cursorSystem) {
         this.isMouseDown = false;
@@ -25,15 +27,18 @@
         this.cursorPosition = new Position();
         this.cursorSize = new Size();
         this.cursorCollidable = new Collidable();
+        this.keyboardInput = new KeyboardInput();
         this.selectedCollision = null;
         this.activeCollisionSelections = [];
         this.canvasScaler = cursorSystem.canvasScaler;
         this.cellSize = cursorSystem.cellSize;
+        this.tick = 0;
 
         this.cursorEntity.type = "selection-cursor";
         this.cursorEntity.addProperty(this.cursorPosition);
         this.cursorEntity.addProperty(this.cursorSize);
         this.cursorEntity.addProperty(this.cursorCollidable);
+        this.cursorEntity.addProperty(this.keyboardInput);
 
         this.cursorPosition.x = -1000000;
         this.cursorPosition.y = -1000000;
@@ -110,11 +115,36 @@
 
         if (this.selectedCollision != null) {
             this.drawFillAroundCollision(this.selectedCollision);
+
+            if (this.tick % 5 === 0) {
+
+                var entity = this.selectedCollision.entity;
+                var position = entity.getProperty("position");
+
+                if (this.keyboardInput.pressedKeys["38"]) {
+                    position.y -= this.cellSize;
+                }
+
+                if (this.keyboardInput.pressedKeys["40"]) {
+                    position.y += this.cellSize;
+                }
+
+                if (this.keyboardInput.pressedKeys["37"]) {
+                    position.x -= this.cellSize;
+                }
+
+                if (this.keyboardInput.pressedKeys["39"]) {
+                    position.x += this.cellSize;
+                }
+            }
+
         }
+
+        this.tick++;
     };
 
     app.systems.cursorModes.Selection.prototype.mousedown = function (event) {
-
+        this.tick = 0;
         if (this.game != null) {
             this.isMouseDown = true;
             this.startCursorPosition.x = this.cursorPosition.x;

@@ -115,7 +115,7 @@
         game.appendSystem(keyboardInputSystem);
 
         // Logic Systems
-        game.appendSystem(playerStateMachineSystem);
+        //game.appendSystem(playerStateMachineSystem);
 
         // Collision Systems
         game.appendSystem(positionConstraintSystem);

@@ -1,9 +1,6 @@
 ﻿BASE.require([
     "app.Entity",
-    "app.entities.Player",
-    "app.entities.Tree",
-    "app.entities.BlueHouse",
-    "app.entities.WitchHut"
+    "app.systems.cursorModes.brushes"
 ], function () {
 
     BASE.namespace("app.systems.cursorModes");
@@ -12,6 +9,7 @@
     var Position = app.properties.Position;
     var Size = app.properties.Size;
     var Collidable = app.properties.Collidable;
+    var brushes = app.systems.cursorModes.brushes;
 
     app.systems.cursorModes.Brush = function (cursorSystem) {
         this.isMouseDown = false;
@@ -25,34 +23,23 @@
         this.canvasScaler = cursorSystem.canvasScaler;
         this.brushEntity = null;
         this.cellSize = cursorSystem.cellSize;
+        this.currentBrushName = null;
 
         this.lastCursorPosition = {
             x: 0,
             y: 0
         };
 
-        this.entities = {
-            tree: {
-                displayName: "Tree",
-                Type: app.entities.Tree,
-                category: "Plants"
-            },
-            "blue-house": {
-                displayName: "Blue House",
-                Type: app.entities.BlueHouse,
-                category: "Structures"
-            },
-            "witch-hut": {
-                displayName: "Witch Hut",
-                Type: app.entities.WitchHut,
-                category: "Structures"
-            }
-        };
+        this.entities = brushes;
+        this.entitiesByName = brushes.reduce(function (accumulator, brush) {
+            accumulator[brush.name] = brush;
+            return accumulator;
+        }, {});
     };
 
     app.systems.cursorModes.Brush.prototype.selectBrushByName = function (name) {
 
-        if (this.entities[name]) {
+        if (this.entitiesByName[name]) {
             this.clearBrush();
 
             this.currentBrushName = name;
@@ -77,7 +64,7 @@
     };
 
     app.systems.cursorModes.Brush.prototype.createBrushByName = function (name) {
-        var entity = new this.entities[name].Type();
+        var entity = new this.entitiesByName[name].Type();
         var entityImageTexture = entity.getProperty("image-texture");
         var collidable = entity.getProperty("collidable");
         var position = entity.getProperty("position");
@@ -93,7 +80,7 @@
     };
 
     app.systems.cursorModes.Brush.prototype.createEntityByName = function (name) {
-        var entity = new this.entities[name].Type();
+        var entity = new this.entitiesByName[name].Type();
         return entity;
     };
 
@@ -134,7 +121,7 @@
     };
 
     app.systems.cursorModes.Brush.prototype.deactivated = function () {
-
+        this.clearBrush();
     };
 
     app.systems.cursorModes.Brush.prototype.update = function () {

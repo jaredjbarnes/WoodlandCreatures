@@ -47,37 +47,24 @@
     var Tree = app.entities.Tree;
     var Timer = app.Timer;
 
-    var getSize = function (width, height) {
-        var ratio;
-
-        if (width > height) {
-            ratio = width / height;
-            return {
-                width: 480,
-                height: 480 / ratio
-            };
-        } else {
-            ratio = height / width;
-            return {
-                width: 480 / ratio,
-                height: 480
-            }
-        }
-    };
-
     app.components.MapBuilder = function (elem, tags, services) {
         var self = this;
         var $elem = $(elem);
         var canvas = tags["canvas"];
         var $canvas = $(tags["canvas"]);
-        var $header= $(tags["header"]);
+        var $header = $(tags["header"]);
         var $canvasContainer = $(tags["canvas-container"]);
 
         var $selectionButton = $(tags["selection-button"]);
         var $eraser = $(tags["eraser-button"]);
-        var $terrain = $(tags["terrain-button"]);
+        var $terrainButton = $(tags["terrain-button"]);
+        var $plantsButton = $(tags["plants-button"]);
+        var $structuresButton = $(tags["structures-button"]);
         var $groundColor = $(tags["ground-color"]);
 
+        var terrain = $(tags["terrain"]).controller();
+        var plants = $(tags["plants"]).controller();
+        var structures = $(tags["structures"]).controller();
         var stateManager = $(tags["state-manager"]).controller();
 
         // Entities
@@ -134,14 +121,21 @@
         window.cursorSystem = cursorSystem;
         window.cameraSystem = cameraSystem;
 
+        brushSystem = cursorSystem.modes.brush;
+
+        terrain.initialize(brushSystem, "Terrain");
+        plants.initialize(brushSystem, "Plants");
+        structures.initialize(brushSystem, "Structures");
+
         var deselectButtons = function () {
             $header.children().removeClass("selected");
         };
 
-        self.changeMode = function (mode) {
+        self.changeMode = function (mode, buttonTagName) {
+            buttonTagName = buttonTagName || mode;
             cursorSystem.changeMode(mode);
             deselectButtons();
-            $header.children("[tag='"+mode+"-button']").addClass("selected");
+            $header.children("[tag='" + buttonTagName + "-button']").addClass("selected");
         };
 
         $elem.on("windowResize", function () {
@@ -159,8 +153,37 @@
             self.changeMode("selection");
         });
 
-        $terrain.on("click", function () {
-            self.changeMode("terrain");
+        $terrainButton.on("click", function () {
+            stateManager.pushAsync("terrain").chain(function () {
+                return terrain.getBrushNameAsync();
+            }).chain(function (brushName) {
+                self.changeMode("brush", "terrain");
+                cursorSystem.modes.brush.selectBrushByName(brushName);
+            }).finally(function () {
+                return stateManager.replaceAsync("default");
+            }).try();
+        });
+
+        $plantsButton.on("click", function () {
+            stateManager.pushAsync("plants").chain(function () {
+                return plants.getBrushNameAsync();
+            }).chain(function (brushName) {
+                self.changeMode("brush", "plants");
+                cursorSystem.modes.brush.selectBrushByName(brushName);
+            }).finally(function () {
+                return stateManager.replaceAsync("default");
+            }).try();
+        });
+
+        $structuresButton.on("click", function () {
+            stateManager.pushAsync("structures").chain(function () {
+                return structures.getBrushNameAsync();
+            }).chain(function (brushName) {
+                self.changeMode("brush", "structures");
+                cursorSystem.modes.brush.selectBrushByName(brushName);
+            }).finally(function () {
+                return stateManager.replaceAsync("default");
+            }).try();
         });
 
         $eraser.on("click", function () {

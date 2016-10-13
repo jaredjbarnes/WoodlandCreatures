@@ -2,6 +2,22 @@
 the CollisionSystem as a dependency. This will allow the complex
 systems to react to collisions specific to their needs.
 
+
+Actionable is simply a field on a property instance with isActionable.
+Completable is simply a field on a property instance with isCompletable.
+
+IsActionable also needs a actionableDisplayName field which is expected to be a string.
+IActionable also needs a act field that is a boolean. This tells the System to act.
+
+IsCompletable also needs a completableDisplayName
+IsCompletable also needa a complete field to tell the system to complete.
+
+A message chain could use these principles to go through a chain of messages. It
+would increment the message index if complete was set to true. The MessageChain system
+would then set the complete back to false and wait for another command to complete 
+the message chain. 
+
+
 Systems
 =============================
 Actionable

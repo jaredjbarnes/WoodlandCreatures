@@ -106,6 +106,8 @@
     <Content Include="app\components\GroundColorSelector.js" />
     <Content Include="app\components\HorizontalScrollbar.html" />
     <Content Include="app\components\HorizontalScrollbar.js" />
+    <Content Include="app\components\BrushSelector.html" />
+    <Content Include="app\components\BrushSelector.js" />
     <Content Include="app\components\Theme.html" />
     <Content Include="app\components\VerticalScrollbar.js" />
     <Content Include="app\components\MapBuilder.html" />
@@ -116,12 +118,15 @@
     <Content Include="app\entities\WitchHut.js" />
     <Content Include="app\entities\BlueHouse.js" />
     <Content Include="app\properties\Animation.js" />
+    <Content Include="app\properties\MapColor.js" />
     <Content Include="app\properties\RigidBody.js" />
     <Content Include="app\properties\Selection.js" />
     <Content Include="app\systems\cursorModes\Brush.js" />
+    <Content Include="app\systems\cursorModes\brushes.js" />
     <Content Include="app\systems\cursorModes\Eraser.js" />
     <Content Include="app\systems\cursorModes\Selection.js" />
     <Content Include="app\systems\CameraSystem.js" />
+    <Content Include="app\systems\MapSystem.js" />
     <Content Include="app\systems\NarrowPhaseCollisionSystem.js" />
     <Content Include="app\systems\GridSystem.js" />
     <Content Include="app\systems\BroadphaseCollisionDrawerSystem.js" />

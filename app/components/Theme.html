@@ -1,36 +1,98 @@
 ﻿<style>
     .lifted {
+        position: relative;
         border-radius: 10px;
         box-shadow: 0 2px 15px rgba(0,0,0,0.3);
         background-color: #f2f2f2;
-        box-sizing:border-box;
+        box-sizing: border-box;
+        transition: transform 200ms, box-shadow 200ms, border-width 200ms;
     }
 
     .lifted-button {
+        position: relative;
         border-radius: 10px;
         box-shadow: 0 2px 15px rgba(0,0,0,0.3);
         background-color: #f2f2f2;
-        height:50px;
-        width:50px;
-        display:inline-block;
-        box-sizing:border-box;
-        text-align:center;
-        line-height:50px;
-        color:rgba(0,0,0,0.8);
-        cursor:pointer;
+        height: 50px;
+        width: 50px;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        line-height: 50px;
+        color: rgba(0,0,0,0.8);
+        cursor: pointer;
+        transition: transform 200ms, box-shadow 200ms, border-width 200ms;
     }
+
+    .lifted-item {
+        position: relative;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+        cursor: pointer;
+        transition: transform 200ms, box-shadow 200ms, border-width 200ms;
+    }
+
+        .lifted-item:hover {
+            transform: translate(0,-5px);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+
+        .lifted-item:active {
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transform: scale(0.95);
+        }
 
     .lifted-button:hover {
-        border:4px solid rgba(0, 148, 255, 0.3);
-        line-height:42px;
+        transform: translate(0,-5px);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        cursor: pointer;
     }
 
-    .lifted-button.selected {
-        border:4px solid #0094ff;
-        line-height:42px;
+    .lifted-button:active {
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+        cursor: pointer;
+        transform: scale(0.95);
     }
 
-    .lifted.selected {
-        border:4px solid #0094ff;
+    .lifted-item.selected::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        bottom: -4px;
+        left: -4px;
+        border: 4px solid #0094ff;
+        border-radius: 14px;
+    }
+
+    .lifted-button.selected::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        bottom: -4px;
+        left: -4px;
+        border: 4px solid #0094ff;
+        border-radius: 14px;
+    }
+
+    .lifted.selected::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        bottom: -4px;
+        left: -4px;
+        border: 4px solid #0094ff;
+        border-radius: 14px;
     }
 </style>

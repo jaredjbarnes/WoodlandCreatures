@@ -96,7 +96,7 @@
     };
 
     app.systems.cursorModes.Selection.prototype.deactivated = function () {
-
+        this.selectedCollision = null;
     };
 
     app.systems.cursorModes.Selection.prototype.update = function () {

@@ -13,6 +13,7 @@
     var Collidable = app.properties.Collidable;
 
     app.systems.cursorModes.Selection = function (cursorSystem) {
+        this.isMouseDown = false;
         this.cursorSystem = cursorSystem;
         this.game = cursorSystem.game;
         this.scale = cursorSystem.scale;
@@ -27,6 +28,7 @@
         this.selectedCollision = null;
         this.activeCollisionSelections = [];
         this.canvasScaler = cursorSystem.canvasScaler;
+        this.cellSize = cursorSystem.cellSize;
 
         this.cursorEntity.type = "selection-cursor";
         this.cursorEntity.addProperty(this.cursorPosition);
@@ -38,6 +40,16 @@
 
         this.cursorSize.width = 1;
         this.cursorSize.height = 1;
+
+        this.startCursorPosition = {
+            x: 0,
+            y: 0
+        };
+
+        this.startSelectedEntityPosition = {
+            x: 0,
+            y: 0
+        };
 
         this.cursorSystem.game.stage.appendChild(this.cursorEntity);
     };
@@ -102,8 +114,19 @@
     };
 
     app.systems.cursorModes.Selection.prototype.mousedown = function (event) {
+
         if (this.game != null) {
+            this.isMouseDown = true;
+            this.startCursorPosition.x = this.cursorPosition.x;
+            this.startCursorPosition.y = this.cursorPosition.y;
+
             this.selectedCollision = this.activeCollisionSelections[0] || null;
+
+            if (this.selectedCollision != null) {
+                var position = this.selectedCollision.entity.getProperty("position");
+                this.startSelectedEntityPosition.x = position.x;
+                this.startSelectedEntityPosition.y = position.y;
+            }
         }
     };
 
@@ -111,22 +134,34 @@
         var canvas = this.canvas;
         var cameraPosition = this.cameraPosition;
         var cursorPosition = this.cursorPosition;
+        var startCursorPosition = this.startCursorPosition;
         var scale = this.scale;
 
         if (this.game != null) {
             cursorPosition.x = ((event.pageX - canvas.getBoundingClientRect().left) / scale.x) + cameraPosition.x;
             cursorPosition.y = ((event.pageY - canvas.getBoundingClientRect().top) / scale.y) + cameraPosition.y;
         }
+
+        if (this.isMouseDown && this.selectedCollision) {
+            var differenceX = cursorPosition.x - startCursorPosition.x;
+            var differenceY = cursorPosition.y - startCursorPosition.y;
+
+            var position = this.selectedCollision.entity.getProperty("position");
+            position.x = Math.floor((this.startSelectedEntityPosition.x + differenceX) / this.cellSize) * this.cellSize;
+            position.y = Math.floor((this.startSelectedEntityPosition.y + differenceY) / this.cellSize) * this.cellSize;
+        }
     };
 
     app.systems.cursorModes.Selection.prototype.mouseup = function (event) {
-
+        this.isMouseDown = false;
     };
 
     app.systems.cursorModes.Selection.prototype.mouseout = function (event) {
-        var cursorPosition = this.cursorPosition;
-
         if (this.game != null) {
+            this.isMouseDown = false;
+
+            var cursorPosition = this.cursorPosition;
+
             cursorPosition.x = -10;
             cursorPosition.y = -10;
         }

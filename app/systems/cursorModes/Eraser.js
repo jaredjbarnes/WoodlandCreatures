@@ -70,7 +70,7 @@
         context.fill();
         context.lineWidth = 1;
         context.lineCap = "round";
-        context.strokeStyle = '#0094ff';
+        context.strokeStyle = 'rgb(180,0,0)';
         context.stroke();
     };
 
@@ -94,7 +94,7 @@
         this.activeCollisionSelections = collisions;
 
         collisions.forEach(function (collision) {
-            self.drawBorderAroundCollision(collision);
+            self.drawFillAroundCollision(collision);
         });
     };
 

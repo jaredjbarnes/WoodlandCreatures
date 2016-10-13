@@ -12,6 +12,7 @@
         var $elem = $(elem);
         var $closeButton = $(tags["close-button"]);
         var $container = $(tags["container"]);
+        var $title = $(tags["title"]);
 
         var brushSystem = null;
         var entities = [];
@@ -100,6 +101,9 @@
         self.initialize = function (newBrushSystem, newCategory) {
             brushSystem = newBrushSystem;
             category = newCategory;
+
+            $title.text(newCategory);
+
             cacheAllEntities();
             createBrushes();
         };

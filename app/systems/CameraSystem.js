@@ -160,7 +160,11 @@
             if (adjustedA.y === adjustedB.y) {
 
                 if (adjustedA.x === adjustedB.x) {
-                    return 0;
+                    if (entityA.id > entityB.id) {
+                        return 1;
+                    } else {
+                        return -1
+                    }
                 } else if (adjustedA.x > adjustedB.x) {
                     return 1;
                 } else {

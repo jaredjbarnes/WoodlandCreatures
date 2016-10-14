@@ -29,6 +29,7 @@
 
     var Game = app.Game;
     var Entity = app.Entity;
+    var BroadphaseCollisionDrawerSystem = app.systems.BroadphaseCollisionDrawerSystem;
     var BroadPhaseCollisionSystem = app.systems.BroadPhaseCollisionSystem;
     var PositionConstraintSystem = app.systems.PositionConstraintSystem;
     var CameraSystem = app.systems.CameraSystem;
@@ -88,6 +89,7 @@
         var gridSystem = new GridSystem(canvas, camera);
         var cursorSystem = new CursorSystem(canvas, camera);
         var cameraSystem = new CameraSystem(canvas, camera);
+        var broadPhaseCollisionDrawerSystem = new BroadphaseCollisionDrawerSystem(canvas, camera);
 
         var keyboardInputSystem = new KeyboardInputSystem(document, {
             37: "left",
@@ -102,7 +104,7 @@
         game.appendSystem(keyboardInputSystem);
 
         // Logic Systems
-        //game.appendSystem(playerStateMachineSystem);
+        game.appendSystem(playerStateMachineSystem);
 
         // Collision Systems
         game.appendSystem(positionConstraintSystem);
@@ -115,6 +117,7 @@
         game.appendSystem(cameraSystem);
         game.appendSystem(gridSystem);
         game.appendSystem(cursorSystem);
+        //game.appendSystem(broadPhaseCollisionDrawerSystem);
 
         game.play();
 

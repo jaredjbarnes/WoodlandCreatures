@@ -132,19 +132,30 @@
         entities.sort(function (entityA, entityB) {
             var sizeA = entityA.getProperty("size");
             var positionA = entityA.getProperty("position");
+            var groundA = entityA.getProperty("ground");
+
+            var sizeB = entityB.getProperty("size");
+            var positionB = entityB.getProperty("position");
+            var groundB = entityB.getProperty("ground");
+           
 
             var adjustedA = {
                 x: positionA.x + (sizeA.width / 2),
                 y: positionA.y + (sizeA.height / 2)
             };
 
-            var sizeB = entityB.getProperty("size");
-            var positionB = entityB.getProperty("position");
-
             var adjustedB = {
                 x: positionB.x + (sizeB.width / 2),
                 y: positionB.y + (sizeB.height / 2)
             };
+
+            if (groundA != null && groundB == null) {
+                return -1
+            }
+
+            if (groundA == null && groundB != null) {
+                return 1;
+            }
 
             if (adjustedA.y === adjustedB.y) {
 

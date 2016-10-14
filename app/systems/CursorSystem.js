@@ -23,7 +23,7 @@
         this.game = null;
         this.isReady = true;
         this.canvas = canvas;
-        this.cellSize = cellSize || 15;
+        this.cellSize = cellSize || 16;
         this.context = canvas.getContext("2d");
         this.camera = camera;
         this.cameraPosition = camera.getProperty("position");

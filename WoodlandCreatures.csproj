@@ -114,10 +114,15 @@
     <Content Include="app\builder\Theme.html" />
     <Content Include="app\components\MapBuilder.js" />
     <Content Include="app\components\VerticalScrollbar.html" />
+    <Content Include="app\entities\FlagStone.js" />
+    <Content Include="app\entities\CobbleStone.js" />
+    <Content Include="app\entities\LongGrass.js" />
     <Content Include="app\entities\Stage.js" />
+    <Content Include="app\entities\Grass.js" />
     <Content Include="app\entities\WitchHut.js" />
     <Content Include="app\entities\BlueHouse.js" />
     <Content Include="app\properties\Animation.js" />
+    <Content Include="app\properties\Ground.js" />
     <Content Include="app\properties\MapColor.js" />
     <Content Include="app\properties\RigidBody.js" />
     <Content Include="app\properties\Selection.js" />

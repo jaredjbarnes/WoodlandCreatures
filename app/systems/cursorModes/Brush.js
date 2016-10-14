@@ -85,7 +85,9 @@
     };
 
     app.systems.cursorModes.Brush.prototype.drawBrush = function () {
-        if (this.game != null && this.brushEntity != null && !this.brushEntityHasCollision()) {
+        if (this.game != null &&
+            this.brushEntity != null &&
+            !this.brushEntityHasCollision()) {
 
             var entity = this.createEntityByName(this.currentBrushName);
             var position = entity.getProperty("position");
@@ -98,16 +100,17 @@
     };
 
     app.systems.cursorModes.Brush.prototype.brushEntityHasCollision = function () {
-        var rigidBody = this.brushEntity.getProperty("rigid-body");
+        var collidable = this.brushEntity.getProperty("collidable");
         var brushPosition = this.brushEntity.getProperty("position");
+        var brushEntity = this.brushEntity;
 
-        if (rigidBody != null) {
-            return Object.keys(rigidBody.activeCollisions).filter(function (key) {
-                var collision = rigidBody.activeCollisions[key];
+        if (collidable != null) {
+            return Object.keys(collidable.activeCollisions).filter(function (key) {
+                var collision = collidable.activeCollisions[key];
                 var entity = collision.entity;
                 var position = entity.getProperty("position");
 
-                return position.x === brushPosition.x && position.y === brushPosition.y
+                return brushEntity.type == entity.type && position.x === brushPosition.x && position.y === brushPosition.y;
 
             }).length > 0;
         }
@@ -138,11 +141,11 @@
 
         if (this.game != null && this.brushEntity != null) {
             var size = this.brushEntity.getProperty("size");
-            var lastX = Math.floor(((event.pageX - canvas.getBoundingClientRect().left) / this.scale.x) + this.cameraPosition.x - (size.width / 2));
-            var lastY = Math.floor(((event.pageY - canvas.getBoundingClientRect().top) / this.scale.y) + this.cameraPosition.y - (size.height / 2));
+            var lastX = ((event.pageX - canvas.getBoundingClientRect().left) / this.scale.x) + this.cameraPosition.x - (size.width / 2);
+            var lastY = ((event.pageY - canvas.getBoundingClientRect().top) / this.scale.y) + this.cameraPosition.y - (size.height / 2);
 
-            this.lastCursorPosition.x = Math.floor(lastX / this.cellSize) * this.cellSize;
-            this.lastCursorPosition.y = Math.floor(lastY / this.cellSize) * this.cellSize;
+            this.lastCursorPosition.x = Math.floor(Math.round(lastX / this.cellSize) * this.cellSize);
+            this.lastCursorPosition.y = Math.floor(Math.round(lastY / this.cellSize) * this.cellSize);
 
             var position = this.brushEntity.getProperty("position");
 

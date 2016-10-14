@@ -12,14 +12,14 @@
     var Size = app.properties.Size;
     var Collision = app.properties.Collidable;
 
-    app.systems.GridSystem = function (canvas, camera) {
+    app.systems.GridSystem = function (canvas, camera, cellSize) {
         var self = this;
         this.isReady = true;
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
         this.camera = camera;
         this.game = null;
-        this.cellSize = 15;
+        this.cellSize = cellSize || 16;
         this.offset = camera.getProperty("position");
         this.cameraSize = camera.getProperty("size");
     };

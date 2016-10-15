@@ -69,6 +69,8 @@
         var collidable = entity.getProperty("collidable");
         var position = entity.getProperty("position");
 
+        entity.removeProperty(entity.getProperty("ground"));
+
         entityImageTexture.opacity = 0.4;
         position.isStatic = false;
 

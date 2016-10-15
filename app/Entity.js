@@ -73,6 +73,10 @@
     };
 
     app.Entity.prototype.removeProperty = function (property) {
+        if (property == null) {
+            return;
+        }
+
         var properties = this.properties[property.type];
 
         if (!Array.isArray(properties)) {
@@ -89,8 +93,10 @@
     };
 
     app.Entity.prototype.hasProperties = function (properties) {
+        var allProperties;
         for (var x = 0 ; x < properties.length; x++) {
-            if (this.properties[properties[x]] == null) {
+            allProperties = this.properties[properties[x]];
+            if (!Array.isArray(allProperties) || allProperties.length === 0) {
                 return false;
             }
         }

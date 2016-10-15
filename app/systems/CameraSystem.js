@@ -327,14 +327,22 @@
         var entity;
         var ground;
         var position;
+        var imageTextures;
+        var clearCache = false;
 
         for (var x = 0 ; x < length; x++) {
             entity = activeCollisions[keys[x]].entity;
-            if (entity.parent &&
-                entity.properties["image-texture"] &&
-                !entity.properties["ground"] &&
-                !entity.properties["position"][0].isStatic) {
+            
+            if ((entity.parent &&
+                entity.hasProperties(["image-texture"]) &&
+                !entity.hasProperties(["ground"]) &&
+                !entity.properties["position"][0].isStatic)) {
                 entities.push(entity);
+            }
+
+            if ((entity.hasProperties(["image-texture"]) && entity.getProperty("image-texture").redraw)) {
+                clearCache = true;
+                entity.getProperty("image-texture").redraw = false;
             }
         }
 
@@ -342,6 +350,10 @@
 
         for (var x = 0 ; x < entities.length ; x++) {
             this.drawEntityOnCamera(entities[x], this.offScreenContext);
+        }
+
+        if (clearCache) {
+            this.cacheCanvases();
         }
 
         context.clearRect(0, 0, cameraSize.width, cameraSize.height);

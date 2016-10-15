@@ -37,7 +37,7 @@
         var position = new Position();
         position.x = 0;
         position.y = 0;
-        position.isStatic = true;
+        //position.isStatic = true;
 
         var sprite = new Sprite();
         var offset = {
@@ -46,7 +46,6 @@
         };
 
         sprite.timeScale = .10;
-
 
         sprite.images = [{
             offset: offset,

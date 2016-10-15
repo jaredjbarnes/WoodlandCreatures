@@ -114,6 +114,8 @@
         }
 
         if (this.selectedCollision != null) {
+            this.selectedCollision.entity.getProperty("image-texture").redraw = true;
+
             this.drawFillAroundCollision(this.selectedCollision);
 
             if (this.tick % 5 === 0) {

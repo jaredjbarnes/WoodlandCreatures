@@ -167,8 +167,8 @@
     };
 
     app.systems.NarrowPhaseCollisionSystem.prototype.updateWorldPoints = function (entity) {
-        var rigidBody = entity.getProperty("rigid-body");
-        var position = entity.getProperty("position");
+        var rigidBody = entity.properties["rigid-body"][0];
+        var position = entity.properties["position"][0];
         var worldPoints = rigidBody.worldPoints;
 
         rigidBody.points.forEach(function (point, index) {
@@ -195,12 +195,12 @@
         this.updateWorldPoints(entityA);
         this.updateWorldPoints(entityB);
 
-        var rigidBodyA = entityA.getProperty("rigid-body");
-        var rigidBodyB = entityB.getProperty("rigid-body");
-        var positionA = entityA.getProperty("position");
-        var positionB = entityB.getProperty("position");
-        var collidableA = entityA.getProperty("collidable");
-        var collidableB = entityA.getProperty("collidable");
+        var rigidBodyA = entityA.properties["rigid-body"][0];
+        var rigidBodyB = entityB.properties["rigid-body"][0];
+        var positionA = entityA.properties["position"][0];
+        var positionB = entityB.properties["position"][0];
+        var collidableA = entityA.properties["collidable"][0];
+        var collidableB = entityA.properties["collidable"][0];
         var normalsA = rigidBodyA.normals;
         var normalsB = rigidBodyB.normals;
         var projectionA = this.projectionA;
@@ -322,8 +322,8 @@
     };
 
     app.systems.NarrowPhaseCollisionSystem.prototype.cleanCollisions = function (entity) {
-        var rigidBody = entity.getProperty("rigid-body");
-        var collidable = entity.getProperty("collidable");
+        var rigidBody = entity.properties["rigid-body"][0];
+        var collidable = entity.properties["collidable"][0];
         var activeCollisions = rigidBody.activeCollisions;
         var keys = Object.keys(activeCollisions);
         var timestamp = this.timestamp;
@@ -344,15 +344,12 @@
     app.systems.NarrowPhaseCollisionSystem.prototype.handleCollisions = function (entity) {
         var collision;
         var otherEntity;
-        var activeCollisions = entity.getProperty("collidable").activeCollisions;
-        var collisions = Object.keys(activeCollisions).map(function (key) {
-            return activeCollisions[key];
-        });
-
-        var length = collisions.length;
+        var activeCollisions = entity.properties["collidable"][0].activeCollisions;
+        var keys = Object.keys(activeCollisions);
+        var length = keys.length;
 
         for (var x = 0 ; x < length; x++) {
-            collision = collisions[x];
+            collision = activeCollisions[keys[x]];
             otherEntity = collision.entity;
 
             if (!otherEntity.hasProperties(["rigid-body"])) {

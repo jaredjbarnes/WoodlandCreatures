@@ -222,7 +222,7 @@
                     collision.endTimestamp = this.currentTimestamp;
 
                     // Allow for some time to pass, before removing, because its likely they'll hit again.
-                    if (this.currentTimestamp - collision.timestamp > 1000) {
+                    if (this.currentTimestamp - collision.timestamp > 3000) {
                         delete collisions[key];
                     }
                 }

@@ -32,8 +32,8 @@
         image.size.height = 16;
 
         var size = new Size();
-        size.width = 32;
-        size.height = 55;
+        size.width = 16;
+        size.height = 16;
 
         var position = new Position();
         position.x = 0;

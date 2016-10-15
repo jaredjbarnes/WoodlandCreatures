@@ -48,7 +48,7 @@
             y: 0
         };
 
-        sprite.timeScale = .35;
+        sprite.timeScale = .10;
 
 
         sprite.images = [{

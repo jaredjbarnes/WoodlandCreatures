@@ -27,7 +27,13 @@
     };
 
     app.Entity.prototype.getProperty = function (name) {
-        return (this.properties[name] && this.properties[name][0]) || null;
+        var properties = this.properties;
+
+        if (Array.isArray(properties[name]) && properties[name].length > 0) {
+            return properties[name][0];
+        }
+
+        return null;
     };
 
     app.Entity.prototype.getPropertyById = function (id) {

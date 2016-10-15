@@ -38,7 +38,7 @@
         var position = new Position();
         position.x = 0;
         position.y = 0;
-        position.isStatic = true;
+        //position.isStatic = true;
 
         var ground = new Ground();
 
@@ -77,7 +77,7 @@
         var collidable = new Collidable();
         collidable.isStatic = true;
 
-        this.addProperty(sprite);
+        //this.addProperty(sprite);
         this.addProperty(ground);
         this.addProperty(collidable);
         this.addProperty(image);

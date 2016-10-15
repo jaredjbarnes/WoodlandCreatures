@@ -98,7 +98,7 @@
         });
 
         var collidable = new Collidable();
-        collidable.isStatic = true;
+        //collidable.isStatic = true;
 
         this.addProperty(rigidBody);
         this.addProperty(collidable);

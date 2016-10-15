@@ -11,7 +11,7 @@
 
     var Size = app.properties.Size;
     var Position = app.properties.Position;
-    var Collision = app.properties.Collidable;
+    var Collidable = app.properties.Collidable;
     var ImageTexture = app.properties.ImageTexture;
     var Ground = app.properties.Ground;
 
@@ -37,8 +37,8 @@
         position.y = 0;
         position.isStatic = true;
 
-        var collision = new Collision();
-        collision.isStatic = true;
+        var collidable = new Collidable();
+        collidable.isStatic = true;
 
         var ground = new Ground();
 
@@ -46,7 +46,7 @@
         this.addProperty(image);
         this.addProperty(position);
         this.addProperty(size);
-        this.addProperty(collision);
+        this.addProperty(collidable);
 
     };
 

@@ -12,7 +12,7 @@
 
     var Size = app.properties.Size;
     var Position = app.properties.Position;
-    var Collision = app.properties.Collidable;
+    var Collidable = app.properties.Collidable;
     var ImageTexture = app.properties.ImageTexture;
     var RigidBody = app.properties.RigidBody;
     var Sprite = app.properties.Sprite;
@@ -38,9 +38,6 @@
         position.x = 0;
         position.y = 0;
         position.isStatic = true;
-
-        var collision = new Collision();
-        collision.isStatic = true;
 
         var sprite = new Sprite();
         var offset = {
@@ -101,12 +98,15 @@
             y: 55
         });
 
+        var collidable = new Collidable();
+        collidable.isStatic = true;
+
         this.addProperty(rigidBody);
+        this.addProperty(collidable);
         this.addProperty(sprite);
         this.addProperty(image);
         this.addProperty(position);
         this.addProperty(size);
-        this.addProperty(collision);
 
     };
 

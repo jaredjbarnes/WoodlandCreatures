@@ -99,31 +99,44 @@
 
     };
 
-    app.systems.CameraSystem.prototype.cacheCanvases = function () {
+    app.systems.CameraSystem.prototype.cacheGround = function () {
         var self = this;
         var groundCanvas = this.groundCanvas;
         var groundContext = this.groundContext;
-        var staticCanvas = this.staticCanvas;
-        var staticContext = this.staticContext;
         var groundEntities = this.groundEntities;
-        var staticEntities = this.staticEntities;
         var stageSize = this.game.stage.getProperty("size");
 
         groundCanvas.width = stageSize.width;
         groundCanvas.height = stageSize.height;
-        staticCanvas.width = stageSize.width;
-        staticCanvas.height = stageSize.height;
 
         groundEntities.sort(sortEntities);
-        staticEntities.sort(sortEntities);
 
         groundEntities.forEach(function (entity) {
             self.drawEntity(entity, groundContext);
         });
 
+    };
+
+    app.systems.CameraSystem.prototype.cacheStatic = function () {
+        var self = this;
+        var staticCanvas = this.staticCanvas;
+        var staticContext = this.staticContext;
+        var staticEntities = this.staticEntities;
+        var stageSize = this.game.stage.getProperty("size");
+
+        staticCanvas.width = stageSize.width;
+        staticCanvas.height = stageSize.height;
+
+        staticEntities.sort(sortEntities);
+
         staticEntities.forEach(function (entity) {
             self.drawEntity(entity, staticContext);
         });
+    };
+
+    app.systems.CameraSystem.prototype.cacheCanvases = function () {
+        this.cacheGround();
+        this.cacheStatic();
     };
 
     app.systems.CameraSystem.prototype.addGroundEntity = function (entity) {
@@ -134,7 +147,8 @@
 
     app.systems.CameraSystem.prototype.addStaticEntity = function (entity) {
         if (entity.hasProperties(["position", "size", "image-texture"]) &&
-            !entity.hasProperties(["ground"]) && entity.getProperty("position").isStatic) {
+            !entity.hasProperties(["ground"]) &&
+            entity.getProperty("position").isStatic) {
             this.staticEntities.push(entity);
         }
     };
@@ -146,7 +160,22 @@
         this.cacheCanvases();
     };
 
-    app.systems.CameraSystem.prototype.entityRemoved = function (entity) { };
+    app.systems.CameraSystem.prototype.entityRemoved = function (entity) {
+        var index = this.groundEntities.indexOf(entity);
+        if (index > -1) {
+            this.groundEntities.splice(index, 1);
+            this.cacheGround();
+            return;
+        }
+
+        index = this.staticEntities.indexOf(entity);
+        if (index > -1) {
+            this.staticEntities.splice(index, 1);
+            this.cacheStatic();
+            return;
+        }
+
+    };
 
     app.systems.CameraSystem.prototype.loadImage = function (path, callback) {
         callback = callback || emptyFn;
@@ -164,33 +193,79 @@
     };
 
     app.systems.CameraSystem.prototype.drawEntityOnCamera = function (entity, context) {
+        var self = this;
         var cameraSize = this.cameraSize;
         var cameraPosition = this.cameraPosition;
         var camera = this.camera;
         var size = entity.properties["size"][0];
         var position = entity.properties["position"][0];
+        var collidable = entity.properties["collidable"][0];
+        var activeCollisions = collidable.activeCollisions;
+        var keys = Object.keys(activeCollisions);
         var imageTexture = entity.properties["image-texture"][0];
         var imageMap = this.imageMap;
         var context = this.offScreenContext;
-        var image = imageMap[imageTexture.path];
 
-        if (image == null) {
-            this.loadImage(imageTexture.path);
-        } else {
-            context.globalAlpha = imageTexture.opacity;
+        var entities = keys.filter(function (collision) {
+            return collision.endTimestamp == null;
+        }).map(function (key) {
+            return activeCollisions[key].entity;
+        });
 
-            context.drawImage(
-                image,
-                imageTexture.position.x,
-                imageTexture.position.y,
-                imageTexture.size.width,
-                imageTexture.size.height,
-                Math.floor(position.x - cameraPosition.x + imageTexture.offset.x),
-                Math.floor(position.y - cameraPosition.y + imageTexture.offset.y),
-                imageTexture.size.width,
-                imageTexture.size.height
-                );
-        }
+        entities.push(entity);
+        entities.sort(sortEntities);
+
+        entities.forEach(function (intersectingEntity) {
+            if (!intersectingEntity.hasProperties(["image-texture"]) || intersectingEntity.hasProperties(["ground"])) {
+                return;
+            }
+
+            var intersectingImageTexture = intersectingEntity.properties["image-texture"][0];
+            var intersectingPosition = intersectingEntity.properties["position"][0];
+            var intersectingSize = intersectingEntity.properties["size"][0];
+            var image = imageMap[intersectingImageTexture.path];
+
+            if (image == null) {
+                self.loadImage(intersectingImageTexture.path);
+            } else {
+
+                var left = Math.max(intersectingPosition.x, position.x);
+                var top = Math.max(intersectingPosition.y, position.y);
+                var right = Math.min(intersectingPosition.x + intersectingSize.width, position.x + size.width);
+                var bottom = Math.min(intersectingPosition.y + intersectingSize.height, position.y + size.height);
+                var width = right - left;
+                var height = bottom - top;
+
+                if (width < 0 || height < 0) {
+                    return;
+                }
+
+                var x = Math.floor(position.x - intersectingPosition.x);
+                var y = Math.floor(position.y - intersectingPosition.y);
+
+                if (x < 0) {
+                    x = 0;
+                }
+
+                if (y < 0) {
+                    y = 0
+                }
+
+                context.globalAlpha = intersectingImageTexture.opacity;
+
+                context.drawImage(
+                    image,
+                    intersectingImageTexture.position.x + x,
+                    intersectingImageTexture.position.y + y,
+                    width,
+                    height,
+                    Math.floor(intersectingPosition.x - cameraPosition.x + intersectingImageTexture.offset.x + x),
+                    Math.floor(intersectingPosition.y - cameraPosition.y + intersectingImageTexture.offset.y + y),
+                    width,
+                    height
+                    );
+            }
+        });
 
     };
 

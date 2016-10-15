@@ -5,7 +5,9 @@
     "app.entities.CobbleStone",
     "app.entities.FlagStone",
     "app.entities.BlueHouse",
-    "app.entities.WitchHut"
+    "app.entities.WindVane",
+    "app.entities.WitchHut",
+    "app.entities.Flower"
 ], function () {
 
     BASE.namespace("app.systems.cursorModes");
@@ -46,6 +48,16 @@
             displayName: "Witch Hut",
             Type: app.entities.WitchHut,
             category: "Structures"
+        } ,{
+            name: "wind-vane",
+            displayName: "Wind Vane",
+            Type: app.entities.WindVane,
+            category: "Structures"
+        }, {
+            name: "flower",
+            displayName: "Flower",
+            Type: app.entities.Flower,
+            category: "Terrain"
         }
     ];
 });

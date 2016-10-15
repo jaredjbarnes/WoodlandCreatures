@@ -102,6 +102,8 @@
     <Content Include="app\builder\Frame.js" />
     <Content Include="app\builder\Main.html" />
     <Content Include="app\CanvasScaler.js" />
+    <Content Include="app\components\CanvasImage.html" />
+    <Content Include="app\components\CanvasImage.js" />
     <Content Include="app\components\GroundColorSelector.html" />
     <Content Include="app\components\GroundColorSelector.js" />
     <Content Include="app\components\HorizontalScrollbar.html" />
@@ -119,6 +121,8 @@
     <Content Include="app\entities\LongGrass.js" />
     <Content Include="app\entities\Stage.js" />
     <Content Include="app\entities\Grass.js" />
+    <Content Include="app\entities\Flower.js" />
+    <Content Include="app\entities\WindVane.js" />
     <Content Include="app\entities\WitchHut.js" />
     <Content Include="app\entities\BlueHouse.js" />
     <Content Include="app\properties\Animation.js" />
@@ -128,6 +132,7 @@
     <Content Include="app\properties\Selection.js" />
     <Content Include="app\systems\cursorModes\Brush.js" />
     <Content Include="app\systems\cursorModes\brushes.js" />
+    <Content Include="app\systems\cursorModes\Pan.js" />
     <Content Include="app\systems\cursorModes\Eraser.js" />
     <Content Include="app\systems\cursorModes\Selection.js" />
     <Content Include="app\systems\CameraSystem.js" />

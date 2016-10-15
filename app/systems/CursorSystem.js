@@ -2,6 +2,7 @@
     "app.CanvasScaler",
     "app.systems.cursorModes.Brush",
     "app.systems.cursorModes.Eraser",
+    "app.systems.cursorModes.Pan",
     "app.systems.cursorModes.Selection"
 ], function () {
     BASE.namespace("app.systems");
@@ -9,6 +10,7 @@
     var Selection = app.systems.cursorModes.Selection;
     var Brush = app.systems.cursorModes.Brush;
     var Eraser = app.systems.cursorModes.Eraser;
+    var Pan = app.systems.cursorModes.Pan;
 
     var invokeMethod = function (obj, methodName, args) {
         args = args || [];
@@ -75,7 +77,8 @@
         this.modes = {
             "selection": new Selection(this),
             "brush": new Brush(this),
-            "eraser": new Eraser(this)
+            "eraser": new Eraser(this),
+            "pan": new Pan(this)
         }
     };
 

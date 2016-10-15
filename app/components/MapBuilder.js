@@ -57,6 +57,7 @@
         var $canvasContainer = $(tags["canvas-container"]);
 
         var $selectionButton = $(tags["selection-button"]);
+        var $panButton = $(tags["pan-button"]);
         var $eraser = $(tags["eraser-button"]);
         var $terrainButton = $(tags["terrain-button"]);
         var $plantsButton = $(tags["plants-button"]);
@@ -156,6 +157,14 @@
             self.changeMode("selection");
         });
 
+        $panButton.on("click", function () {
+            self.changeMode("pan");
+        });
+
+        $eraser.on("click", function () {
+            self.changeMode("eraser");
+        });
+
         $terrainButton.on("click", function () {
             stateManager.pushAsync("terrain").chain(function () {
                 return terrain.getBrushNameAsync();
@@ -187,10 +196,6 @@
             }).finally(function () {
                 return stateManager.replaceAsync("default");
             }).try();
-        });
-
-        $eraser.on("click", function () {
-            self.changeMode("eraser");
         });
 
         stateManager.pushAsync("default").try();

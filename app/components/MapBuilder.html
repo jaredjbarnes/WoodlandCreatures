@@ -55,11 +55,46 @@
             </div>
             <div tag="header" map-builder-header>
                 <div tag="ground-color-button" component="./GroundColorSelector.html"></div>
-                <div tag="selection-button" class="lifted-button">S</div>
-                <div tag="eraser-button" class="lifted-button">E</div>
-                <div tag="terrain-button" class="lifted-button">T</div>
-                <div tag="plants-button" class="lifted-button">P</div>
-                <div tag="structures-button" class="lifted-button">St</div>
+
+                <div tag="selection-button" class="lifted-button" style="padding:4px;">
+                    <img src="/images/cursor.png" class="fill-parent" />
+                </div>
+
+                <div tag="pan-button" class="lifted-button" style="padding:4px;">
+                    <img src="/images/pan.png" class="fill-parent" />
+                </div>
+
+                <div tag="eraser-button" class="lifted-button" style="padding:4px;">
+                    <img src="/images/eraser.png" class="fill-parent" />
+                </div>
+
+                <div tag="terrain-button"
+                     class="lifted-button"
+                     component="./CanvasImage.html"
+                     source-path="/images/props.png"
+                     source-width="16"
+                     source-height="16"
+                     source-x="1"
+                     source-y="1"
+                     style="padding:6px;"></div>
+
+                <div tag="plants-button" class="lifted-button"
+                     component="./CanvasImage.html"
+                     source-path="/images/props.png"
+                     source-width="65"
+                     source-height="80"
+                     source-x="50"
+                     source-y="539"
+                     style="padding:4px 8px"></div>
+
+                <div tag="structures-button" class="lifted-button"
+                     component="./CanvasImage.html"
+                     source-path="/images/props.png"
+                     source-width="96"
+                     source-height="100"
+                     source-x="351"
+                     source-y="190"
+                     style="padding:4px;"></div>
             </div>
         </div>
         <div tag="terrain" name="terrain" component="./BrushSelector.html"></div>

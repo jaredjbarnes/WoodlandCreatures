@@ -35,7 +35,7 @@
         context.beginPath();
         context.lineCap = "square";
         context.lineWidth = 1;
-        context.strokeStyle = "rgba(255, 255, 255, 0.2)"
+        context.strokeStyle = "rgba(255, 255, 255, 0.1)"
         context.moveTo(number, 0);
         context.lineTo(number, this.cameraSize.height);
         context.stroke();
@@ -49,7 +49,7 @@
         context.beginPath();
         context.lineCap = "square";
         context.lineWidth = 1;
-        context.strokeStyle = "rgba(255, 255, 255, 0.2)"
+        context.strokeStyle = "rgba(255, 255, 255, 0.1)"
         context.moveTo(0, number);
         context.lineTo(this.cameraSize.width, number);
         context.stroke();

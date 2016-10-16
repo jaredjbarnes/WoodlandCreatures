@@ -116,7 +116,7 @@
         //Render Systems
         game.appendSystem(spriteSystem);
         game.appendSystem(cameraSystem);
-        //game.appendSystem(gridSystem);
+        game.appendSystem(gridSystem);
         game.appendSystem(cursorSystem);
         //game.appendSystem(broadPhaseCollisionDrawerSystem);
 

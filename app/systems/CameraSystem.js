@@ -256,8 +256,8 @@
 
                 context.drawImage(
                     image,
-                    intersectingImageTexture.position.x + x,
-                    intersectingImageTexture.position.y + y,
+                    Math.floor(intersectingImageTexture.position.x + x),
+                    Math.floor(intersectingImageTexture.position.y + y),
                     width,
                     height,
                     Math.floor(intersectingPosition.x - cameraPosition.x + intersectingImageTexture.offset.x + x),
@@ -289,8 +289,8 @@
                 imageTexture.position.y,
                 imageTexture.size.width,
                 imageTexture.size.height,
-                position.x,
-                position.y,
+                Math.floor(position.x),
+                Math.floor(position.y),
                 imageTexture.size.width,
                 imageTexture.size.height
                 );
@@ -362,8 +362,8 @@
 
         context.clearRect(0, 0, cameraSize.width, cameraSize.height);
         context.drawImage(this.groundCanvas,
-            cameraPosition.x,
-            cameraPosition.y,
+            Math.floor(cameraPosition.x),
+            Math.floor(cameraPosition.y),
             this.offScreenCanvas.width,
             this.offScreenCanvas.height,
             0,
@@ -372,8 +372,8 @@
             this.offScreenCanvas.height);
 
         context.drawImage(this.staticCanvas,
-           cameraPosition.x,
-           cameraPosition.y,
+           Math.floor(cameraPosition.x),
+           Math.floor(cameraPosition.y),
            this.offScreenCanvas.width,
            this.offScreenCanvas.height,
            0,

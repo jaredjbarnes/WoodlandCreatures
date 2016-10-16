@@ -64,8 +64,8 @@
             collision = collisions[x];
 
             if (collision.endTimestamp == null) {
-                position.x = position.x + collision.penetration.x;
-                position.y = position.y + collision.penetration.y;
+                position.x = position.x + Math.round(collision.penetration.x);
+                position.y = position.y + Math.round(collision.penetration.y);
             }
         }
 

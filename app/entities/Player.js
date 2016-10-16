@@ -60,10 +60,10 @@
         var rigidBody = new RigidBody();
         rigidBody.points.push({
             x: 5,
-            y: 19
+            y: 15
         }, {
             x: 17,
-            y: 19
+            y: 15
         }, {
             x: 17,
             y: 24

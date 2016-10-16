@@ -1,5 +1,9 @@
 ﻿BASE.require([
     "app.entities.Tree",
+    "app.entities.TopLeftHedge",
+    "app.entities.TopRightHedge",
+    "app.entities.VerticalHedge",
+    "app.entities.HorizontalHedge",
     "app.entities.Grass",
     "app.entities.LongGrass",
     "app.entities.CobbleStone",
@@ -17,6 +21,26 @@
             name: "tree",
             displayName: "Tree",
             Type: app.entities.Tree,
+            category: "Plants"
+        }, {
+            name: "top-left-hedge",
+            displayName: "Top Left Hedge",
+            Type: app.entities.TopLeftHedge,
+            category: "Plants"
+        }, {
+            name: "top-right-hedge",
+            displayName: "Top Right Hedge",
+            Type: app.entities.TopRightHedge,
+            category: "Plants"
+        }, {
+            name: "vertical-hedge",
+            displayName: "Vertical Hedge",
+            Type: app.entities.VerticalHedge,
+            category: "Plants"
+        }, {
+            name: "horizontal-hedge",
+            displayName: "Horizontal Hedge",
+            Type: app.entities.HorizontalHedge,
             category: "Plants"
         }, {
             name: "grass",
@@ -48,7 +72,7 @@
             displayName: "Witch Hut",
             Type: app.entities.WitchHut,
             category: "Structures"
-        } ,{
+        }, {
             name: "wind-vane",
             displayName: "Wind Vane",
             Type: app.entities.WindVane,

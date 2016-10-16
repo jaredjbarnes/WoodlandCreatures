@@ -122,6 +122,10 @@
     <Content Include="app\entities\Stage.js" />
     <Content Include="app\entities\Grass.js" />
     <Content Include="app\entities\Flower.js" />
+    <Content Include="app\entities\HorizontalHedge.js" />
+    <Content Include="app\entities\VerticalHedge.js" />
+    <Content Include="app\entities\TopRightHedge.js" />
+    <Content Include="app\entities\TopLeftHedge.js" />
     <Content Include="app\entities\WindVane.js" />
     <Content Include="app\entities\WitchHut.js" />
     <Content Include="app\entities\BlueHouse.js" />

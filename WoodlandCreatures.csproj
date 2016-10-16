@@ -116,8 +116,12 @@
     <Content Include="app\builder\Theme.html" />
     <Content Include="app\components\MapBuilder.js" />
     <Content Include="app\components\VerticalScrollbar.html" />
+    <Content Include="app\entities\GrassRoofHouse.js" />
+    <Content Include="app\entities\LargeRedHouse.js" />
+    <Content Include="app\entities\BottomRightHedge.js" />
     <Content Include="app\entities\FlagStone.js" />
     <Content Include="app\entities\CobbleStone.js" />
+    <Content Include="app\entities\BottomLeftHedge.js" />
     <Content Include="app\entities\LongGrass.js" />
     <Content Include="app\entities\Stage.js" />
     <Content Include="app\entities\Grass.js" />
@@ -126,6 +130,7 @@
     <Content Include="app\entities\VerticalHedge.js" />
     <Content Include="app\entities\TopRightHedge.js" />
     <Content Include="app\entities\TopLeftHedge.js" />
+    <Content Include="app\entities\FairyFountain.js" />
     <Content Include="app\entities\WindVane.js" />
     <Content Include="app\entities\WitchHut.js" />
     <Content Include="app\entities\BlueHouse.js" />

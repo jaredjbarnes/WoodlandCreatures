@@ -15,22 +15,22 @@
     var ImageTexture = app.properties.ImageTexture;
     var RigidBody = app.properties.RigidBody;
 
-    app.entities.BlueHouse = function () {
+    app.entities.BottomRightHedge = function () {
         app.Entity.call(this);
 
-        this["@class"] = "app.entities.BlueHouse";
-        this.type = "blue-house";
+        this["@class"] = "app.entities.BottomRightHedge";
+        this.type = "bottom-right-hedge";
 
         var image = new app.properties.ImageTexture();
         image.path = "/images/props.png";
-        image.position.x = 351;
-        image.position.y = 190;
-        image.size.width = 96;
-        image.size.height = 100;
+        image.position.x = 480;
+        image.position.y = 322;
+        image.size.width = 16;
+        image.size.height = 23;
 
         var size = new Size();
-        size.width = 96;
-        size.height = 100;
+        size.width = 16;
+        size.height = 23;
 
         var position = new Position();
         position.x = 0;
@@ -43,16 +43,16 @@
         var rigidBody = new RigidBody();
         rigidBody.points.push({
             x: 0,
-            y: 30
+            y: 0
         }, {
-            x: 96,
-            y: 30
+            x: 16,
+            y: 0
         }, {
-            x: 96,
-            y: 85
+            x: 16,
+            y: 23
         }, {
             x: 0,
-            y: 85
+            y: 23
         });
 
         this.addProperty(rigidBody);
@@ -63,6 +63,6 @@
 
     };
 
-    BASE.extend(app.entities.BlueHouse, app.Entity);
+    BASE.extend(app.entities.BottomRightHedge, app.Entity);
 
 });

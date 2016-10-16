@@ -1,9 +1,26 @@
 ﻿BASE.require([
+    "BASE.collections.Hashmap",
 ], function () {
     BASE.namespace("app.systems");
 
+    var Hashmap = BASE.collections.Hashmap;
+
     var isCollision = function (entity) {
         return entity.hasProperties(["collidable", "position", "size"]);
+    };
+
+    var BroadphaseCollision = function () {
+        this.startTimestamp = null;
+        this.endTimestamp = null;
+        this.timestamp = null;
+        this.entityId = null;
+    };
+
+    var BroadPhaseEntity = function () {
+        this.entityId = null;
+        this.collidable = null;
+        this.position = null;
+        this.size = null;
     };
 
     var emptyFn = function () { };
@@ -16,11 +33,15 @@
         this.width = 0;
         this.height = 0;
         this.grid = [[]];
-        this.entities = [];
+        this.broadPhaseEntities = [];
+        this.entityToBroadPhase = new Hashmap();
+        this.broadPhaseToEntity = new Hashmap();
         this.cellSize = cellSize || 50;
         this.totalCells = 0;
         this.currentTimestamp = 0;
         this.isReady = true;
+        this.stagePosition = null;
+        this.stageSize = null;
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.sweepAndPrune = function () {
@@ -39,6 +60,7 @@
         var gridCell;
         var size;
         var position;
+        var broadPhaseEntities = this.broadPhaseEntities;
 
         // the total number of cells this grid will contain
         this.totalCells = gridWidth * gridHeight;
@@ -48,16 +70,16 @@
         this.grid = Array(gridWidth);
 
         // insert all entities into grid
-        for (i = 0; i < this.entities.length; i++) {
-            entity = this.entities[i];
-            size = entity.properties["size"][0];
-            position = entity.properties["position"][0];
+        for (i = 0; i < broadPhaseEntities.length; i++) {
+            entity = broadPhaseEntities[i];
+            size = entity.size;
+            position = entity.position;
 
             // if entity is outside the grid extents, then ignore it
             //if (
-			//	position.x < this.x || position.x + size.width > this.x + this.width
+            //	position.x < this.x || position.x + size.width > this.x + this.width
             //|| position.y < this.y || position.y + size.height > this.y + this.height
-			//) {
+            //) {
             //    continue;
             //}
 
@@ -95,8 +117,8 @@
 
     app.systems.BroadPhaseCollisionSystem.prototype.queryForCollisions = function () {
         var pairs = [];
-        var entityA;
-        var entityB;
+        var broadPhaseA;
+        var broadPhaseB;
         var hash;
         var i;
         var j;
@@ -104,8 +126,8 @@
         var l;
         var gridCol;
         var gridCell;
-        var collisionA;
-        var collisionB;
+        var collidableA;
+        var collidableB;
         var sizeA;
         var positionA;
         var sizeB;
@@ -135,28 +157,28 @@
                 // for every object in a cell...
                 for (k = 0; k < gridCell.length; k++) {
 
-                    entityA = gridCell[k];
+                    broadPhaseA = gridCell[k];
 
                     // for every other object in a cell...
                     for (l = k + 1; l < gridCell.length; l++) {
-                        entityB = gridCell[l];
+                        broadPhaseB = gridCell[l];
 
-                        collisionA = entityA.properties["collidable"][0];
-                        collisionB = entityB.properties["collidable"][0];
+                        collidableA = broadPhaseA.collidable;
+                        collidableB = broadPhaseB.collidable;
 
                         // We don't need to check static or disabled objects to other static objects.
-                        if ((collisionA.isStatic && collisionB.isStatic) || !collisionA.enabled || !collisionB.enabled) {
+                        if ((collidableA.isStatic && collidableB.isStatic) || !collidableA.enabled || !collidableB.enabled) {
                             continue;
                         }
 
-                        positionA = entityA.properties["position"][0];
-                        sizeA = entityA.properties["size"][0];
+                        positionA = broadPhaseA.position;
+                        sizeA = broadPhaseA.size;
 
-                        positionB = entityB.properties["position"][0];
-                        sizeB = entityB.properties["size"][0];
+                        positionB = broadPhaseB.position;
+                        sizeB = broadPhaseB.size;
 
                         if (this.intersects(positionA, sizeA, positionB, sizeB)) {
-                            pairs.push([entityA, entityB]);
+                            pairs.push([broadPhaseA, broadPhaseB]);
                         }
                     }
                 }
@@ -177,8 +199,8 @@
 
     app.systems.BroadPhaseCollisionSystem.prototype.updateWorldSize = function () {
         var entity = this.game.stage;
-        var position = entity.getProperty("position");
-        var size = entity.getProperty("size");
+        var position = this.stagePosition;
+        var size = this.stageSize;
 
         if (position == null || size == null) {
             return;
@@ -198,7 +220,7 @@
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.handleCollisionEnds = function () {
-        var entities = this.entities;
+        var entities = this.broadPhaseEntities;
         var length = entities.length;
         var entity;
         var collisions;
@@ -209,7 +231,7 @@
 
         for (var x = 0 ; x < length ; x++) {
             entity = entities[x];
-            collisions = entity.properties["collidable"][0].activeCollisions;
+            collisions = entity.collidable.activeCollisions;
             keys = Object.keys(collisions);
             keysLength = keys.length;
 
@@ -237,8 +259,8 @@
 
     app.systems.BroadPhaseCollisionSystem.prototype.assignTimeStamp = function (pairs) {
         var pair;
-        var entityA;
-        var entityB;
+        var broadPhaseA;
+        var broadPhaseB;
         var collisionDataA;
         var collisionDataB;
         var activeCollisionsA;
@@ -246,33 +268,34 @@
 
         for (var x = 0; x < pairs.length; x++) {
             pair = pairs[x];
-            entityA = pair[0];
-            entityB = pair[1];
+            broadPhaseA = pair[0];
+            broadPhaseB = pair[1];
 
-            activeCollisionsA = entityA.properties["collidable"][0].activeCollisions;
-            activeCollisionsB = entityB.properties["collidable"][0].activeCollisions;
-            collisionDataA = activeCollisionsA[entityB.id];
-            collisionDataB = activeCollisionsB[entityA.id];
+            activeCollisionsA = broadPhaseA.collidable.activeCollisions;
+            activeCollisionsB = broadPhaseB.collidable.activeCollisions;
+            collisionDataA = activeCollisionsA[broadPhaseB.entityId];
+            collisionDataB = activeCollisionsB[broadPhaseA.entityId];
 
             if (collisionDataA == null) {
-                collisionDataA = activeCollisionsA[entityB.id] = {
-                    startTimestamp: this.currentTimestamp,
-                    timestamp: this.currentTimestamp,
-                    endTimestamp: null,
-                    entity: entityB
-                };
+
+                collisionDataA = activeCollisionsA[broadPhaseB.entityId] = new BroadphaseCollision();
+                collisionDataA.startTimestamp = this.currentTimestamp;
+                collisionDataA.timestamp = this.currentTimestamp;
+                collisionDataA.endTimestamp = null;
+                collisionDataA.entity = this.broadPhaseToEntity.get(broadPhaseB);
+
             } else {
                 collisionDataA.timestamp = this.currentTimestamp;
                 collisionDataA.endTimestamp = null;
             }
 
             if (collisionDataB == null) {
-                collisionDataB = activeCollisionsB[entityA.id] = {
-                    startTimestamp: this.currentTimestamp,
-                    timestamp: this.currentTimestamp,
-                    endTimestamp: null,
-                    entity: entityA
-                };
+                collisionDataB = activeCollisionsB[broadPhaseA.entityId] = new BroadphaseCollision();
+                collisionDataB.startTimestamp = this.currentTimestamp;
+                collisionDataB.timestamp = this.currentTimestamp;
+                collisionDataB.endTimestamp = null;
+                collisionDataB.entity = this.broadPhaseToEntity.get(broadPhaseA);
+
             } else {
                 collisionDataB.timestamp = this.currentTimestamp;
                 collisionDataB.endTimestamp = null;
@@ -290,24 +313,36 @@
         this.handleCollisionEnds();
     };
 
-
     app.systems.BroadPhaseCollisionSystem.prototype.entityAdded = function (entity) {
-        if (entity.hasProperties(["position","size","collidable"])) {
-            this.entities.push(entity);
+        if (entity.hasProperties(["position", "size", "collidable"])) {
+            var broadPhaseEntity = new BroadPhaseEntity();
+            broadPhaseEntity.position = entity.properties["position"][0];
+            broadPhaseEntity.size = entity.properties["size"][0];
+            broadPhaseEntity.collidable = entity.properties["collidable"][0];
+            broadPhaseEntity.entityId = entity.id;
+
+            this.entityToBroadPhase.add(entity, broadPhaseEntity);
+            this.broadPhaseToEntity.add(broadPhaseEntity, entity);
+            this.broadPhaseEntities.push(broadPhaseEntity);
         }
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.entityRemoved = function (entity) {
-        var index = this.entities.indexOf(entity);
+        var broadPhaseEntity = this.entityToBroadPhase.remove(entity);
+        var index = this.broadPhaseEntities.indexOf(broadPhaseEntity);
+
+        this.broadPhaseToEntity.remove(broadPhaseEntity);
 
         if (index > -1) {
-            this.entities.splice(index, 1);
+            this.broadPhaseEntities.splice(index, 1);
         }
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.activated = function (game) {
         var self = this;
         this.game = game;
+        this.stagePosition = game.stage.getProperty("position");
+        this.stageSize = game.stage.getProperty("size");
 
         game.stage.filter().forEach(function (entity) {
             self.entityAdded(entity);
@@ -323,7 +358,14 @@
         this.width = 0;
         this.height = 0;
         this.grid = [[]];
-        this.entities = [];
+        this.broadPhaseEntities = [];
+        this.entityToBroadPhase = new Hashmap();
+        this.broadPhaseToEntity = new Hashmap();
+        this.cellSize = cellSize || 50;
         this.totalCells = 0;
+        this.currentTimestamp = 0;
+        this.isReady = true;
+        this.stagePosition = null;
+        this.stageSize = null;
     };
 });

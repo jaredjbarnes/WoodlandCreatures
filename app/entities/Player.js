@@ -59,7 +59,7 @@
 
         var rigidBody = new RigidBody();
         rigidBody.points.push({
-            x: 5,
+            x: 8,
             y: 15
         }, {
             x: 17,
@@ -68,7 +68,7 @@
             x: 17,
             y: 24
         }, {
-            x: 5,
+            x: 8,
             y: 24
         });
 

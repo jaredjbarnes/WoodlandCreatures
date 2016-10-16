@@ -54,12 +54,12 @@
             position = entity.properties["position"][0];
 
             // if entity is outside the grid extents, then ignore it
-            if (
-				position.x < this.x || position.x + size.width > this.x + this.width
-            || position.y < this.y || position.y + size.height > this.y + this.height
-			) {
-                continue;
-            }
+            //if (
+			//	position.x < this.x || position.x + size.width > this.x + this.width
+            //|| position.y < this.y || position.y + size.height > this.y + this.height
+			//) {
+            //    continue;
+            //}
 
             // Find the cells that the entity overlaps.
             left = Math.floor((position.x - this.x) / this.cellSize);

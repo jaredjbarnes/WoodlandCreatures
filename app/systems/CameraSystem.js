@@ -72,6 +72,7 @@
         this.staticCache = document.createElement("canvas");
         this.offScreenCanvas.width = canvas.width;
         this.offScreenCanvas.height = canvas.height;
+        this.stageSize = null;
 
         this.position = {
             x: 0,
@@ -270,6 +271,7 @@
     };
 
     app.systems.CameraSystem.prototype.drawEntity = function (entity, context) {
+        var stageSize = this.stageSize;
         var size = entity.properties["size"][0];
         var position = entity.properties["position"][0];
         var imageTexture = entity.properties["image-texture"][0];
@@ -300,6 +302,8 @@
         var self = this;
         var stage = game.stage;
         var size = stage.getProperty("size");
+        
+        this.stateSize = size;
         this.game = game;
 
         stage.filter().forEach(function (entity) {

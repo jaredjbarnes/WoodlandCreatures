@@ -18,7 +18,7 @@
     app.entities.Stage = function () {
         app.Entity.call(this);
 
-        this.type = "map";
+        this.type = "stage";
         this.id = "root";
 
         var worldSize = new Size();

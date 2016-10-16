@@ -1,5 +1,54 @@
-﻿(function () {
+﻿BASE.require([
+    "BASE.collections.Hashmap"
+], function () {
     BASE.namespace("app");
+
+    var Hashmap = BASE.collections.Hashmap;
+
+    var toNonCircularObject = function (obj, objectArray) {
+        var clone;
+        objectArray = objectArray || []
+
+        if (objectArray.indexOf(obj) === -1) {
+            objectArray.push(obj);
+
+            if (Array.isArray(obj)) {
+                clone = new Array();
+
+                obj.forEach(function (item) {
+                    var itemClone;
+                    if (typeof item === "object" && item != null) {
+                        itemClone = toNonCircularObject(item, objectArray);
+                        if (typeof itemClone !== "undefined") {
+                            clone.push(itemClone);
+                        }
+                    } else {
+                        clone.push(item);
+                    }
+                });
+            } else {
+                clone = {};
+                var keys = Object.keys(obj);
+
+                keys.forEach(function (key) {
+                    var item = obj[key];
+
+                    if (typeof item === "object" && item != null) {
+                        itemClone = toNonCircularObject(item, objectArray);
+                        if (typeof itemClone !== "undefined") {
+                            clone[key] = itemClone;
+                        }
+                    } else {
+                        clone[key] = item;
+                    }
+                });
+            }
+
+            return clone;
+        } else {
+            return undefined;
+        }
+    };
 
     var pausedState = {
         play: function (game) {
@@ -88,6 +137,12 @@
         cancelAnimationFrame(this.frame);
     }
 
+    app.Game.prototype.toJson = function () {
+        var array = [];
+        array.push(this);
+        return JSON.stringify(toNonCircularObject(this.stage, array));
+    };
+
     app.Game.prototype.update = function () {
         var game = this;
 
@@ -144,4 +199,4 @@
         });
     };
 
-}());
+});

@@ -37,6 +37,7 @@
         context.lineWidth = 1;
         context.strokeStyle = "rgba(255, 255, 255, 0.1)"
         context.moveTo(number, 0);
+        context.setLineDash([3, 3]);
         context.lineTo(number, this.cameraSize.height);
         context.stroke();
     };
@@ -51,6 +52,7 @@
         context.lineWidth = 1;
         context.strokeStyle = "rgba(255, 255, 255, 0.1)"
         context.moveTo(0, number);
+        context.setLineDash([3, 3]);
         context.lineTo(this.cameraSize.width, number);
         context.stroke();
     };

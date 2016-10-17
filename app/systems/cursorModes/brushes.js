@@ -14,6 +14,9 @@
     "app.entities.LargeRedHouse",
     "app.entities.GrassRoofHouse",
     "app.entities.FairyFountain",
+    "app.entities.FacingCliff",
+    "app.entities.LeftCliff",
+    "app.entities.RightCliff",
     "app.entities.WindVane",
     "app.entities.WitchHut",
     "app.entities.Flower"
@@ -56,6 +59,21 @@
             name: "bottom-right-hedge",
             displayName: "Bottom Right Hedge",
             Type: app.entities.BottomRightHedge,
+            category: "Plants"
+        },  {
+            name: "left-cliff",
+            displayName: "Left Cliff",
+            Type: app.entities.LeftCliff,
+            category: "Plants"
+        }, {
+            name: "facing-cliff",
+            displayName: "Facing Cliff",
+            Type: app.entities.FacingCliff,
+            category: "Plants"
+        }, {
+            name: "right-cliff",
+            displayName: "Right Cliff",
+            Type: app.entities.RightCliff,
             category: "Plants"
         }, {
             name: "grass",

@@ -91,6 +91,7 @@
         var cursorSystem = new CursorSystem(canvas, camera);
         var cameraSystem = new CameraSystem(canvas, camera);
         var broadPhaseCollisionDrawerSystem = new BroadphaseCollisionDrawerSystem(canvas, camera);
+        var rigidBodyDrawerSystem = new RigidBodyDrawerSystem(canvas, camera);
 
         var keyboardInputSystem = new KeyboardInputSystem(document, {
             37: "left",
@@ -118,6 +119,7 @@
         game.appendSystem(cameraSystem);
         game.appendSystem(gridSystem);
         game.appendSystem(cursorSystem);
+        game.appendSystem(rigidBodyDrawerSystem);
         //game.appendSystem(broadPhaseCollisionDrawerSystem);
 
         game.play();

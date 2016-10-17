@@ -213,6 +213,9 @@
         var minOverlap;
         var normal;
 
+        var originA = Vector.add(positionA, rigidBodyA.origin);
+        var originB = Vector.add(positionB, rigidBodyB.origin);
+
         // If the collision was already handled from the other side then stop detection.
         if (collisionA != null && collisionA.timestamp === this.timestamp) {
             return collisionA.endTimestamp != null;
@@ -277,7 +280,7 @@
             minOverlap = overlapA.overlap;
             normal = overlapA.axis;
 
-            if (Vector.dot(normal, Vector.subtract(rigidBodyA.minWorldPoint, rigidBodyB.minWorldPoint)) > 0) {
+            if (Vector.dot(normal, Vector.subtract(originA, originB)) > 0) {
                 normal = Vector.negate(normal);
             }
 
@@ -298,7 +301,9 @@
             minOverlap = overlapB.overlap;
             normal = overlapB.axis;
 
-            if (Vector.dot(normal, Vector.subtract(rigidBodyB.minWorldPoint, rigidBodyA.minWorldPoint)) > 0) {
+           
+
+            if (Vector.dot(normal, Vector.subtract(originB, originA)) > 0) {
                 normal = Vector.negate(normal);
             }
 

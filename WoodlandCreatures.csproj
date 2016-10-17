@@ -116,6 +116,9 @@
     <Content Include="app\builder\Theme.html" />
     <Content Include="app\components\MapBuilder.js" />
     <Content Include="app\components\VerticalScrollbar.html" />
+    <Content Include="app\entities\RightCliff.js" />
+    <Content Include="app\entities\LeftCliff.js" />
+    <Content Include="app\entities\FacingCliff.js" />
     <Content Include="app\entities\GrassRoofHouse.js" />
     <Content Include="app\entities\LargeRedHouse.js" />
     <Content Include="app\entities\BottomRightHedge.js" />

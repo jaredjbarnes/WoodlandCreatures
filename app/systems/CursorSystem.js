@@ -49,6 +49,26 @@
             invokeMethod(self.currentMode, "mousedown", [event]);
         });
 
+        canvas.addEventListener("touchmove", function (event) {
+            var touchEvent = event.targetTouches[0];
+            invokeMethod(self.currentMode, "touchmove", [touchEvent]);
+        });
+
+        canvas.addEventListener("touchcancel", function (event) {
+            var touchEvent = event.targetTouches[0];
+            invokeMethod(self.currentMode, "touchcancel", [touchEvent]);
+        });
+
+        canvas.addEventListener("touchend", function (event) {
+            var touchEvent = event.targetTouches[0];
+            invokeMethod(self.currentMode, "touchend", [event]);
+        });
+
+        canvas.addEventListener("touchstart", function (event) {
+            var touchEvent = event.targetTouches[0];
+            invokeMethod(self.currentMode, "touchstart", [event]);
+        });
+
     };
 
     app.systems.CursorSystem.prototype.changeMode = function (name) {

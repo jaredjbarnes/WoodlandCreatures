@@ -15,22 +15,22 @@
     var ImageTexture = app.properties.ImageTexture;
     var RigidBody = app.properties.RigidBody;
 
-    app.entities.RightCliff = function () {
+    app.entities.RightFacingCliff = function () {
         app.Entity.call(this);
 
-        this["@class"] = "app.entities.RightCliff";
-        this.type = "right-cliff";
+        this["@class"] = "app.entities.RightFacingCliff";
+        this.type = "right-facing-cliff";
 
         var image = new app.properties.ImageTexture();
         image.path = "/images/props.png";
-        image.position.x = 591;
-        image.position.y = 104;
-        image.size.width = 48;
-        image.size.height = 80;
+        image.position.x = 547;
+        image.position.y = 60;
+        image.size.width = 16;
+        image.size.height = 64;
 
         var size = new Size();
-        size.width = 48;
-        size.height = 80;
+        size.width = 16;
+        size.height = 64;
 
         var position = new Position();
         position.x = 0;
@@ -42,17 +42,17 @@
 
         var rigidBody = new RigidBody();
         rigidBody.points.push({
-            x: 0,
-            y: 35
+            x:0,
+            y: 16
         }, {
-            x: 37,
+            x: 16,
             y: 0
         }, {
-            x: 32,
-            y: 40
+            x: 16,
+            y: 44
         }, {
             x: 0,
-            y: 78
+            y: 64
         });
 
         this.addProperty(rigidBody);
@@ -63,6 +63,6 @@
 
     };
 
-    BASE.extend(app.entities.RightCliff, app.Entity);
+    BASE.extend(app.entities.RightFacingCliff, app.Entity);
 
 });

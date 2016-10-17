@@ -119,7 +119,7 @@
         game.appendSystem(cameraSystem);
         game.appendSystem(gridSystem);
         game.appendSystem(cursorSystem);
-        game.appendSystem(rigidBodyDrawerSystem);
+        //game.appendSystem(rigidBodyDrawerSystem);
         //game.appendSystem(broadPhaseCollisionDrawerSystem);
 
         game.play();
@@ -172,17 +172,6 @@
                 return terrain.getBrushNameAsync();
             }).chain(function (brushName) {
                 self.changeMode("brush", "terrain");
-                cursorSystem.modes.brush.selectBrushByName(brushName);
-            }).finally(function () {
-                return stateManager.replaceAsync("default");
-            }).try();
-        });
-
-        $plantsButton.on("click", function () {
-            stateManager.pushAsync("plants").chain(function () {
-                return plants.getBrushNameAsync();
-            }).chain(function (brushName) {
-                self.changeMode("brush", "plants");
                 cursorSystem.modes.brush.selectBrushByName(brushName);
             }).finally(function () {
                 return stateManager.replaceAsync("default");

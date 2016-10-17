@@ -16,6 +16,8 @@
     "app.entities.FairyFountain",
     "app.entities.FacingCliff",
     "app.entities.LeftCliff",
+    "app.entities.LeftFacingCliff",
+    "app.entities.RightFacingCliff",
     "app.entities.RightCliff",
     "app.entities.WindVane",
     "app.entities.WitchHut",
@@ -25,111 +27,121 @@
     BASE.namespace("app.systems.cursorModes");
 
     app.systems.cursorModes.brushes = [
-        {
-            name: "tree",
-            displayName: "Tree",
-            Type: app.entities.Tree,
-            category: "Plants"
-        }, {
-            name: "top-left-hedge",
-            displayName: "Top Left Hedge",
-            Type: app.entities.TopLeftHedge,
-            category: "Plants"
-        }, {
-            name: "top-right-hedge",
-            displayName: "Top Right Hedge",
-            Type: app.entities.TopRightHedge,
-            category: "Plants"
-        }, {
-            name: "vertical-hedge",
-            displayName: "Vertical Hedge",
-            Type: app.entities.VerticalHedge,
-            category: "Plants"
-        }, {
-            name: "horizontal-hedge",
-            displayName: "Horizontal Hedge",
-            Type: app.entities.HorizontalHedge,
-            category: "Plants"
-        }, {
-            name: "bottom-left-hedge",
-            displayName: "Bottom Left Hedge",
-            Type: app.entities.BottomLeftHedge,
-            category: "Plants"
-        }, {
-            name: "bottom-right-hedge",
-            displayName: "Bottom Right Hedge",
-            Type: app.entities.BottomRightHedge,
-            category: "Plants"
-        },  {
-            name: "left-cliff",
-            displayName: "Left Cliff",
-            Type: app.entities.LeftCliff,
-            category: "Plants"
-        }, {
-            name: "facing-cliff",
-            displayName: "Facing Cliff",
-            Type: app.entities.FacingCliff,
-            category: "Plants"
-        }, {
-            name: "right-cliff",
-            displayName: "Right Cliff",
-            Type: app.entities.RightCliff,
-            category: "Plants"
-        }, {
-            name: "grass",
-            displayName: "Grass",
-            Type: app.entities.Grass,
-            category: "Terrain"
-        }, {
-            name: "long-grass",
-            displayName: "LongGrass",
-            Type: app.entities.LongGrass,
-            category: "Terrain"
-        }, {
-            name: "cobble-stone",
-            displayName: "CobbleStone",
-            Type: app.entities.CobbleStone,
-            category: "Terrain"
-        }, {
-            name: "flag-stone",
-            displayName: "FlagStone",
-            Type: app.entities.FlagStone,
-            category: "Terrain"
-        }, {
-            name: "blue-house",
-            displayName: "Blue House",
-            Type: app.entities.BlueHouse,
-            category: "Structures"
-        }, {
-            name: "large-red-house",
-            displayName: "Large Red House",
-            Type: app.entities.LargeRedHouse,
-            category: "Structures"
-        }, {
-            name: "grass-roof-house",
-            displayName: "Grass Roof House",
-            Type: app.entities.GrassRoofHouse,
-            category: "Structures"
-        }, {
-            name: "witch-hut",
-            displayName: "Witch Hut",
-            Type: app.entities.WitchHut,
-            category: "Structures"
-        }, {
-            name: "wind-vane",
-            displayName: "Wind Vane",
-            Type: app.entities.WindVane,
-            category: "Structures"
-        }, {
-            name: "fairy-fountain",
-            displayName: "Fairy Fountain",
-            Type: app.entities.FairyFountain,
-            category: "Structures"
-        }, {
-            name: "flower",
-            displayName: "Flower",
-            Type: app.entities.Flower,
-            category: "Terrain"
-        }
+       {
+           name: "grass",
+           displayName: "Grass",
+           Type: app.entities.Grass,
+           category: "Terrain"
+       }, {
+           name: "flower",
+           displayName: "Flower",
+           Type: app.entities.Flower,
+           category: "Terrain"
+       }, {
+           name: "long-grass",
+           displayName: "LongGrass",
+           Type: app.entities.LongGrass,
+           category: "Terrain"
+       }, {
+           name: "cobble-stone",
+           displayName: "CobbleStone",
+           Type: app.entities.CobbleStone,
+           category: "Terrain"
+       }, {
+           name: "flag-stone",
+           displayName: "FlagStone",
+           Type: app.entities.FlagStone,
+           category: "Terrain"
+       }, {
+           name: "top-left-hedge",
+           displayName: "Top Left Hedge",
+           Type: app.entities.TopLeftHedge,
+           category: "Terrain"
+       }, {
+           name: "top-right-hedge",
+           displayName: "Top Right Hedge",
+           Type: app.entities.TopRightHedge,
+           category: "Terrain"
+       }, {
+           name: "vertical-hedge",
+           displayName: "Vertical Hedge",
+           Type: app.entities.VerticalHedge,
+           category: "Terrain"
+       }, {
+           name: "horizontal-hedge",
+           displayName: "Horizontal Hedge",
+           Type: app.entities.HorizontalHedge,
+           category: "Terrain"
+       }, {
+           name: "bottom-left-hedge",
+           displayName: "Bottom Left Hedge",
+           Type: app.entities.BottomLeftHedge,
+           category: "Terrain"
+       }, {
+           name: "bottom-right-hedge",
+           displayName: "Bottom Right Hedge",
+           Type: app.entities.BottomRightHedge,
+           category: "Terrain"
+       }, {
+           name: "tree",
+           displayName: "Tree",
+           Type: app.entities.Tree,
+           category: "Terrain"
+       }, {
+           name: "left-cliff",
+           displayName: "Left Cliff",
+           Type: app.entities.LeftCliff,
+           category: "Terrain"
+       }, {
+           name: "left-facing-cliff",
+           displayName: "Left Facing Cliff",
+           Type: app.entities.LeftFacingCliff,
+           category: "Terrain"
+       }, {
+           name: "right-facing-cliff",
+           displayName: "Right Facing Cliff",
+           Type: app.entities.RightFacingCliff,
+           category: "Terrain"
+       }, {
+           name: "facing-cliff",
+           displayName: "Facing Cliff",
+           Type: app.entities.FacingCliff,
+           category: "Terrain"
+       }, {
+           name: "right-cliff",
+           displayName: "Right Cliff",
+           Type: app.entities.RightCliff,
+           category: "Terrain"
+       }, {
+           name: "blue-house",
+           displayName: "Blue House",
+           Type: app.entities.BlueHouse,
+           category: "Structures"
+       }, {
+           name: "large-red-house",
+           displayName: "Large Red House",
+           Type: app.entities.LargeRedHouse,
+           category: "Structures"
+       }, {
+           name: "grass-roof-house",
+           displayName: "Grass Roof House",
+           Type: app.entities.GrassRoofHouse,
+           category: "Structures"
+       }, {
+           name: "witch-hut",
+           displayName: "Witch Hut",
+           Type: app.entities.WitchHut,
+           category: "Structures"
+       }, {
+           name: "wind-vane",
+           displayName: "Wind Vane",
+           Type: app.entities.WindVane,
+           category: "Structures"
+       }, {
+           name: "fairy-fountain",
+           displayName: "Fairy Fountain",
+           Type: app.entities.FairyFountain,
+           category: "Structures"
+       }
     ];
 });

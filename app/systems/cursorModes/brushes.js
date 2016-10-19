@@ -2,8 +2,12 @@
     "app.entities.Tree",
     "app.entities.TopLeftHedge",
     "app.entities.TopRightHedge",
+    "app.entities.VerticalTopHedge",
     "app.entities.VerticalHedge",
+    "app.entities.VerticalBottomHedge",
     "app.entities.HorizontalHedge",
+    "app.entities.RightHorizontalHedge",
+    "app.entities.LeftHorizontalHedge",
     "app.entities.BottomLeftHedge",
     "app.entities.BottomRightHedge",
     "app.entities.Grass",
@@ -63,14 +67,34 @@
            Type: app.entities.TopRightHedge,
            category: "Terrain"
        }, {
+           name: "vertical-top-hedge",
+           displayName: "Vertical Top Hedge",
+           Type: app.entities.VerticalTopHedge,
+           category: "Terrain"
+       }, {
            name: "vertical-hedge",
            displayName: "Vertical Hedge",
            Type: app.entities.VerticalHedge,
            category: "Terrain"
        }, {
+           name: "vertical-bottom-hedge",
+           displayName: "Vertical Bottom Hedge",
+           Type: app.entities.VerticalBottomHedge,
+           category: "Terrain"
+       }, {
+           name: "left-horizontal-hedge",
+           displayName: "LeftHorizontal Hedge",
+           Type: app.entities.LeftHorizontalHedge,
+           category: "Terrain"
+       }, {
            name: "horizontal-hedge",
            displayName: "Horizontal Hedge",
            Type: app.entities.HorizontalHedge,
+           category: "Terrain"
+       }, {
+           name: "right-horizontal-hedge",
+           displayName: "Right Horizontal Hedge",
+           Type: app.entities.RightHorizontalHedge,
            category: "Terrain"
        }, {
            name: "bottom-left-hedge",

@@ -116,6 +116,10 @@
     <Content Include="app\builder\Theme.html" />
     <Content Include="app\components\MapBuilder.js" />
     <Content Include="app\components\VerticalScrollbar.html" />
+    <Content Include="app\entities\VerticalBottomHedge.js" />
+    <Content Include="app\entities\VerticalTopHedge.js" />
+    <Content Include="app\entities\LeftHorizontalHedge.js" />
+    <Content Include="app\entities\RightHorizontalHedge.js" />
     <Content Include="app\entities\RightFacingCliff.js" />
     <Content Include="app\entities\LeftFacingCliff.js" />
     <Content Include="app\entities\RightCliff.js" />

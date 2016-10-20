@@ -126,6 +126,7 @@
 
         window.cursorSystem = cursorSystem;
         window.cameraSystem = cameraSystem;
+        window.broadPhaseCollisionSystem = broadPhaseCollisionSystem;
 
         brushSystem = cursorSystem.modes.brush;
 

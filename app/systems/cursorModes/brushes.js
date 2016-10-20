@@ -15,6 +15,7 @@
     "app.entities.CobbleStone",
     "app.entities.FlagStone",
     "app.entities.BlueHouse",
+    "app.entities.RedFlagStoneHouse",
     "app.entities.LargeRedHouse",
     "app.entities.GrassRoofHouse",
     "app.entities.FairyFountain",
@@ -140,6 +141,11 @@
            name: "blue-house",
            displayName: "Blue House",
            Type: app.entities.BlueHouse,
+           category: "Structures"
+       }, {
+           name: "red-flag-stone-house",
+           displayName: "Red Flag Stone House",
+           Type: app.entities.RedFlagStoneHouse,
            category: "Structures"
        }, {
            name: "large-red-house",

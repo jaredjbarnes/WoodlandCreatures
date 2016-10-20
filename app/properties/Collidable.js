@@ -8,8 +8,10 @@
         this.isStatic = false;
         this.enabled = true;
         this.activeCollisions = {};
+        this.activeCollisionsLength = 0;
         this.name = null;
         this.collidableNames = [];
+        this.gridCells = [];
     };
 
 });

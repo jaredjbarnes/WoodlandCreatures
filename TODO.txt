@@ -18,6 +18,9 @@ would then set the complete back to false and wait for another command to comple
 the message chain. 
 
 
+The CursorSystem will depend on the BroadPhaseCollisionSystem and the CameraSystem.
+This is need for various optimizations and clear caches when necessary.
+
 Systems
 =============================
 Actionable

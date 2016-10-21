@@ -23,25 +23,21 @@
         this.size = null;
     };
 
-    var GridObjects = function () {
-        this.static = [];
-        this.dynamic = [];
-    };
-
     var emptyFn = function () { };
     var emptyArray = [];
 
-    app.systems.BroadPhaseCollisionSystem = function (cellSize) {
+    app.systems.BroadPhaseCollisionSystem = function (camera, cellSize) {
         this.game = null;
         this.x = 0;
         this.y = 0;
         this.width = 0;
         this.height = 0;
-        this.gridWidth = 0;
-        this.gridHeight = 0;
+        this.camera = camera;
+        this.cameraPosition = camera.getProperty("position");
+        this.cameraSize = camera.getProperty("size");
         this.grid = [[]];
+        this.buffer = 0;
         this.broadPhaseEntities = [];
-        this.staticBroadPhaseEntities = [];
         this.entityToBroadPhase = new Hashmap();
         this.broadPhaseToEntity = new Hashmap();
         this.cellSize = cellSize || 50;
@@ -52,17 +48,9 @@
         this.stageSize = null;
     };
 
-    app.systems.BroadPhaseCollisionSystem.prototype.getGridHeight = function () {
-        return Math.floor(this.height / this.cellSize);
-    };
-
-    app.systems.BroadPhaseCollisionSystem.prototype.getGridWidth = function () {
-        return Math.floor((this.width) / this.cellSize)
-    };
-
-    app.systems.BroadPhaseCollisionSystem.prototype.sweepAndPrune = function (broadPhaseEntities, type) {
-        var gridWidth = this.gridWidth;
-        var gridHeight = this.gridHeight;
+    app.systems.BroadPhaseCollisionSystem.prototype.sweepAndPrune = function () {
+        var gridWidth = Math.floor((this.height) / this.cellSize);
+        var gridHeight = Math.floor((this.width) / this.cellSize);
         var left;
         var right;
         var top;
@@ -76,20 +64,32 @@
         var gridCell;
         var size;
         var position;
-        var collidable;
+        var buffer = this.buffer;
+        var broadPhaseEntities = this.broadPhaseEntities;
+        var screenTop = this.cameraPosition.y - buffer;
+        var screenBottom = this.cameraPosition.y + this.cameraSize.height + buffer;
+        var screenLeft = this.cameraPosition.x - buffer;
+        var screenRight = this.cameraPosition.x + this.cameraSize.width + buffer;
+
+        // the total number of cells this grid will contain
+        this.totalCells = gridWidth * gridHeight;
+
+        // construct grid
+        // NOTE: this is a purposeful use of the Array() constructor 
+        this.grid = Array(gridWidth);
 
         // insert all entities into grid
         for (i = 0; i < broadPhaseEntities.length; i++) {
             entity = broadPhaseEntities[i];
             size = entity.size;
             position = entity.position;
-            collidable = entity.collidable;
 
-            // if entity is outside the grid extents, then ignore it
-            if (
-            	position.x < this.x || position.x + size.width > this.x + this.width
-            || position.y < this.y || position.y + size.height > this.y + this.height
-            ) {
+            // if entity is outside the camera extents, then ignore it
+
+            if (position.x + size.width < screenLeft ||
+                position.x > screenRight ||
+                position.y + size.height < screenTop ||
+                position.y > screenBottom) {
                 continue;
             }
 
@@ -104,9 +104,7 @@
 
                 // Make sure a column exists, initialize if not to grid height length
                 // NOTE: again, a purposeful use of the Array constructor 
-                if (!this.grid[cX]) {
-                    this.grid[cX] = new Array(gridHeight);
-                }
+                if (!this.grid[cX]) { this.grid[cX] = Array(gridHeight); }
 
                 gridCol = this.grid[cX];
 
@@ -115,21 +113,16 @@
 
                     // Ensure we have a bucket to put entities into for this cell
                     if (!gridCol[cY]) {
-                        gridCol[cY] = new GridObjects();
+                        gridCol[cY] = [];
                     }
 
                     gridCell = gridCol[cY];
 
                     // Add entity to cell
-                    gridCell[type].push(entity);
+                    gridCell.push(entity);
                 }
             }
         }
-    };
-
-    app.systems.BroadPhaseCollisionSystem.prototype.updateStaticEntities = function () {
-        this.clearStaticEntities();
-        this.sweepAndPrune(this.staticBroadPhaseEntities, "static");
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.queryForCollisions = function () {
@@ -171,45 +164,20 @@
                 // ignore cells that have no objects
                 if (!gridCell) { continue; }
 
-                // Loop through the dynamic entities and see if they intersect with the static.
-                for (k = 0; k < gridCell.dynamic.length ; k++) {
+                // for every object in a cell...
+                for (k = 0; k < gridCell.length; k++) {
 
-                    broadPhaseA = gridCell.dynamic[k];
+                    broadPhaseA = gridCell[k];
 
-                    for (l = 0; l < gridCell.static.length; l++) {
-                        broadPhaseB = gridCell.static[l];
-
-                        collidableA = broadPhaseA.collidable;
-                        collidableB = broadPhaseB.collidable;
-
-                        // We don't need to check static or disabled objects to other static objects.
-                        if (!collidableA.enabled || !collidableB.enabled) {
-                            continue;
-                        }
-
-                        positionA = broadPhaseA.position;
-                        sizeA = broadPhaseA.size;
-
-                        positionB = broadPhaseB.position;
-                        sizeB = broadPhaseB.size;
-
-                        if (this.intersects(positionA, sizeA, positionB, sizeB)) {
-                            pairs.push([broadPhaseA, broadPhaseB]);
-                        }
-                    }
-
-                    for (l = 0; l < gridCell.dynamic.length; l++) {
-                        broadPhaseB = gridCell.dynamic[l];
-
-                        if (broadPhaseB === broadPhaseA) {
-                            continue;
-                        }
+                    // for every other object in a cell...
+                    for (l = k + 1; l < gridCell.length; l++) {
+                        broadPhaseB = gridCell[l];
 
                         collidableA = broadPhaseA.collidable;
                         collidableB = broadPhaseB.collidable;
 
                         // We don't need to check static or disabled objects to other static objects.
-                        if (!collidableA.enabled || !collidableB.enabled) {
+                        if ((collidableA.isStatic && collidableB.isStatic) || !collidableA.enabled || !collidableB.enabled) {
                             continue;
                         }
 
@@ -224,7 +192,6 @@
                         }
                     }
                 }
-
             }
         }
 
@@ -240,30 +207,6 @@
         return top <= bottom && left <= right;
     };
 
-    app.systems.BroadPhaseCollisionSystem.prototype.clearDynamicEntities = function () {
-        var grid = this.grid;
-        var gridWidth = this.gridWidth;
-        var gridHeight = this.gridHeight;
-
-        for (var x = 0 ; x < gridWidth; x++) {
-            for (var y = 0 ; y < gridHeight; y++) {
-                grid[x][y].dynamic.length = 0;
-            }
-        }
-    };
-
-    app.systems.BroadPhaseCollisionSystem.prototype.clearStaticEntities = function () {
-        var grid = this.grid;
-        var gridWidth = this.gridWidth;
-        var gridHeight = this.gridHeight;
-
-        for (var x = 0 ; x < gridWidth; x++) {
-            for (var y = 0 ; y < gridHeight; y++) {
-                grid[x][y].static.length = 0;
-            }
-        }
-    };
-
     app.systems.BroadPhaseCollisionSystem.prototype.updateWorldSize = function () {
         var entity = this.game.stage;
         var position = this.stagePosition;
@@ -277,18 +220,6 @@
         this.x = position.x;
         this.height = size.height;
         this.width = size.width;
-        var gridWidth = this.gridWidth = this.getGridWidth();
-        var gridHeight = this.gridHeight = this.getGridHeight();
-        var grid = this.grid = new Array(gridWidth);
-
-        for (var x = 0 ; x < gridWidth; x++) {
-            grid[x] = new Array(gridHeight);
-
-            for (var y = 0 ; y < gridHeight; y++) {
-                grid[x][y] = new GridObjects();
-            }
-        }
-
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.invokeMethod = function (obj, methodName, args) {
@@ -298,7 +229,8 @@
         }
     };
 
-    app.systems.BroadPhaseCollisionSystem.prototype.handleCollisionEnds = function (entities) {
+    app.systems.BroadPhaseCollisionSystem.prototype.handleCollisionEnds = function () {
+        var entities = this.broadPhaseEntities;
         var length = entities.length;
         var entity;
         var collisions;
@@ -306,18 +238,10 @@
         var keys;
         var key;
         var keysLength;
-        var collidable;
 
         for (var x = 0 ; x < length ; x++) {
             entity = entities[x];
-            collidable = entity.collidable;
-
-            // Do a simple check on the length of the collisions. Before doing more expensive calls.
-            if (collidable.activeCollisionsLength === 0) {
-                continue;
-            }
-
-            collisions = collidable.activeCollisions;
+            collisions = entity.collidable.activeCollisions;
             keys = Object.keys(collisions);
             keysLength = keys.length;
 
@@ -332,11 +256,15 @@
                     // Allow for some time to pass, before removing, because its likely they'll hit again.
                     if (this.currentTimestamp - collision.timestamp > 3000) {
                         delete collisions[key];
-                        collidable.activeCollisionsLength--;
                     }
                 }
             }
         }
+    };
+
+    app.systems.BroadPhaseCollisionSystem.prototype.executeBroadphase = function () {
+        this.updateWorldSize();
+        this.sweepAndPrune();
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.assignTimeStamp = function (pairs) {
@@ -359,12 +287,13 @@
             collisionDataB = activeCollisionsB[broadPhaseA.entityId];
 
             if (collisionDataA == null) {
+
                 collisionDataA = activeCollisionsA[broadPhaseB.entityId] = new BroadphaseCollision();
                 collisionDataA.startTimestamp = this.currentTimestamp;
                 collisionDataA.timestamp = this.currentTimestamp;
                 collisionDataA.endTimestamp = null;
                 collisionDataA.entity = this.broadPhaseToEntity.get(broadPhaseB);
-                broadPhaseA.collidable.activeCollisionsLength++;
+
             } else {
                 collisionDataA.timestamp = this.currentTimestamp;
                 collisionDataA.endTimestamp = null;
@@ -376,7 +305,7 @@
                 collisionDataB.timestamp = this.currentTimestamp;
                 collisionDataB.endTimestamp = null;
                 collisionDataB.entity = this.broadPhaseToEntity.get(broadPhaseA);
-                broadPhaseB.collidable.activeCollisionsLength++;
+
             } else {
                 collisionDataB.timestamp = this.currentTimestamp;
                 collisionDataB.endTimestamp = null;
@@ -387,19 +316,11 @@
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.update = function () {
-        // Save current time for collisions.
         this.currentTimestamp = this.game.timer.now();
-
-        // Clear Dynamic entities old placement.
-        this.clearDynamicEntities();
-        this.sweepAndPrune(this.broadPhaseEntities, "dynamic");
-
+        this.executeBroadphase();
         var pairs = this.queryForCollisions();
-
         this.assignTimeStamp(pairs);
-
-        this.handleCollisionEnds(this.broadPhaseEntities);
-        this.handleCollisionEnds(this.staticBroadPhaseEntities);
+        this.handleCollisionEnds();
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.entityAdded = function (entity) {
@@ -412,30 +333,18 @@
 
             this.entityToBroadPhase.add(entity, broadPhaseEntity);
             this.broadPhaseToEntity.add(broadPhaseEntity, entity);
-
-            if (broadPhaseEntity.collidable.isStatic) {
-                this.staticBroadPhaseEntities.push(broadPhaseEntity);
-                this.sweepAndPrune([broadPhaseEntity], "static");
-            } else {
-                this.broadPhaseEntities.push(broadPhaseEntity);
-            }
-
+            this.broadPhaseEntities.push(broadPhaseEntity);
         }
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.entityRemoved = function (entity) {
         var broadPhaseEntity = this.entityToBroadPhase.remove(entity);
+        var index = this.broadPhaseEntities.indexOf(broadPhaseEntity);
+
         this.broadPhaseToEntity.remove(broadPhaseEntity);
 
-        var index = this.broadPhaseEntities.indexOf(broadPhaseEntity);
         if (index > -1) {
             this.broadPhaseEntities.splice(index, 1);
-            return;
-        }
-
-        index = this.staticBroadPhaseEntities.indexOf(broadPhaseEntity);
-        if (index > -1) {
-            this.staticBroadPhaseEntities.splice(index, 1);
         }
     };
 
@@ -444,12 +353,12 @@
         this.game = game;
         this.stagePosition = game.stage.getProperty("position");
         this.stageSize = game.stage.getProperty("size");
-        this.updateWorldSize();
 
         game.stage.filter().forEach(function (entity) {
             self.entityAdded(entity);
         });
 
+        this.updateWorldSize();
     };
 
     app.systems.BroadPhaseCollisionSystem.prototype.deactivated = function () {
@@ -459,8 +368,6 @@
         this.width = 0;
         this.height = 0;
         this.grid = [[]];
-        this.gridWidth = 0;
-        this.gridHeight = 0;
         this.broadPhaseEntities = [];
         this.entityToBroadPhase = new Hashmap();
         this.broadPhaseToEntity = new Hashmap();

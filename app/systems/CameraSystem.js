@@ -158,21 +158,21 @@
         this.addGroundEntity(entity);
         this.addStaticEntity(entity);
 
-        this.cacheCanvases();
+        this.redrawCachedEntitiesOnCamera();
     };
 
     app.systems.CameraSystem.prototype.entityRemoved = function (entity) {
         var index = this.groundEntities.indexOf(entity);
         if (index > -1) {
             this.groundEntities.splice(index, 1);
-            this.cacheGround();
+            this.redrawCachedEntitiesOnCamera();
             return;
         }
 
         index = this.staticEntities.indexOf(entity);
         if (index > -1) {
             this.staticEntities.splice(index, 1);
-            this.cacheStatic();
+            this.redrawCachedEntitiesOnCamera();
             return;
         }
 
@@ -191,6 +191,37 @@
         camera.imageMap[path] = image;
         image.onload = callback;
         image.src = path;
+    };
+
+    app.systems.CameraSystem.prototype.redrawCachedEntitiesOnCamera = function (entity, context) {
+        var self = this;
+        var camera = this.camera;
+        var activeCollisions = camera.getProperty("collidable").activeCollisions;
+        var position = camera.getProperty("position");
+        var size = camera.getProperty("size");
+        var groundContext = this.groundContext;
+        var staticContext = this.staticContext;
+
+        var entities = Object.keys(activeCollisions).map(function (key) {
+            return activeCollisions[key].entity;
+        });
+
+        entities.sort(sortEntities);
+
+        groundContext.clearRect(position.x, position.y, size.width, size.height);
+        staticContext.clearRect(position.x, position.y, size.width, size.height);
+
+        entities.forEach(function (entity) {
+            if (entity.parent == null) {
+                return;
+            }
+
+            if (entity.hasProperties(["ground", "image-texture"])) {
+                self.drawEntity(entity, groundContext);
+            } else if (entity.hasProperties(["position", "size", "image-texture"])) {
+                self.drawEntity(entity, staticContext);
+            }
+        });
     };
 
     app.systems.CameraSystem.prototype.drawEntityOnCamera = function (entity, context) {
@@ -302,9 +333,14 @@
         var self = this;
         var stage = game.stage;
         var size = stage.getProperty("size");
-        
+
         this.stateSize = size;
         this.game = game;
+
+        this.groundCanvas.width = size.width;
+        this.groundCanvas.height = size.height;
+        this.staticCanvas.width = size.width;
+        this.staticCanvas.height = size.height;
 
         stage.filter().forEach(function (entity) {
             self.entityAdded(entity);
@@ -336,7 +372,7 @@
 
         for (var x = 0 ; x < length; x++) {
             entity = activeCollisions[keys[x]].entity;
-            
+
             if ((entity.parent &&
                 entity.hasProperties(["image-texture"]) &&
                 !entity.hasProperties(["ground"]) &&
@@ -357,7 +393,7 @@
         }
 
         if (clearCache) {
-            this.cacheCanvases();
+            this.redrawCachedEntitiesOnCamera();
         }
 
         context.clearRect(0, 0, cameraSize.width, cameraSize.height);

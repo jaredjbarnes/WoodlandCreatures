@@ -2,7 +2,9 @@
     "app.Entity",
     "app.properties.Collidable",
     "app.properties.Size",
-    "app.properties.Position"
+    "app.properties.Position",
+    "app.systems.BroadPhaseCollisionSystem",
+    "app.systems.CameraSystem"
 ], function () {
 
     BASE.namespace("app.systems.cursorModes");
@@ -27,6 +29,8 @@
         this.cursorCollidable = new Collidable();
         this.activeCollisionSelections = [];
         this.canvasScaler = cursorSystem.canvasScaler;
+        this.cameraSystem = null;
+        this.broadPhaseCollisionSystem = null;
 
         this.cursorEntity.type = "eraser-cursor";
         this.cursorEntity.addProperty(this.cursorPosition);
@@ -39,8 +43,22 @@
         this.cursorSize.width = 1;
         this.cursorSize.height = 1;
 
+        this.findSystems();
         this.cursorSystem.game.stage.appendChild(this.cursorEntity);
     };
+
+    app.systems.cursorModes.Eraser.prototype.findSystems = function () {
+        var self = this;
+        this.game.systems.forEach(function (system) {
+            if (system instanceof app.systems.BroadPhaseCollisionSystem) {
+                self.broadPhaseCollisionSystem = system;
+            }
+
+            if (system instanceof app.systems.CameraSystem) {
+                self.cameraSystem = system;
+            }
+        });
+    }
 
     app.systems.cursorModes.Eraser.prototype.drawBorderAroundCollision = function (collision) {
         var entity = collision.entity;

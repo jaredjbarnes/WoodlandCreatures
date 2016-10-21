@@ -32,6 +32,8 @@
         this.canvasScaler = new app.CanvasScaler(canvas);
         this.scale = this.canvasScaler.scale;
         this.currentMode = null;
+        this.cameraSystem = null;
+        this.broadPhaseCollisionSystem = null;
 
         canvas.addEventListener("mousemove", function (event) {
             invokeMethod(self.currentMode, "mousemove", [event]);
@@ -71,6 +73,19 @@
 
     };
 
+    app.systems.CursorSystem.prototype.findSystems = function () {
+        var self = this;
+        this.game.systems.forEach(function (system) {
+            if (system instanceof app.systems.BroadPhaseCollisionSystem) {
+                self.broadPhaseCollisionSystem = system;
+            }
+
+            if (system instanceof app.systems.CameraSystem) {
+                self.cameraSystem = system;
+            }
+        });
+    }
+
     app.systems.CursorSystem.prototype.changeMode = function (name) {
         var lastMode = this.currentMode;
 
@@ -93,6 +108,7 @@
 
     app.systems.CursorSystem.prototype.activated = function (game) {
         this.game = game;
+        this.findSystems();
 
         this.modes = {
             "selection": new Selection(this),
@@ -100,6 +116,7 @@
             "eraser": new Eraser(this),
             "pan": new Pan(this)
         }
+
     };
 
     app.systems.CursorSystem.prototype.deactivated = function () {

@@ -22,6 +22,7 @@
         this.cameraPosition = cursorSystem.cameraPosition;
         this.context = cursorSystem.context;
         this.canvasScaler = cursorSystem.canvasScaler;
+        this.cameraSystem = cursorSystem.cameraSystem;
         this.mouseStartPosition = {
             x: 0,
             y: 0
@@ -56,6 +57,9 @@
 
     app.systems.cursorModes.Pan.prototype.mousemove = function (event) {
         if (this.isMouseDown) {
+            if (this.cameraSystem != null) {
+                this.cameraSystem.redrawCachedEntitiesOnCamera();
+            }
             var scale = this.canvasScaler.scale;
             this.cameraPosition.x = Math.floor(this.canvasStartPosition.x + ((this.mouseStartPosition.x - event.pageX) / scale.x));
             this.cameraPosition.y = Math.floor(this.canvasStartPosition.y + ((this.mouseStartPosition.y - event.pageY) / scale.y));

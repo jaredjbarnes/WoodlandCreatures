@@ -3,7 +3,9 @@
     "app.properties.Collidable",
     "app.properties.Size",
     "app.properties.Position",
-    "app.properties.KeyboardInput"
+    "app.properties.KeyboardInput",
+    "app.systems.BroadPhaseCollisionSystem",
+    "app.systems.CameraSystem"
 ], function () {
 
     BASE.namespace("app.systems.cursorModes");
@@ -33,6 +35,8 @@
         this.canvasScaler = cursorSystem.canvasScaler;
         this.cellSize = cursorSystem.cellSize;
         this.tick = 0;
+        this.cameraSystem = cursorSystem.cameraSystem;
+        this.broadPhaseCollisionSystem = cursorSystem.broadPhaseCollisionSystem;
 
         this.cursorEntity.type = "selection-cursor";
         this.cursorEntity.addProperty(this.cursorPosition);
@@ -114,7 +118,10 @@
         }
 
         if (this.selectedCollision != null) {
-            this.selectedCollision.entity.getProperty("image-texture").redraw = true;
+
+            if (this.cameraSystem != null) {
+                this.cameraSystem.redrawCachedEntitiesOnCamera();
+            }
 
             this.drawFillAroundCollision(this.selectedCollision);
 

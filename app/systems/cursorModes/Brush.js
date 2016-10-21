@@ -130,7 +130,9 @@
     };
 
     app.systems.cursorModes.Brush.prototype.update = function () {
-
+        if (this.isMouseDown) {
+            this.cursorSystem.cameraSystem.redrawCachedEntitiesOnCamera();
+        }
     };
 
     app.systems.cursorModes.Brush.prototype.mousedown = function (event) {

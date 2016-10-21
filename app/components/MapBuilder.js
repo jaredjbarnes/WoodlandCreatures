@@ -80,7 +80,6 @@
         stage.appendChild(camera);
 
         // Systems 
-        var broadPhaseCollisionSystem = new BroadPhaseCollisionSystem();
         var narrowPhaseCollisionSystem = new NarrowPhaseCollisionSystem();
         var positionConstraintSystem = new PositionConstraintSystem();
         var playerStateMachineSystem = new PlayerStateMachineSystem();
@@ -88,6 +87,7 @@
         var spriteSystem = new SpriteSystem();
 
         var gridSystem = new GridSystem(canvas, camera);
+        var broadPhaseCollisionSystem = new BroadPhaseCollisionSystem(camera);
         var cursorSystem = new CursorSystem(canvas, camera);
         var cameraSystem = new CameraSystem(canvas, camera);
         var broadPhaseCollisionDrawerSystem = new BroadphaseCollisionDrawerSystem(canvas, camera);

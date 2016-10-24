@@ -57,7 +57,7 @@
                 }
             } else {
 
-                if (animation.repeatDirection === 0 ) {
+                if (animation.repeatDirection === 0) {
                     animation.currentValue = animation.endValue;
                 } else {
                     if (onIteration % 2 === 0) {
@@ -68,8 +68,10 @@
                 }
 
             }
-            animation.iterations = onIteration;
         }
+
+        animation.iterations = onIteration;
+        animation.progress = animation.currentValue / (animation.endValue - animation.startValue)
     };
 
     app.systems.AnimationSystem.prototype.update = function () {

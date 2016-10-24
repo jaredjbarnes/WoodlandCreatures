@@ -17,6 +17,7 @@
         this.iterations = 0;
         this.direction = 0;
         this.repeatDirection = 0;
+        this.progress = 0;
     };
 
     app.properties.Animation.REPEAT_DEFAULT = 0;

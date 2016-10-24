@@ -100,8 +100,10 @@
     };
 
     app.systems.AnimationSystem.prototype.entityAdded = function (entity) {
-        if (entity.hasProperties(["animation"])) {
+        var animation = entity.getProperty("animation");
+        if (animation != null) {
             this.entities.push(entity);
+            animation.startTime = this.currentTime;
         }
     };
 
@@ -117,6 +119,7 @@
     app.systems.AnimationSystem.prototype.propertyAdded = function (entity, property) {
         if (property.type === "animation") {
             var index = this.entities.indexOf(entity);
+            property.startTime = this.currentTime;
             if (index === -1) {
                 this.entities.push(entity);
             }

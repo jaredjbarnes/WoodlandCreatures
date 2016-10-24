@@ -9,12 +9,14 @@
     "app.properties.Sprite",
     "app.properties.RigidBody",
     "app.properties.State",
-    "app.properties.TouchInput"
+    "app.properties.TouchInput",
+    "app.properties.Animation"
 ], function () {
 
     BASE.namespace("app.entities");
 
     var KeyboardInput = app.properties.KeyboardInput;
+    var Animation = app.properties.Animation;
     var Position = app.properties.Position;
     var Size = app.properties.Size;
     var Collision = app.properties.Collidable;
@@ -75,6 +77,14 @@
         var positionConstraint = new PositionConstraint();
         positionConstraint.byEntityId = "root";
 
+        var animation = new Animation();
+        animation.endValue = 10;
+        animation.duration = 10000;
+        animation.easing = "easeOutExpo";
+        animation.repeatDirection = 1;
+        animation.repeat = 2;
+
+        this.addProperty(animation);
         this.addProperty(rigidBody);
         this.addProperty(positionConstraint);
         this.addProperty(state);

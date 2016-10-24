@@ -150,6 +150,7 @@
     <Content Include="app\properties\RigidBody.js" />
     <Content Include="app\properties\Selection.js" />
     <Content Include="app\Serializer.js" />
+    <Content Include="app\systems\AnimationSystem.js" />
     <Content Include="app\systems\cursorModes\Brush.js" />
     <Content Include="app\systems\cursorModes\brushes.js" />
     <Content Include="app\systems\cursorModes\Pan.js" />

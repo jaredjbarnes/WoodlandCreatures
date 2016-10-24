@@ -91,7 +91,7 @@
         this.stage.delegate = this;
     };
 
-    app.Game.prototype.propertyAdded = function (entity) {
+    app.Game.prototype.propertyAdded = function (entity, property) {
         var systems = this.systems;
         var length = systems.length;
         for (var x = 0; x < length; x++) {
@@ -99,7 +99,7 @@
         }
     };
 
-    app.Game.prototype.propertyRemoved = function (entity) {
+    app.Game.prototype.propertyRemoved = function (entity, property) {
         var systems = this.systems;
         var length = systems.length;
         for (var x = 0; x < length; x++) {

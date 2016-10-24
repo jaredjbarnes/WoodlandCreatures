@@ -15,6 +15,7 @@
     "app.systems.PlayerCollisionSystem",
     "app.systems.KeyboardInputSystem",
     "app.systems.NarrowPhaseCollisionSystem",
+    "app.systems.AnimationSystem",
     "app.systems.CursorSystem",
     "app.systems.GridSystem",
     "app.entities.Map",
@@ -40,6 +41,7 @@
     var PlayerCollisionSystem = app.systems.PlayerCollisionSystem;
     var KeyboardInputSystem = app.systems.KeyboardInputSystem;
     var NarrowPhaseCollisionSystem = app.systems.NarrowPhaseCollisionSystem;
+    var AnimationSystem = app.systems.AnimationSystem;
     var CursorSystem = app.systems.CursorSystem;
     var GridSystem = app.systems.GridSystem;
     var Stage = app.entities.Stage;
@@ -92,6 +94,7 @@
         var cameraSystem = new CameraSystem(canvas, camera);
         var broadPhaseCollisionDrawerSystem = new BroadphaseCollisionDrawerSystem(canvas, camera);
         var rigidBodyDrawerSystem = new RigidBodyDrawerSystem(canvas, camera);
+        var animationSystem = new AnimationSystem();
 
         var keyboardInputSystem = new KeyboardInputSystem(document, {
             37: "left",
@@ -107,6 +110,7 @@
 
         // Logic Systems
         game.appendSystem(playerStateMachineSystem);
+        game.appendSystem(animationSystem);
 
         // Collision Systems
         game.appendSystem(positionConstraintSystem);

@@ -1,0 +1,58 @@
+﻿<div mobile-controller controller="app.components.MobileController">
+    <style>
+        [mobile-controller] {
+            position: relative;
+        }
+
+            [mobile-controller] .button {
+                background-color: #fff;
+                width: 75px;
+                height: 75px;
+                border-radius: 50%;
+                box-shadow:0 0 10px rgba(0,0,0,0.75);
+            }
+
+        [mobile-controller-buttons] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+        }
+
+        [mobile-controller-joystick] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .button[tag='a'] {
+            position: absolute;
+            bottom: 50px;
+            right: 125px;
+        }
+
+        .button[tag='b'] {
+            position: absolute;
+            bottom: 50px;
+            right: 25px;
+        }
+
+        .button[tag='joystick'] {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+        }
+    </style>
+
+    <div mobile-controller-joystick>
+        <div tag="joystick" class="button"></div>
+    </div>
+    <div tag="buttons" mobile-controller-buttons>
+        <div tag="a" class="button"></div>
+        <div tag="b" class="button"></div>
+    </div>
+</div>

@@ -1,179 +1,48 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Woodand Creatures</title>
-    <!-- This prevents zoom by mobile and forces GPU Rasterization for android browser-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-
+    <title>Game Builder</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
     <style>
         html, body {
             overflow: hidden;
+            background-color: #e9e9e9;
+            color: rgba(255,255,255,0.8);
             width: 100%;
             height: 100%;
             padding: 0;
             margin: 0;
-            border: 0;
+            font-family: Arial;
         }
     </style>
+    <script type="components/config" root="lib/weblib/components/" src="lib/weblib/components/components.json">
+    </script>
 </head>
 <body>
-    <canvas id="viewport" style="background-color:#489848"></canvas>
+    <style component="css-helpers"></style>
+    <div component="./app/components/MobilePlayer.html" style="width: 100%; height: 100%;"></div>
     <script src="lib/weblib/lib/BASE/BASE.js"></script>
     <script>
         BASE.require.loader.setRoot("lib/weblib/lib/BASE/");
         BASE.require.loader.setNamespace("app", "app");
-        BASE.require.loader.setNamespace("Matter", "Matter");
-
-        var getAspectRatioForWidth = function (width, height) {
-            var ratio;
-
-            if (width > height) {
-                ratio = width / height;
-                return {
-                    width: 480,
-                    height: 480 / ratio
-                };
-            } else {
-                ratio = height / width;
-                return {
-                    width: 480 / ratio,
-                    height: 480
-                }
-            }
-        };
+        BASE.require.loader.setNamespace("components", "lib/weblib/components");
 
         BASE.require([
-            "app.Game",
-            "app.Entity",
-            "app.systems.TouchInputSystem",
-            "app.systems.BroadPhaseCollisionSystem",
-            "app.systems.BroadphaseCollisionDrawerSystem",
-            "app.systems.PositionConstraintSystem",
-            "app.systems.FollowEntityCameraSystem",
-            "app.systems.FreeCameraSystem",
-            "app.systems.RigidBodyDrawerSystem",
-            "app.systems.SpriteSystem",
-            "app.systems.StateMachineSystem",
-            "app.systems.PlayerStateMachineSystem",
-            "app.systems.PlayerCollisionSystem",
-            "app.systems.KeyboardInputSystem",
-            "app.systems.NarrowPhaseCollisionSystem",
-            "app.systems.SelectionSystem",
-            "app.systems.CursorSystem",
-            "app.systems.GridSystem",
-            "app.entities.Map",
-            "app.entities.Player",
-            "app.entities.Camera",
-            "app.entities.Tree",
-            "app.Timer"
+            "BASE.web.ComponentsDocument",
+            "FastClick",
+            "jQuery"
         ], function () {
-            var canvas = document.querySelector("#viewport");
 
-            var width = document.body.clientWidth;
-            var height = document.body.clientHeight;
+            BASE.namespace("BASE.web");
 
-            var size = getAspectRatioForWidth(width, height);
-            var scale = {
-                x: width / size.width,
-                y: height / size.height
-            };
-
-            canvas.width = size.width;
-            canvas.height = size.height;
-
-            canvas.style.width = width + "px";
-            canvas.style.height = height + "px";
-
-            var Timer = app.Timer;
-            var Game = app.Game;
-            var Camera = app.systems.Camera;
-            var Entity = app.Entity;
-            var Map = app.entities.Map;
-            var Camera = app.entities.Camera;
-            var SpriteSystem = app.systems.SpriteSystem;
-            var CollisionSystem = app.systems.BroadPhaseCollisionSystem;
-            var BroadphaseCollisionDrawerSystem = app.systems.BroadphaseCollisionDrawerSystem;
-            var PositionConstraintSystem = app.systems.PositionConstraintSystem;
-            var FollowEntityCameraSystem = app.systems.FollowEntityCameraSystem;
-            var RigidBodyDrawerSystem = app.systems.RigidBodyDrawerSystem;
-            var FreeCameraSystem = app.systems.FreeCameraSystem;
-            var PlayerStateMachineSystem = app.systems.PlayerStateMachineSystem;
-            var PlayerCollisionSystem = app.systems.PlayerCollisionSystem;
-            var RigidBodyCollisionSystem = app.systems.NarrowPhaseCollisionSystem;
-            var KeyboardInputSystem = app.systems.KeyboardInputSystem;
-            var SelectionSystem = app.systems.SelectionSystem;
-            var BrushSystem = app.systems.CursorSystem;
-            var GridSystem = app.systems.GridSystem;
-            var Player = app.entities.Player;
-            var Tree = app.entities.Tree;
-            var TouchInputSystem = app.systems.TouchInputSystem;
-
-            var collisionSystem = new CollisionSystem();
-            var constraintSystem = new PositionConstraintSystem();
-            var playerStateMachineSystem = new PlayerStateMachineSystem();
-            var playerCollisionSystem = new PlayerCollisionSystem();
-            var rigidBodyCollisionSystem = new RigidBodyCollisionSystem();
-
-            var touchInputSystem = new TouchInputSystem(document, scale);
-            touchInputSystem.cameraName = "character";
-
-            var keyboardInputSystem = new KeyboardInputSystem(document, {
-                37: "left",
-                38: "up",
-                39: "right",
-                40: "down"
+            $(function () {
+                BASE.web.components = new BASE.web.ComponentsDocument(document);
+                FastClick.attach(document.body);
             });
-
-            var timer = new Timer();
-            var map = new Map();
-            var player = new Player();
-            var camera = new Camera();
-            var tree;
-            var position;
-
-            map.appendChild(player);
-            map.appendChild(camera);
-
-            var cameraSystem = new FollowEntityCameraSystem(canvas, camera, player);
-            var freeCameraSystem = new FreeCameraSystem(canvas, camera, scale);
-            var selectionSystem = new SelectionSystem(canvas, camera, scale);
-            var spriteSystem = new SpriteSystem();
-            var gridSystem = new GridSystem(canvas, camera);
-            var brushSystem = new BrushSystem(canvas, camera, scale);
-            var rigidBodyDrawerSystem = new RigidBodyDrawerSystem(canvas, camera);
-            var broadphaseCollisionDrawerSystem = new BroadphaseCollisionDrawerSystem(canvas, camera);
-
-            var game = new Game(map, timer);
-
-            // Input Systems
-            game.appendSystem(keyboardInputSystem);
-            game.appendSystem(touchInputSystem);
-
-            // Logic Systems
-            game.appendSystem(playerStateMachineSystem);
-            game.appendSystem(constraintSystem);
-
-            // Collision systems
-            game.appendSystem(collisionSystem);
-            game.appendSystem(rigidBodyCollisionSystem);
-            game.appendSystem(playerCollisionSystem);
-
-            // Render systems
-            game.appendSystem(spriteSystem);
-            //game.appendSystem(cameraSystem);
-
-            game.appendSystem(freeCameraSystem);
-            game.appendSystem(gridSystem);
-            game.appendSystem(brushSystem);
-            //game.appendSystem(rigidBodyDrawerSystem);
-            //game.appendSystem(broadphaseCollisionDrawerSystem);
-            //game.appendSystem(selectionSystem);
-
-            game.play();
-
-            window.game = game;
-            window.brushSystem = brushSystem;
         });
     </script>
 </body>

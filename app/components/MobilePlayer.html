@@ -1,0 +1,39 @@
+﻿<div mobile-player unselectable controller="app.components.MobilePlayer">
+    <style component="css-helpers"></style>
+    <style component="./Theme.html"></style>
+    <style>
+        [mobile-player-canvas-container] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #000;
+            z-index:1;
+        }
+
+        [mobile-player-canvas] {
+            width: 320px;
+            height: 480px;
+            background-color: #489848;
+        }
+
+        [mobile-player-rotate-device] {
+            background-color: black;
+            color: rgba(255,255,255,0.8);
+        }
+    </style>
+    <div tag="state-manager" component="absolute-state-manager" class="absolute-fill-parent" style="z-index:1;">
+        <div name="rotate-device" mobile-player-rotate-device class="absolute-fill-parent">
+            <div class="bullseye">Rotate Device to Landscape</div>
+        </div>
+        <div name="default" class="absolute-fill-parent">
+            <div tag="canvas-container" mobile-player-canvas-container>
+                <canvas tag="canvas" mobile-player-canvas class="fill-parent"></canvas>
+            </div>
+        </div>
+    </div>
+    <div tag="player-controller" component="./MobileController.html" class="absolute-fill-parent" style="z-index:1;">
+
+    </div>
+</div>

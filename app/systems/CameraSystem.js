@@ -136,6 +136,13 @@
     };
 
     app.systems.CameraSystem.prototype.cacheCanvases = function () {
+        var size = this.game.stage.getProperty("size");
+
+        this.groundCanvas.width = size.width;
+        this.groundCanvas.height = size.height;
+        this.staticCanvas.width = size.width;
+        this.staticCanvas.height = size.height;
+
         this.cacheGround();
         this.cacheStatic();
     };
@@ -259,7 +266,9 @@
             var image = imageMap[intersectingImageTexture.path];
 
             if (image == null) {
-                self.loadImage(intersectingImageTexture.path);
+                self.loadImage(intersectingImageTexture.path, function () {
+                    self.cacheCanvases();
+                });
             } else {
 
                 var left = Math.max(intersectingPosition.x, position.x);
@@ -303,6 +312,7 @@
     };
 
     app.systems.CameraSystem.prototype.drawEntity = function (entity, context) {
+        var self = this;
         var stageSize = this.stageSize;
         var size = entity.properties["size"][0];
         var position = entity.properties["position"][0];
@@ -311,14 +321,16 @@
         var image = imageMap[imageTexture.path];
 
         if (image == null) {
-            this.loadImage(imageTexture.path);
+            this.loadImage(imageTexture.path, function () {
+                self.cacheCanvases();
+            });
         } else {
             context.globalAlpha = imageTexture.opacity;
 
             context.drawImage(
                 image,
-                imageTexture.position.x,
-                imageTexture.position.y,
+                Math.floor(imageTexture.position.x),
+                Math.floor(imageTexture.position.y),
                 imageTexture.size.width,
                 imageTexture.size.height,
                 Math.floor(position.x),
@@ -335,7 +347,7 @@
         var stage = game.stage;
         var size = stage.getProperty("size");
 
-        this.stateSize = size;
+        this.stageSize = size;
         this.game = game;
 
         this.groundCanvas.width = size.width;
@@ -370,6 +382,8 @@
         var position;
         var imageTextures;
         var clearCache = false;
+
+        this.positionCamera();
 
         for (var x = 0 ; x < length; x++) {
             entity = activeCollisions[keys[x]].entity;

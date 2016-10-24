@@ -1,4 +1,6 @@
-﻿BASE.require([], function () {
+﻿BASE.require([
+    "app.CanvasScaler"
+], function () {
 
     BASE.namespace("app.systems");
 
@@ -6,21 +8,19 @@
         return entity.hasProperties(["touch-input", "position", "size"]);
     };
 
-    app.systems.TouchInputSystem = function (document, scale) {
+    app.systems.TouchInputSystem = function (document, canvas, camera) {
         var self = this;
         this.document = document;
-        this.scale = scale || {
-            x: 1,
-            y: 1
-        };
+        this.canvasScaler = new app.CanvasScaler(canvas);
+        this.scale = this.canvasScaler.scale;
         this.isTouching = false;
         this.touch = {
             pageX: 0,
             pageY: 0
         };
         this.isReady = true;
-        this.cameraName = null;
-        this.cameraPosition = null;
+        this.cameraName = camera.name;
+        this.cameraPosition = camera.getProperty("position");
         this.entities = [];
 
         this.touchstartListener = function (event) {
@@ -102,10 +102,6 @@
         if (hasTouchInput(entity)) {
             this.entities.push(entity);
         }
-
-        if (entity.hasProperties(["camera", "position"]) && entity.getProperty("camera").name === this.cameraName) {
-            this.cameraPosition = entity.getProperty("position");
-        }
     };
 
     app.systems.TouchInputSystem.prototype.entityRemoved = function (entity) {
@@ -114,10 +110,6 @@
             if (index > -1) {
                 this.entities.splice(index, 1);
             }
-        }
-
-        if (entity.hasProperties(["camera", "position"]) && entity.getProperty("camera").name === this.cameraName) {
-            this.cameraPosition = null;
         }
     };
 

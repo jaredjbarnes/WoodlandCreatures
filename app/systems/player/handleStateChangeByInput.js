@@ -4,8 +4,8 @@
     BASE.namespace("app.systems.player");
 
     var invokeMethod = function (obj, methodName, args) {
-        if (obj != null  && typeof obj[methodName] === "function") {
-           return  obj[methodName].apply(obj, args);
+        if (obj != null && typeof obj[methodName] === "function") {
+            return obj[methodName].apply(obj, args);
         }
     };
 
@@ -58,10 +58,15 @@
                 state.name = nothingState;
             } else {
                 hypotenuse = Math.sqrt(Math.pow(touchInput.x, 2) + Math.pow(touchInput.y, 2));
+
+                if (hypotenuse === 0) {
+                    return;
+                }
+
                 x = touchInput.x / hypotenuse;
                 y = touchInput.y / hypotenuse;
 
-               position.x += (x * MOVE_BY);
+                position.x += (x * MOVE_BY);
                 position.y += (y * MOVE_BY);
 
                 if (Math.abs(x) > Math.abs(y)) {

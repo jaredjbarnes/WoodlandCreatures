@@ -75,7 +75,6 @@
         var positionConstraint = new PositionConstraint();
         positionConstraint.byEntityId = "root";
 
-        this.addProperty(animation);
         this.addProperty(rigidBody);
         this.addProperty(positionConstraint);
         this.addProperty(state);

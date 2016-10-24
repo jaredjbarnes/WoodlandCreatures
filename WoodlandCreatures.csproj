@@ -110,6 +110,10 @@
     <Content Include="app\components\HorizontalScrollbar.js" />
     <Content Include="app\components\BrushSelector.html" />
     <Content Include="app\components\BrushSelector.js" />
+    <Content Include="app\components\MobileController.html" />
+    <Content Include="app\components\MobileController.js" />
+    <Content Include="app\components\MobilePlayer.html" />
+    <Content Include="app\components\MobilePlayer.js" />
     <Content Include="app\components\Theme.html" />
     <Content Include="app\components\VerticalScrollbar.js" />
     <Content Include="app\components\MapBuilder.html" />

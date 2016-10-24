@@ -218,7 +218,7 @@
 
             if (entity.hasProperties(["ground", "image-texture"])) {
                 self.drawEntity(entity, groundContext);
-            } else if (entity.hasProperties(["position", "size", "image-texture"])) {
+            } else if (entity.hasProperties(["position", "size", "image-texture"]) && entity.getProperty("position").isStatic) {
                 self.drawEntity(entity, staticContext);
             }
         });
@@ -238,8 +238,9 @@
         var imageMap = this.imageMap;
         var context = this.offScreenContext;
 
-        var entities = keys.filter(function (collision) {
-            return collision.endTimestamp == null;
+        var entities = keys.filter(function (key) {
+            var collision = activeCollisions[key];
+            return collision.endTimestamp == null && collision.entity.parent != null;
         }).map(function (key) {
             return activeCollisions[key].entity;
         });

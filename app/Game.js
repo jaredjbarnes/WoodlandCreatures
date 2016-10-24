@@ -5,6 +5,12 @@
 
     var Hashmap = BASE.collections.Hashmap;
 
+    var blacklistedProperties = {
+        "verticies":true,
+        "normals": true,
+        "activeCollisions": true
+    };
+
     var toNonCircularObject = function (obj, objectArray) {
         var clone;
         objectArray = objectArray || []
@@ -31,6 +37,10 @@
                 var keys = Object.keys(obj);
 
                 keys.forEach(function (key) {
+                    if (blacklistedProperties[key]) {
+                        return;
+                    }
+
                     var item = obj[key];
 
                     if (typeof item === "object" && item != null) {

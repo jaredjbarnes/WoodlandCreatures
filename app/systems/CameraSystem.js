@@ -275,15 +275,15 @@
                 var top = Math.max(intersectingPosition.y, position.y);
                 var right = Math.min(intersectingPosition.x + intersectingSize.width, position.x + size.width);
                 var bottom = Math.min(intersectingPosition.y + intersectingSize.height, position.y + size.height);
-                var width = right - left;
-                var height = bottom - top;
+                var width = Math.round(right - left);
+                var height = Math.round(bottom - top);
 
                 if (width < 0 || height < 0) {
                     return;
                 }
 
-                var x = Math.floor(position.x - intersectingPosition.x);
-                var y = Math.floor(position.y - intersectingPosition.y);
+                var x = position.x - intersectingPosition.x;
+                var y = position.y - intersectingPosition.y;
 
                 if (x < 0) {
                     x = 0;
@@ -297,12 +297,12 @@
 
                 context.drawImage(
                     image,
-                    Math.floor(intersectingImageTexture.position.x + x),
-                    Math.floor(intersectingImageTexture.position.y + y),
+                    Math.round(intersectingImageTexture.position.x + x),
+                    Math.round(intersectingImageTexture.position.y + y),
                     width,
                     height,
-                    Math.floor(intersectingPosition.x - cameraPosition.x + intersectingImageTexture.offset.x + x),
-                    Math.floor(intersectingPosition.y - cameraPosition.y + intersectingImageTexture.offset.y + y),
+                    Math.round(intersectingPosition.x - cameraPosition.x + intersectingImageTexture.offset.x + x),
+                    Math.round(intersectingPosition.y - cameraPosition.y + intersectingImageTexture.offset.y + y),
                     width,
                     height
                     );
@@ -329,12 +329,12 @@
 
             context.drawImage(
                 image,
-                Math.floor(imageTexture.position.x),
-                Math.floor(imageTexture.position.y),
+                Math.round(imageTexture.position.x),
+                Math.round(imageTexture.position.y),
                 imageTexture.size.width,
                 imageTexture.size.height,
-                Math.floor(position.x),
-                Math.floor(position.y),
+                Math.round(position.x),
+                Math.round(position.y),
                 imageTexture.size.width,
                 imageTexture.size.height
                 );
@@ -413,8 +413,8 @@
 
         context.clearRect(0, 0, cameraSize.width, cameraSize.height);
         context.drawImage(this.groundCanvas,
-            Math.floor(cameraPosition.x),
-            Math.floor(cameraPosition.y),
+            Math.round(cameraPosition.x),
+            Math.round(cameraPosition.y),
             this.offScreenCanvas.width,
             this.offScreenCanvas.height,
             0,
@@ -423,8 +423,8 @@
             this.offScreenCanvas.height);
 
         context.drawImage(this.staticCanvas,
-           Math.floor(cameraPosition.x),
-           Math.floor(cameraPosition.y),
+           Math.round(cameraPosition.x),
+           Math.round(cameraPosition.y),
            this.offScreenCanvas.width,
            this.offScreenCanvas.height,
            0,

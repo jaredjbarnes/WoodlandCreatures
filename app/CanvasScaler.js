@@ -6,7 +6,7 @@
 
     app.CanvasScaler = function (canvas, threshold) {
         this.canvas = canvas;
-        this.threshold = threshold || 320;
+        this.threshold = threshold || 250;
         this.scale = {
             x: 1,
             y: 1

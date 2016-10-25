@@ -32,8 +32,8 @@
         var middleX = followEntityPosition.x + (followEntitySize.width / 2);
         var middleY = followEntityPosition.y + (followEntitySize.height / 2);
 
-        cameraPosition.x = Math.floor(middleX - (cameraSize.width / 2));
-        cameraPosition.y = Math.floor(middleY - (cameraSize.height / 2));
+        cameraPosition.x = Math.round(middleX - (cameraSize.width / 2));
+        cameraPosition.y = Math.round(middleY - (cameraSize.height / 2));
 
         if (positionConstraint == null || cameraSize == null || cameraPosition == null) {
             return;

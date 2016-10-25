@@ -1,4 +1,6 @@
-﻿BASE.require([], function () {
+﻿BASE.require([
+    "jQuery"
+], function () {
 
     BASE.namespace("app.systems");
 
@@ -34,20 +36,23 @@
     app.systems.KeyboardInputSystem.prototype.activated = function (game) {
         var document = this.document;
         var pressedKeys = this.pressedKeys;
+        var $body = $(document.body);
 
         this.entities = game.stage.filter(hasKeyboardProperty).forEach(function (entity) {
             var keyboardProperty = entity.properties["keyboard-input"][0];
             keyboardProperty.pressedKeys = pressedKeys;
         });
 
-        document.body.addEventListener("keydown", this.keyDownListener, false);
-        document.body.addEventListener("keyup", this.keyUpListener, false);
+        $body.on("keydown", this.keyDownListener);
+        $body.on("keyup", this.keyUpListener);
     }
 
     app.systems.KeyboardInputSystem.prototype.deactivated = function () {
         var document = this.document;
-        document.body.removeEventListener("keydown", this.keyDownListener, false);
-        document.body.removeEventListener("keyup", this.keyUpListener, false);
+        var $body = $(document.body);
+
+        $body.off("keydown", this.keyDownListener);
+        $body.off("keyup", this.keyUpListener);
     };
 
     app.systems.KeyboardInputSystem.prototype.entityAdded = function (entity) {

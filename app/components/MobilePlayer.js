@@ -2,6 +2,7 @@
     "jQuery",
     "app.Game",
     "app.Entity",
+    "app.CanvasScaler",
     "app.systems.TouchInputSystem",
     "app.systems.BroadPhaseCollisionSystem",
     "app.systems.BroadphaseCollisionDrawerSystem",
@@ -16,7 +17,6 @@
     "app.systems.KeyboardInputSystem",
     "app.systems.NarrowPhaseCollisionSystem",
     "app.systems.AnimationSystem",
-    "app.systems.CursorSystem",
     "app.systems.GridSystem",
     "app.entities.Map",
     "app.entities.Player",
@@ -44,7 +44,6 @@
     var KeyboardInputSystem = app.systems.KeyboardInputSystem;
     var NarrowPhaseCollisionSystem = app.systems.NarrowPhaseCollisionSystem;
     var AnimationSystem = app.systems.AnimationSystem;
-    var CursorSystem = app.systems.CursorSystem;
     var GridSystem = app.systems.GridSystem;
     var Stage = app.entities.Stage;
     var Player = app.entities.Player;
@@ -61,6 +60,8 @@
         var $canvasContainer = $(tags["canvas-container"]);
         var playerController = $(tags["player-controller"]).controller();
         var stateManager = $(tags["state-manager"]).controller();
+
+        var canvasScaler = new app.CanvasScaler(canvas);
 
         // Entities
         var stage = new Stage();
@@ -81,8 +82,6 @@
 
         var gridSystem = new GridSystem(canvas, camera);
         var broadPhaseCollisionSystem = new BroadPhaseCollisionSystem(camera);
-        var cursorSystem = new CursorSystem(canvas, camera);
-        //var cameraSystem = new CameraSystem(canvas, camera);
         var followEntityCameraSystem = new FollowEntityCameraSystem(canvas, camera, player);
         var broadPhaseCollisionDrawerSystem = new BroadphaseCollisionDrawerSystem(canvas, camera);
         var rigidBodyDrawerSystem = new RigidBodyDrawerSystem(canvas, camera);
@@ -131,40 +130,25 @@
 
         followEntityCameraSystem.cacheCanvases();
 
-        window.cursorSystem = cursorSystem;
         //window.cameraSystem = cameraSystem;
         window.broadPhaseCollisionSystem = broadPhaseCollisionSystem;
 
         $elem.on("windowResize", function () {
-            cursorSystem.canvasScaler.scaleCanvas();
-            touchInputSystem.canvasScaler.scaleCanvas();
+            canvasScaler.scaleCanvas();
         });
 
         var interval = setInterval(function () {
             if ($elem.parents("body").length > 0) {
                 clearInterval(interval);
-                orientationChange();
-                cursorSystem.canvasScaler.scaleCanvas();
+                canvasScaler.scaleCanvas();
             }
         }, 100);
-
-        var orientationChange = function (event) {
-            if (window.orientation === -90 || window.orientation === 90) {
-                // stateManager.replaceAsync("default").try();
-            } else {
-                // stateManager.replaceAsync("rotate-device").try();
-            }
-        };
-
-        document.addEventListener("orientationchange", orientationChange);
-        document.addEventListener("touchmove", function (event) {
-            event.preventDefault();
-        });
 
         stateManager.pushAsync("default").try();
 
         playerController.setTouchInput(player.getProperty("touch-input"));
 
+     
     };
 
 });

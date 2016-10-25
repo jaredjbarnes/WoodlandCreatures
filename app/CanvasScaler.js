@@ -6,7 +6,7 @@
 
     app.CanvasScaler = function (canvas, threshold) {
         this.canvas = canvas;
-        this.threshold = threshold || 250;
+        this.threshold = threshold || 480;
         this.scale = {
             x: 1,
             y: 1
@@ -17,7 +17,7 @@
         var ratio;
         var threshold = this.threshold;
 
-        if (width < height) {
+        if (width > height) {
             ratio = width / height;
             return {
                 width: threshold,
@@ -40,7 +40,7 @@
         var dimension = this.getDimension(width, height);
 
         this.scale.x = width / dimension.width;
-        this.scale.y = width / dimension.width;
+        this.scale.y = height / dimension.height;
 
         canvas.width = dimension.width;
         canvas.height = dimension.height;

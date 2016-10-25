@@ -45,6 +45,8 @@
                 touchInput.x = self.direction.x;
                 touchInput.y = self.direction.y;
             }
+
+            event.preventDefault();
         };
 
         var joyStickTouchEnd = function (event) {
@@ -78,6 +80,7 @@
         $joystick.on("touchstart", joyStickTouchStart);
         $joystick.on("touchmove", joyStickTouchMove);
         $joystick.on("touchend", joyStickTouchEnd);
+
     };
 
 });

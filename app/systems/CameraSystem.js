@@ -278,7 +278,7 @@
                 var width = Math.round(right - left);
                 var height = Math.round(bottom - top);
 
-                if (width < 0 || height < 0) {
+                if (width <= 0 || height <= 0) {
                     return;
                 }
 
@@ -319,24 +319,42 @@
         var imageTexture = entity.properties["image-texture"][0];
         var imageMap = this.imageMap;
         var image = imageMap[imageTexture.path];
+        var x = position.x;
+        var y = position.y;
+        var sourcePositionX = imageTexture.position.x;
+        var sourcePositionY = imageTexture.position.y;
+        var width = imageTexture.size.width;
+        var height = imageTexture.size.height;
 
         if (image == null) {
             this.loadImage(imageTexture.path, function () {
                 self.cacheCanvases();
             });
         } else {
+            if (x < 0) {
+                width += x;
+                sourcePositionX -= x;
+                x = 0;
+            }
+
+            if (y < 0) {
+                height += y;
+                sourcePositionY -= y;
+                y = 0;
+            }
+
             context.globalAlpha = imageTexture.opacity;
 
             context.drawImage(
                 image,
-                Math.round(imageTexture.position.x),
-                Math.round(imageTexture.position.y),
-                imageTexture.size.width,
-                imageTexture.size.height,
-                Math.round(position.x),
-                Math.round(position.y),
-                imageTexture.size.width,
-                imageTexture.size.height
+                Math.round(sourcePositionX),
+                Math.round(sourcePositionY),
+                width,
+                height,
+                Math.round(x),
+                Math.round(y),
+                width,
+                height
                 );
         }
 
@@ -367,6 +385,7 @@
         var cameraPosition = this.cameraPosition;
         var camera = this.camera;
         var context = this.context;
+        var canvas = this.canvas;
 
         this.cameraSize.width = this.canvas.width;
         this.cameraSize.height = this.canvas.height;
@@ -412,27 +431,32 @@
         }
 
         context.clearRect(0, 0, cameraSize.width, cameraSize.height);
+
         context.drawImage(this.groundCanvas,
             Math.round(cameraPosition.x),
             Math.round(cameraPosition.y),
-            this.offScreenCanvas.width,
-            this.offScreenCanvas.height,
+            cameraSize.width,
+            cameraSize.height,
             0,
             0,
-            this.offScreenCanvas.width,
-            this.offScreenCanvas.height);
+            cameraSize.width,
+            cameraSize.height);
 
         context.drawImage(this.staticCanvas,
-           Math.round(cameraPosition.x),
-           Math.round(cameraPosition.y),
-           this.offScreenCanvas.width,
-           this.offScreenCanvas.height,
-           0,
-           0,
-           this.offScreenCanvas.width,
-           this.offScreenCanvas.height);
+            Math.round(cameraPosition.x),
+            Math.round(cameraPosition.y),
+            cameraSize.width,
+            cameraSize.height,
+            0,
+            0,
+            cameraSize.width,
+            cameraSize.height);
 
-        context.drawImage(this.offScreenCanvas, 0, 0, this.offScreenCanvas.width, this.offScreenCanvas.height);
+        context.drawImage(this.offScreenCanvas,
+            0,
+            0,
+            cameraSize.width,
+            cameraSize.height);
     };
 
 });

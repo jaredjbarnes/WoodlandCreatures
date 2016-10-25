@@ -17,18 +17,24 @@
         this.mapping = mapping || {};
 
         this.keyDownListener = function (event) {
-            self.pressedKeys[event.keyCode] = true;
+            var keyCode = event.keyCode;
+            var alias = mapping[keyCode];
 
-            if (mapping[event.keyCode] != null) {
-                self.pressedKeys[mapping[event.keyCode]] = true;
+            self.pressedKeys[keyCode] = true;
+
+            if (alias != null) {
+                self.pressedKeys[alias] = true;
             }
         };
 
         this.keyUpListener = function (event) {
-            self.pressedKeys[event.keyCode] = false;
+            var keyCode = event.keyCode;
+            var alias = mapping[keyCode];
 
-            if (mapping[event.keyCode] != null) {
-                self.pressedKeys[mapping[event.keyCode]] = false;
+            self.pressedKeys[keyCode] = false;
+
+            if (alias != null) {
+                self.pressedKeys[alias] = false;
             }
         };
     };
@@ -45,6 +51,7 @@
 
         $body.on("keydown", this.keyDownListener);
         $body.on("keyup", this.keyUpListener);
+
     }
 
     app.systems.KeyboardInputSystem.prototype.deactivated = function () {

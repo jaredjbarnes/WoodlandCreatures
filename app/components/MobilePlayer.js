@@ -130,8 +130,7 @@
 
         followEntityCameraSystem.cacheCanvases();
 
-        //window.cameraSystem = cameraSystem;
-        window.broadPhaseCollisionSystem = broadPhaseCollisionSystem;
+        window.game = game;
 
         $elem.on("windowResize", function () {
             canvasScaler.scaleCanvas();
@@ -148,7 +147,6 @@
 
         playerController.setTouchInput(player.getProperty("touch-input"));
 
-     
     };
 
 });

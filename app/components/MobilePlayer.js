@@ -4,6 +4,7 @@
     "app.Entity",
     "app.CanvasScaler",
     "app.systems.TouchInputSystem",
+    "app.systems.MapSystem",
     "app.systems.BroadPhaseCollisionSystem",
     "app.systems.BroadphaseCollisionDrawerSystem",
     "app.systems.PositionConstraintSystem",
@@ -45,6 +46,7 @@
     var NarrowPhaseCollisionSystem = app.systems.NarrowPhaseCollisionSystem;
     var AnimationSystem = app.systems.AnimationSystem;
     var GridSystem = app.systems.GridSystem;
+    var MapSystem = app.systems.MapSystem;
     var Stage = app.entities.Stage;
     var Player = app.entities.Player;
     var Camera = app.entities.Camera;
@@ -55,6 +57,7 @@
         var self = this;
         var $elem = $(elem);
         var canvas = tags["canvas"];
+        var mapCanvas = tags["map"];
         var $canvas = $(tags["canvas"]);
         var $header = $(tags["header"]);
         var $canvasContainer = $(tags["canvas-container"]);
@@ -86,6 +89,7 @@
         var broadPhaseCollisionDrawerSystem = new BroadphaseCollisionDrawerSystem(canvas, camera);
         var rigidBodyDrawerSystem = new RigidBodyDrawerSystem(canvas, camera);
         var animationSystem = new AnimationSystem();
+        var mapSystem = new MapSystem(mapCanvas, stage, 300);
 
         var keyboardInputSystem = new KeyboardInputSystem(document, {
             37: "left",
@@ -122,15 +126,10 @@
         //Render Systems
         game.appendSystem(spriteSystem);
         game.appendSystem(followEntityCameraSystem);
+        game.appendSystem(mapSystem);
         //game.appendSystem(cameraSystem);
         //game.appendSystem(rigidBodyDrawerSystem);
         //game.appendSystem(broadPhaseCollisionDrawerSystem);
-
-        game.play();
-
-        followEntityCameraSystem.cacheCanvases();
-
-        window.game = game;
 
         $elem.on("windowResize", function () {
             canvasScaler.scaleCanvas();
@@ -143,8 +142,11 @@
             }
         }, 100);
 
+        game.play();
+        mapSystem.draw();
+        window.game = game;
         stateManager.pushAsync("default").try();
-
+        followEntityCameraSystem.cacheCanvases();
         playerController.setTouchInput(player.getProperty("touch-input"));
 
     };

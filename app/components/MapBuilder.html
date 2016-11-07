@@ -7,7 +7,7 @@
             top: 100px;
             left: 0;
             right: 0;
-            bottom: 100px;
+            bottom: 0;
             background-color: #000;
         }
 
@@ -28,30 +28,28 @@
                 vertical-align: top;
             }
 
-        [map-builder-footer] {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 100px;
-            background-color: #f2f2f2;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
-            box-sizing: border-box;
-            padding: 25px;
-        }
-
         [map-builder-canvas] {
             width: 960px;
             height: 640px;
             background-color: #489848;
+            backface-visibility: hidden;
+        }
+
+        [map-builder-map] {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            width: 150px;
+            opacity:1;
+            backface-visibility: hidden;
         }
     </style>
     <div tag="state-manager" component="absolute-state-manager" class="absolute-fill-parent">
         <div name="default" class="absolute-fill-parent">
             <div tag="canvas-container" map-builder-canvas-container>
                 <canvas tag="canvas" map-builder-canvas class="fill-parent"></canvas>
-            </div>
-            <div map-builder-footer>
+                <canvas tag="map" map-builder-map></canvas>
             </div>
             <div tag="header" map-builder-header>
                 <!--<div tag="ground-color-button" component="./GroundColorSelector.html"></div>-->
@@ -87,8 +85,8 @@
                      style="padding:4px;"></div>
             </div>
         </div>
-        <div tag="terrain" name="terrain" component="./BrushSelector.html"></div>
-        <div tag="plants" name="plants" component="./BrushSelector.html"></div>
-        <div tag="structures" name="structures" component="./BrushSelector.html"></div>
+        <div tag="terrain" name="terrain" component="./BrushSelector.html" class="absolute-fill-parent"></div>
+        <div tag="plants" name="plants" component="./BrushSelector.html" class="absolute-fill-parent"></div>
+        <div tag="structures" name="structures" component="./BrushSelector.html" class="absolute-fill-parent"></div>
     </div>
 </div>

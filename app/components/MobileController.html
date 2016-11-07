@@ -9,7 +9,7 @@
                 width: 75px;
                 height: 75px;
                 border-radius: 50%;
-                box-shadow:0 0 10px rgba(0,0,0,0.75);
+                box-shadow: 0 0 10px rgba(0,0,0,0.75);
             }
 
         [mobile-controller-buttons] {
@@ -41,15 +41,28 @@
             right: 25px;
         }
 
-        .button[tag='joystick'] {
+        [joystick-position-container] {
             position: absolute;
-            bottom: 50px;
-            left: 50px;
+            bottom: 10px;
+            left: 10px;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255,255,255,0.3);
+            border: 1px solid #fff;
+        }
+
+        .button[tag='joystick'] {
+            top: 37px;
+            left: 37px;
+            position: relative;
         }
     </style>
 
     <div mobile-controller-joystick>
-        <div tag="joystick" class="button"></div>
+        <div joystick-position-container>
+            <div tag="joystick" class="button"></div>
+        </div>
     </div>
     <div tag="buttons" mobile-controller-buttons>
         <div tag="a" class="button"></div>

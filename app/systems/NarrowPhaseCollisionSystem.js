@@ -23,7 +23,6 @@
         };
 
         this.timestamp;
-
     };
 
     app.systems.NarrowPhaseCollisionSystem.prototype.prepareRigidBody = function (rigidBody) {

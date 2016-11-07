@@ -11,6 +11,10 @@
         var $b = $(tags["b"]);
         var $joystick = $(tags["joystick"]);
         var touchInput = null;
+        var offset = {
+            x: 37,
+            y: 37
+        };
         var startJoystickData = {
             id: 0,
             x: 0,
@@ -46,6 +50,11 @@
                 touchInput.y = self.direction.y;
             }
 
+            $joystick.css({
+                top: self.direction.y + offset.y,
+                left: self.direction.x + offset.x
+            });
+
             event.preventDefault();
         };
 
@@ -58,6 +67,11 @@
                 touchInput.y = self.direction.y;
                 touchInput.isTouching = false;
             }
+
+            $joystick.css({
+                top: self.direction.y + offset.y,
+                left: self.direction.x + offset.x
+            });
         };
 
         self.direction = {

@@ -92,7 +92,7 @@
     };
 
     app.systems.StateMachineSystem.prototype.entityAdded = function (entity) {
-        if (entity.hasProperties(["state"])){
+        if (entity.hasProperties(["state"])) {
             this.entities.push(entity);
         }
     };
@@ -102,6 +102,22 @@
 
         if (index > -1) {
             this.entities.splice(index, 1);
+        }
+    };
+
+    app.systems.StateMachineSystem.prototype.propertyAdded = function (entity, property) {
+        if (property.type === "state") {
+            this.entities.push(entity);
+        }
+    };
+
+    app.systems.StateMachineSystem.prototype.propertyRemoved = function (entity, property) {
+        if (property.type === "state") {
+            var index = this.entities.indexOf(entity);
+
+            if (index > -1) {
+                this.entities.splice(index, 1);
+            }
         }
     };
 

@@ -4,7 +4,8 @@
     "app.properties.Size",
     "app.properties.Collidable",
     "app.properties.ImageTexture",
-    "app.properties.Ground"
+    "app.properties.Ground",
+    "app.properties.Mapable"
 ], function () {
 
     BASE.namespace("app.entities");
@@ -14,6 +15,7 @@
     var Collision = app.properties.Collidable;
     var ImageTexture = app.properties.ImageTexture;
     var Ground = app.properties.Ground;
+    var Mapable = app.properties.Mapable;
 
     app.entities.FlagStone = function () {
         app.Entity.call(this);
@@ -42,6 +44,12 @@
 
         var ground = new Ground();
 
+        var mapable = new Mapable();
+        mapable.color.red = 162;
+        mapable.color.green = 224;
+        mapable.color.blue = 170;
+
+        this.addProperty(mapable);
         this.addProperty(ground);
         this.addProperty(image);
         this.addProperty(position);

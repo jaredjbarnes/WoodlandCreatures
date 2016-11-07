@@ -23,7 +23,7 @@
 
         var worldSize = new Size();
         worldSize.width = 2000;
-        worldSize.height = 2000;
+        worldSize.height = 1000;
 
         var position = new Position();
         position.x = 0;

@@ -4,7 +4,8 @@
     "app.properties.Size",
     "app.properties.Collidable",
     "app.properties.ImageTexture",
-    "app.properties.RigidBody"
+    "app.properties.RigidBody",
+    "app.properties.Mapable"
 ], function () {
 
     BASE.namespace("app.entities");
@@ -14,6 +15,7 @@
     var Collision = app.properties.Collidable;
     var ImageTexture = app.properties.ImageTexture;
     var RigidBody = app.properties.RigidBody;
+    var Mapable = app.properties.Mapable;
 
     app.entities.LargeRedHouse = function () {
         app.Entity.call(this);
@@ -55,6 +57,12 @@
             y: 85
         });
 
+        var mapable = new Mapable();
+        mapable.color.red = 103;
+        mapable.color.green = 55;
+        mapable.color.blue = 57;
+
+        this.addProperty(mapable);
         this.addProperty(rigidBody);
         this.addProperty(image);
         this.addProperty(position);

@@ -10,7 +10,7 @@
     "app.properties.RigidBody",
     "app.properties.State",
     "app.properties.TouchInput",
-    "app.properties.MapColor"
+    "app.properties.Mapable"
 ], function () {
 
     BASE.namespace("app.entities");
@@ -25,7 +25,7 @@
     var PositionConstraint = app.properties.PositionConstraint;
     var ImageTexture = app.properties.ImageTexture;
     var TouchInput = app.properties.TouchInput;
-    var MapColor = app.properties.MapColor;
+    var Mapable = app.properties.Mapable;
 
     app.entities.Player = function () {
         app.Entity.call(this);
@@ -77,12 +77,12 @@
         var positionConstraint = new PositionConstraint();
         positionConstraint.byEntityId = "root";
 
-        var mapColor = new MapColor();
-        mapColor.red = 220;
-        mapColor.green = 177;
-        mapColor.blue = 130;
+        var mapable = new Mapable();
+        mapable.color.red = 220;
+        mapable.color.green = 177;
+        mapable.color.blue = 130;
 
-        this.addProperty(mapColor);
+        this.addProperty(mapable);
         this.addProperty(rigidBody);
         this.addProperty(positionConstraint);
         this.addProperty(state);

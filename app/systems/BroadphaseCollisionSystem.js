@@ -84,8 +84,8 @@
             size = entity.size;
             position = entity.position;
 
-            // if entity is outside the camera extents, then ignore it
-
+            // if entity is outside the camera extents, then ignore it.
+            // This is a big optimization and is specific to this game play.
             if (position.x + size.width < screenLeft ||
                 position.x > screenRight ||
                 position.y + size.height < screenTop ||
@@ -325,6 +325,7 @@
 
     app.systems.BroadPhaseCollisionSystem.prototype.entityAdded = function (entity) {
         if (entity.hasProperties(["position", "size", "collidable"])) {
+
             var broadPhaseEntity = new BroadPhaseEntity();
             broadPhaseEntity.position = entity.properties["position"][0];
             broadPhaseEntity.size = entity.properties["size"][0];
@@ -334,6 +335,7 @@
             this.entityToBroadPhase.add(entity, broadPhaseEntity);
             this.broadPhaseToEntity.add(broadPhaseEntity, entity);
             this.broadPhaseEntities.push(broadPhaseEntity);
+
         }
     };
 

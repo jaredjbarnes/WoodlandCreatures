@@ -5,7 +5,7 @@
     "app.properties.Collidable",
     "app.properties.ImageTexture",
     "app.properties.RigidBody",
-    "app.properties.MapColor"
+    "app.properties.Mapable"
 ], function () {
 
     BASE.namespace("app.entities");
@@ -15,7 +15,7 @@
     var Collision = app.properties.Collidable;
     var ImageTexture = app.properties.ImageTexture;
     var RigidBody = app.properties.RigidBody;
-    var MapColor = app.properties.MapColor;
+    var Mapable = app.properties.Mapable;
 
     app.entities.Tree = function () {
         app.Entity.call(this);
@@ -60,12 +60,12 @@
             y: 69
         });
 
-        var mapColor = new MapColor();
-        mapColor.red = 40;
-        mapColor.green = 88;
-        mapColor.blue = 48;
+        var mapable = new Mapable();
+        mapable.color.red = 40;
+        mapable.color.green = 88;
+        mapable.color.blue = 48;
 
-        this.addProperty(mapColor);
+        this.addProperty(mapable);
         this.addProperty(rigidBody);
         this.addProperty(image);
         this.addProperty(position);

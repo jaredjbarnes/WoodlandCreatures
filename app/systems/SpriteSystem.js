@@ -60,6 +60,22 @@
         }
     };
 
+    app.systems.SpriteSystem.prototype.propertyAdded = function (entity, property) {
+        if (property.type === "state" || property.type === "image-texture") {
+            this.entityAdded(entity);
+        }
+    };
+
+    app.systems.SpriteSystem.prototype.propertyRemoved = function (entity, property) {
+        if (property.type === "state" || property.type === "image-texture") {
+            var index = this.entities.indexOf(entity);
+
+            if (index > -1) {
+                this.entities.splice(index, 1);
+            }
+        }
+    };
+
     app.systems.SpriteSystem.prototype.activated = function (game) {
         this.game = game;
         this.cacheEntities();

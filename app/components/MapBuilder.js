@@ -18,6 +18,7 @@
     "app.systems.AnimationSystem",
     "app.systems.CursorSystem",
     "app.systems.GridSystem",
+    "app.systems.MapSystem",
     "app.entities.Map",
     "app.entities.Player",
     "app.entities.Camera",
@@ -34,6 +35,7 @@
     var BroadPhaseCollisionSystem = app.systems.BroadPhaseCollisionSystem;
     var PositionConstraintSystem = app.systems.PositionConstraintSystem;
     var CameraSystem = app.systems.CameraSystem;
+    var MapSystem = app.systems.MapSystem;
     var RigidBodyDrawerSystem = app.systems.RigidBodyDrawerSystem;
     var SpriteSystem = app.systems.SpriteSystem;
     var StateMachineSystem = app.systems.StateMachineSystem;
@@ -54,9 +56,13 @@
         var self = this;
         var $elem = $(elem);
         var canvas = tags["canvas"];
-        var $canvas = $(tags["canvas"]);
+        var mapCanvas = tags["map"];
+        var $mapCanvas = $(mapCanvas);
+        var $canvas = $(canvas);
         var $header = $(tags["header"]);
         var $canvasContainer = $(tags["canvas-container"]);
+
+        var isMapMouseDown = false;
 
         var $selectionButton = $(tags["selection-button"]);
         var $panButton = $(tags["pan-button"]);
@@ -95,6 +101,7 @@
         var broadPhaseCollisionDrawerSystem = new BroadphaseCollisionDrawerSystem(canvas, camera);
         var rigidBodyDrawerSystem = new RigidBodyDrawerSystem(canvas, camera);
         var animationSystem = new AnimationSystem();
+        var mapSystem = new MapSystem(mapCanvas, stage, 100);
 
         var keyboardInputSystem = new KeyboardInputSystem(document, {
             37: "left",
@@ -123,6 +130,7 @@
         game.appendSystem(cameraSystem);
         game.appendSystem(gridSystem);
         game.appendSystem(cursorSystem);
+        game.appendSystem(mapSystem);
         //game.appendSystem(rigidBodyDrawerSystem);
         //game.appendSystem(broadPhaseCollisionDrawerSystem);
 
@@ -192,6 +200,54 @@
             }).finally(function () {
                 return stateManager.replaceAsync("default");
             }).try();
+        });
+
+        var positionCamera = function (event) {
+            var rect = mapCanvas.getBoundingClientRect();
+            var size = stage.getProperty("size");
+            var cameraSize = camera.getProperty("size");
+            var cameraPosition = camera.getProperty("position");
+
+            var offset = {
+                x: cameraSize.width / 2,
+                y: cameraSize.height / 2
+            };
+
+            var clickPosition = {
+                x: event.pageX - rect.left,
+                y: event.pageY - rect.top
+            };
+
+            var scaleX = size.width / rect.width;
+            var scaleY = size.height / rect.height;
+
+            var position = {
+                x: (clickPosition.x * scaleX) - offset.x,
+                y: (clickPosition.y * scaleY) - offset.y
+            };
+
+            cameraPosition.x = position.x;
+            cameraPosition.y = position.y;
+        };
+
+        $mapCanvas.on("click", positionCamera);
+
+        $mapCanvas.on("mousedown", function () {
+            isMapMouseDown = true;
+        });
+
+        $mapCanvas.on("mouseout", function () {
+            isMapMouseDown = false;
+        });
+
+        $mapCanvas.on("mouseup", function () {
+            isMapMouseDown = false;
+        });
+
+        $mapCanvas.on("mousemove", function (event) {
+            if (isMapMouseDown) {
+                positionCamera(event);
+            }
         });
 
         stateManager.pushAsync("default").try();

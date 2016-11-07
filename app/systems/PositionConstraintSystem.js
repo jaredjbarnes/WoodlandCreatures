@@ -4,8 +4,10 @@
 
     var emptyFn = function () { };
 
+    var dependencies = ["size", "position", "position-constraint"];
+
     var isRestrainable = function (entity) {
-        return entity.hasProperties(["size", "position", "position-constraint"]);
+        return entity.hasProperties(dependencies);
     };
 
     app.systems.PositionConstraintSystem = function (canvas) {
@@ -23,7 +25,7 @@
 
         this.entities.push(entity);
 
-        if (isRestrainable(entity)) {
+        if (isRestrainable(entity) && this.constrainedEntities.indexOf(entity) === -1) {
             this.constrainedEntities.push(entity);
 
             positionConstraint = entity.getProperty("position-constraint");
@@ -59,6 +61,16 @@
             if (index > -1) {
                 this.constrainedEntities.splice(index, 1);
             }
+        }
+    };
+
+    app.systems.PositionConstraintSystem.prototype.propertyAdded = function (entity, property) {
+        this.entityAdded(entity);
+    };
+
+    app.systems.PositionConstraintSystem.prototype.propertyRemoved = function (entity, property) {
+        if (dependencies.indexOf(property.type) > -1) {
+            this.entityRemoved(entity);
         }
     };
 

@@ -8,6 +8,7 @@
         this.size = null;
         this.position = null;
         this.color = null;
+        this.border = null;
     };
 
     app.systems.MapSystem = function (canvas, stage, threshold) {
@@ -20,7 +21,7 @@
         this.tick = 0;
 
         var stageSize = this.stageSize = stage.getProperty("size");
-        
+
         if (stageSize.width > stageSize.height) {
             canvas.width = threshold;
             canvas.height = stageSize.height / stageSize.width * threshold;
@@ -45,6 +46,8 @@
         var context = this.context;
         var scale = this.scale;
         var color = mapEntity.color;
+        var borderColor = mapEntity.border.color;
+        var thickness = mapEntity.border.thickness;
         var position = mapEntity.position;
         var size = mapEntity.size;
         var x = position.x * scale;
@@ -53,8 +56,18 @@
         var height = size.height * scale;
 
         context.beginPath();
-        context.fillStyle = "rgba(" + color.red + "," + color.green + "," + color.blue + "," + color.alpha + ")";
-        context.fillRect(x, y, width, height);
+
+        if (thickness > 0 && borderColor.alpha > 0) {
+            context.lineWidth = thickness;
+            context.strokeStyle = "rgba(" + borderColor.red + "," + borderColor.green + "," + borderColor.blue + "," + borderColor.alpha + ")";
+            context.strokeRect(x, y, width, height);
+        }
+
+        if (color.alpha > 0){
+            context.fillStyle = "rgba(" + color.red + "," + color.green + "," + color.blue + "," + color.alpha + ")";
+            context.fillRect(x, y, width, height);
+        }
+        
         context.closePath();
     };
 
@@ -83,19 +96,22 @@
     };
 
     app.systems.MapSystem.prototype.entityAdded = function (entity) {
-        if (entity.hasProperties(["map-color", "size", "position"])) {
+        if (entity.hasProperties(["mapable", "size", "position"])) {
+            var mapable = entity.getProperty("mapable");
+
             var mapEntity = new MapEntity();
             mapEntity.id = entity.id;
             mapEntity.size = entity.getProperty("size");
             mapEntity.position = entity.getProperty("position");
-            mapEntity.color = entity.getProperty("map-color");
+            mapEntity.color = mapable.color;
+            mapEntity.border = mapable.border;
 
             this.entities.push(mapEntity);
         }
     };
 
     app.systems.MapSystem.prototype.entityRemoved = function (entity) {
-        if (entity.hasProperties(["map-color", "size", "position"])) {
+        if (entity.hasProperties(["mapable", "size", "position"])) {
 
             var index = this.entities.indexOfByFunction(function (mapEntity) {
                 return mapEntity.id === entity.id;

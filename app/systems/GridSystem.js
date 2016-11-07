@@ -58,11 +58,14 @@
     };
 
     app.systems.GridSystem.prototype.update = function () {
+        var context = this.context;
         var offsetX = this.cellSize - (this.offset.x % this.cellSize);
         var offsetY = this.cellSize - (this.offset.y % this.cellSize);
         var width = this.cameraSize.width;
         var height = this.cameraSize.height;
         var cellSize = this.cellSize;
+
+        context.save();
 
         for (var x = offsetX ; x < width; x += cellSize) {
             this.drawVerticalLineAt(x);
@@ -71,6 +74,8 @@
         for (var y = offsetY; y < height; y += cellSize) {
             this.drawHorizontalLineAt(y);
         }
+
+        context.restore();
 
     };
 

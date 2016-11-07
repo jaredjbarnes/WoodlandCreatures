@@ -4,7 +4,8 @@
     "app.properties.Collidable",
     "app.properties.PositionConstraint",
     "app.properties.Size",
-    "app.properties.Position"
+    "app.properties.Position",
+    "app.properties.Mapable"
 ], function () {
 
     BASE.namespace("app.entities");
@@ -14,6 +15,7 @@
     var Position = app.properties.Position;
     var PositionConstraint = app.properties.PositionConstraint;
     var Collision = app.properties.Collidable;
+    var Mapable = app.properties.Mapable;
 
     app.entities.Camera = function () {
         app.Entity.call(this);
@@ -37,8 +39,17 @@
         var positionConstraint = new PositionConstraint();
         positionConstraint.byEntityId = "root";
 
+        var mapable = new Mapable();
+        mapable.border.color.red = 0;
+        mapable.border.color.green = 144;
+        mapable.border.color.blue = 255;
+        mapable.border.color.alpha = 1;
+        mapable.border.thickness = 1;
+        mapable.color.alpha = 0;
+
         this.addProperty(positionConstraint);
         this.addProperty(position);
+        this.addProperty(mapable);
         this.addProperty(size);
         this.addProperty(collision);
         this.addProperty(camera);

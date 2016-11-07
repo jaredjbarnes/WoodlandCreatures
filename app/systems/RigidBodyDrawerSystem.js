@@ -54,6 +54,7 @@
         context.moveTo(positionA.x - offset.x + rigidBodyA.origin.x, positionA.y + rigidBodyA.origin.y - offset.y);
         context.lineTo(positionB.x - offset.x + rigidBodyB.origin.x, positionB.y + rigidBodyB.origin.y - offset.y);
 
+        context.closePath();
         context.stroke();
     };
 
@@ -75,12 +76,13 @@
 
         context.lineTo(position.x - offset.x + rigidBody.points[0].x, position.y + rigidBody.points[0].y - offset.y);
 
+        context.closePath();
         context.stroke();
-
     };
 
     app.systems.RigidBodyDrawerSystem.prototype.update = function () {
         var self = this;
+
         this.entities.forEach(function (entity) {
             var collision = entity.getProperty("collidable");
             var rigidBody = entity.getProperty("rigid-body");

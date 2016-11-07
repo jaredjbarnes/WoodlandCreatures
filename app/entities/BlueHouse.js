@@ -4,7 +4,8 @@
     "app.properties.Size",
     "app.properties.Collidable",
     "app.properties.ImageTexture",
-    "app.properties.RigidBody"
+    "app.properties.RigidBody",
+    "app.properties.Mapable"
 ], function () {
 
     BASE.namespace("app.entities");
@@ -14,6 +15,7 @@
     var Collision = app.properties.Collidable;
     var ImageTexture = app.properties.ImageTexture;
     var RigidBody = app.properties.RigidBody;
+    var Mapable = app.properties.Mapable;
 
     app.entities.BlueHouse = function () {
         app.Entity.call(this);
@@ -40,6 +42,11 @@
         var collision = new Collision();
         collision.isStatic = true;
 
+        var mapable = new Mapable();
+        mapable.color.red = 41;
+        mapable.color.green = 72;
+        mapable.color.blue = 95;
+
         var rigidBody = new RigidBody();
         rigidBody.points.push({
             x: 0,
@@ -55,6 +62,7 @@
             y: 85
         });
 
+        this.addProperty(mapable);
         this.addProperty(rigidBody);
         this.addProperty(image);
         this.addProperty(position);
